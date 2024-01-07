@@ -20,8 +20,6 @@ const routeMiddleware = resolveMiddleware(
 
 const router = createRouter()
 
-const base_url = '/target-force/forms'
-
 sync(store, router)
 
 export default router
@@ -34,7 +32,7 @@ export default router
 function createRouter () {
   const router = new Router({
     scrollBehavior,
-    base: base_url,
+    base: '/target-force/forms',
     mode: 'history',
     routes
   })
