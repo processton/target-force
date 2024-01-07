@@ -11,7 +11,7 @@ import '~/components'
 
 import '../sass/app.scss'
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 Vue.mixin(Base)
 Vue.use(LoadScript)
