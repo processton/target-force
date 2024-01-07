@@ -12,7 +12,7 @@
 
                     <div class="logo text-center mt-4">
                         <a href="{{ route('targetforce.dashboard') }}">
-                            <img src="{{ asset('/vendor/targetforce/img/logo-main.png') }}" alt="SendPortal" width="130">
+                            <img src="{{ asset('/vendor/targetforce/img/logo-main.png') }}" alt="Target Force" width="130">
                         </a>
                     </div>
 

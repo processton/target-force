@@ -18,6 +18,9 @@
       's3_enabled' => config('filesystems.default') === 's3',
       'paid_plans_enabled' => !is_null(config('cashier.key'))
   ];
+  $target_form = [
+    'base_url' => '/target-force'
+  ]
 @endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -42,7 +45,8 @@
     {{-- Global configuration object --}}
     <script>
         window.config = @json($config);
-        window.$crisp = []
+        window.$crisp = [];
+        window.targetform = @json($target_form);
     </script>
 </head>
 <body>
