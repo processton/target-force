@@ -19,7 +19,7 @@
       'paid_plans_enabled' => !is_null(config('cashier.key'))
   ];
   $target_form = [
-    'base_url' => '/target-force'
+    'base_url' => '/target-force/forms'
   ]
 @endphp
 <!doctype html>

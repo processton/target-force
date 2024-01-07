@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "vite build --watch",
-    "build": "vite build"
+    "dev": "vite",
+    "watch": "vite build --watch -d",
+    "build": "vite build -d --mode development"
   },
   "dependencies": {
     "@hcaptcha/vue-hcaptcha": "^0.3.2",

@@ -194,5 +194,5 @@ export default [
   //   component: page("templates/industries-show.vue"),
   // },
 
-  { path: "*", component: page("errors/404.vue") },
+  // { path: "*", component: page("errors/404.vue") },
 ];
