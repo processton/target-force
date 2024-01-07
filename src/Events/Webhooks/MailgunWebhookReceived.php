@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Events\Webhooks;
+namespace Targetforce\Base\Events\Webhooks;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;

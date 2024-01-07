@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 
-trait SendportalTestSupportTrait
+trait TargetforceTestSupportTrait
 {
     protected function createEmailService(): EmailService
     {
         return EmailService::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
     }
 
@@ -25,7 +25,7 @@ trait SendportalTestSupportTrait
             ->withContent()
             ->sent()
             ->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
                 'email_service_id' => $emailService->id,
             ]);
     }
@@ -33,14 +33,14 @@ trait SendportalTestSupportTrait
     protected function createTag(): Tag
     {
         return Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
     }
 
     protected function createSubscriber(): Subscriber
     {
         return Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
     }
 }

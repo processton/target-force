@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Subscribers'))
 
@@ -8,10 +8,10 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
 
         @slot('left')
-            <form action="{{ route('sendportal.subscribers.index') }}" method="GET" class="form-inline mb-3 mb-md-0">
+            <form action="{{ route('targetforce.subscribers.index') }}" method="GET" class="form-inline mb-3 mb-md-0">
                 <input class="form-control form-control-sm" name="name" type="text" value="{{ request('name') }}"
                        placeholder="{{ __('Search...') }}">
 
@@ -38,7 +38,7 @@
                 <button type="submit" class="btn btn-light btn-md">{{ __('Search') }}</button>
 
                 @if(request()->anyFilled(['name', 'status']))
-                    <a href="{{ route('sendportal.subscribers.index') }}"
+                    <a href="{{ route('targetforce.subscribers.index') }}"
                        class="btn btn-md btn-light">{{ __('Clear') }}</a>
                 @endif
             </form>
@@ -50,19 +50,19 @@
                     <i class="fa fa-bars color-gray-400"></i>
                 </button>
                 <div class="dropdown-menu">
-                    <a href="{{ route('sendportal.subscribers.import') }}" class="dropdown-item">
+                    <a href="{{ route('targetforce.subscribers.import') }}" class="dropdown-item">
                         <i class="fa fa-upload color-gray-400 mr-2"></i> {{ __('Import Subscribers') }}
                     </a>
-                    <a href="{{ route('sendportal.subscribers.export') }}" class="dropdown-item">
+                    <a href="{{ route('targetforce.subscribers.export') }}" class="dropdown-item">
                         <i class="fa fa-download color-gray-400 mr-2"></i> {{ __('Export Subscribers') }}
                     </a>
 
                 </div>
             </div>
-            <a class="btn btn-light btn-md mr-2" href="{{ route('sendportal.tags.index') }}">
+            <a class="btn btn-light btn-md mr-2" href="{{ route('targetforce.tags.index') }}">
                 <i class="fa fa-tag color-gray-400 mr-1"></i> {{ __('Tags') }}
             </a>
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.subscribers.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.subscribers.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('New Subscriber') }}
             </a>
         @endslot
@@ -85,7 +85,7 @@
                 @forelse($subscribers as $subscriber)
                     <tr>
                         <td>
-                            <a href="{{ route('sendportal.subscribers.show', $subscriber->id) }}">
+                            <a href="{{ route('targetforce.subscribers.show', $subscriber->id) }}">
                                 {{ $subscriber->email }}
                             </a>
                         </td>
@@ -107,10 +107,10 @@
                             @endif
                         </td>
                         <td>
-                            <form action="{{ route('sendportal.subscribers.destroy', $subscriber->id) }}" method="POST">
+                            <form action="{{ route('targetforce.subscribers.destroy', $subscriber->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <a href="{{ route('sendportal.subscribers.edit', $subscriber->id) }}"
+                                <a href="{{ route('targetforce.subscribers.edit', $subscriber->id) }}"
                                    class="btn btn-xs btn-light">{{ __('Edit') }}</a>
                                 <button type="submit"
                                         class="btn btn-xs btn-light delete-subscriber">{{ __('Delete') }}</button>
@@ -129,7 +129,7 @@
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.pagination', ['records' => $subscribers])
+    @include('targetforce::layouts.partials.pagination', ['records' => $subscribers])
 
     <script>
         let subscribers = document.getElementsByClassName('delete-subscriber');

@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', $campaign->name)
 
@@ -8,11 +8,11 @@
 
 @section('content')
 
-    @include('sendportal::campaigns.reports.partials.nav')
+    @include('targetforce::campaigns.reports.partials.nav')
 
     <div class="row mb-4">
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('sendportal.campaigns.reports.recipients', $campaign->id) }}"
+            <a href="{{ route('targetforce.campaigns.reports.recipients', $campaign->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
@@ -27,7 +27,7 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('sendportal.campaigns.reports.opens', $campaign->id) }}"
+            <a href="{{ route('targetforce.campaigns.reports.opens', $campaign->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('sendportal.campaigns.reports.clicks', $campaign->id) }}"
+            <a href="{{ route('targetforce.campaigns.reports.clicks', $campaign->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
@@ -57,7 +57,7 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('sendportal.campaigns.reports.bounces', $campaign->id) }}"
+            <a href="{{ route('targetforce.campaigns.reports.bounces', $campaign->id) }}"
                class="text-decoration-none text-reset">
 
                 <div class="widget flex-row align-items-center align-items-stretch">

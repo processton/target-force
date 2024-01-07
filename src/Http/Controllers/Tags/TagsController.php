@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Tags;
+namespace Targetforce\Base\Http\Controllers\Tags;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\TagStoreRequest;
-use Sendportal\Base\Http\Requests\TagUpdateRequest;
-use Sendportal\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\TagStoreRequest;
+use Targetforce\Base\Http\Requests\TagUpdateRequest;
+use Targetforce\Base\Repositories\TagTenantRepository;
 
 class TagsController extends Controller
 {
@@ -28,14 +28,14 @@ class TagsController extends Controller
      */
     public function index(): View
     {
-        $tags = $this->tagRepository->paginate(Sendportal::currentWorkspaceId(), 'name');
+        $tags = $this->tagRepository->paginate(Targetforce::currentWorkspaceId(), 'name');
 
-        return view('sendportal::tags.index', compact('tags'));
+        return view('targetforce::tags.index', compact('tags'));
     }
 
     public function create(): View
     {
-        return view('sendportal::tags.create');
+        return view('targetforce::tags.create');
     }
 
     /**
@@ -43,9 +43,9 @@ class TagsController extends Controller
      */
     public function store(TagStoreRequest $request): RedirectResponse
     {
-        $this->tagRepository->store(Sendportal::currentWorkspaceId(), $request->all());
+        $this->tagRepository->store(Targetforce::currentWorkspaceId(), $request->all());
 
-        return redirect()->route('sendportal.tags.index');
+        return redirect()->route('targetforce.tags.index');
     }
 
     /**
@@ -53,9 +53,9 @@ class TagsController extends Controller
      */
     public function edit(int $id): View
     {
-        $tag = $this->tagRepository->find(Sendportal::currentWorkspaceId(), $id, ['subscribers']);
+        $tag = $this->tagRepository->find(Targetforce::currentWorkspaceId(), $id, ['subscribers']);
 
-        return view('sendportal::tags.edit', compact('tag'));
+        return view('targetforce::tags.edit', compact('tag'));
     }
 
     /**
@@ -63,9 +63,9 @@ class TagsController extends Controller
      */
     public function update(int $id, TagUpdateRequest $request): RedirectResponse
     {
-        $this->tagRepository->update(Sendportal::currentWorkspaceId(), $id, $request->all());
+        $this->tagRepository->update(Targetforce::currentWorkspaceId(), $id, $request->all());
 
-        return redirect()->route('sendportal.tags.index');
+        return redirect()->route('targetforce.tags.index');
     }
 
     /**
@@ -73,8 +73,8 @@ class TagsController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->tagRepository->destroy(Sendportal::currentWorkspaceId(), $id);
+        $this->tagRepository->destroy(Targetforce::currentWorkspaceId(), $id);
 
-        return redirect()->route('sendportal.tags.index');
+        return redirect()->route('targetforce.tags.index');
     }
 }

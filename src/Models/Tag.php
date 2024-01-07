@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\TagFactory;
@@ -35,7 +35,7 @@ class Tag extends BaseModel
     }
 
     /** @var string */
-    protected $table = 'sendportal_tags';
+    protected $table = 'targetforce_tags';
 
     /** @var array */
     protected $fillable = [
@@ -49,7 +49,7 @@ class Tag extends BaseModel
 
     public function campaigns(): BelongsToMany
     {
-        return $this->belongsToMany(Campaign::class, 'sendportal_campaign_tag');
+        return $this->belongsToMany(Campaign::class, 'targetforce_campaign_tag');
     }
 
     /**
@@ -57,7 +57,7 @@ class Tag extends BaseModel
      */
     public function subscribers(): BelongsToMany
     {
-        return $this->belongsToMany(Subscriber::class, 'sendportal_tag_subscriber')->withTimestamps();
+        return $this->belongsToMany(Subscriber::class, 'targetforce_tag_subscriber')->withTimestamps();
     }
 
     /**

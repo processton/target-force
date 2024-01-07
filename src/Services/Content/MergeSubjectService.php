@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Content;
+namespace Targetforce\Base\Services\Content;
 
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Traits\NormalizeTags;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Traits\NormalizeTags;
 
 class MergeSubjectService
 {

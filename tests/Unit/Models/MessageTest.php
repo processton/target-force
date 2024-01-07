@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\MessageFailure;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\MessageFailure;
 use Tests\TestCase;
 
 class MessageTest extends TestCase

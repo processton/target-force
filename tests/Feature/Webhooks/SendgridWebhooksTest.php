@@ -7,7 +7,7 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Message;
 use Tests\TestCase;
 
 class SendgridWebhooksTest extends TestCase
@@ -16,7 +16,7 @@ class SendgridWebhooksTest extends TestCase
     use WithFaker;
 
     /** @var string */
-    protected $route = 'sendportal.api.webhooks.sendgrid';
+    protected $route = 'targetforce.api.webhooks.sendgrid';
 
     /** @test */
     public function it_accepts_delivered_webhooks()
@@ -108,7 +108,7 @@ class SendgridWebhooksTest extends TestCase
         self::assertNotNull($message->refresh()->bounced_at);
 
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Permanent',
@@ -129,7 +129,7 @@ class SendgridWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Temporary',
@@ -154,7 +154,7 @@ class SendgridWebhooksTest extends TestCase
         self::assertNotNull($message->refresh()->bounced_at);
 
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Permanent',
@@ -175,7 +175,7 @@ class SendgridWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Temporary',

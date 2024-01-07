@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Workspaces;
+namespace Targetforce\Base\Http\Controllers\Workspaces;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Sendportal\Base\Models\Workspace;
+use Targetforce\Base\Models\Workspace;
 
 class SwitchWorkspaceController
 {
@@ -18,6 +18,6 @@ class SwitchWorkspaceController
 
         $user->switchToWorkspace($workspace);
 
-        return redirect()->route('sendportal.dashboard');
+        return redirect()->route('targetforce.dashboard');
     }
 }

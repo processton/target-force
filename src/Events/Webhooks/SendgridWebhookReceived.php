@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Events\Webhooks;
+namespace Targetforce\Base\Events\Webhooks;
 
 class SendgridWebhookReceived
 {

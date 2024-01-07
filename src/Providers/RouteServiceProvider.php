@@ -1,11 +1,11 @@
 <?php
 
-namespace Sendportal\Base\Providers;
+namespace Targetforce\Base\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Sendportal\Base\Routes\ApiRoutes;
-use Sendportal\Base\Routes\WebRoutes;
+use Targetforce\Base\Routes\ApiRoutes;
+use Targetforce\Base\Routes\WebRoutes;
 
 class RouteServiceProvider extends ServiceProvider
 {

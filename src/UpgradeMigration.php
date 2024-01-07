@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base;
+namespace Targetforce\Base;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
@@ -10,8 +10,8 @@ class UpgradeMigration extends Migration
 {
     protected function getTableName(string $baseName): string
     {
-        if (Schema::hasTable("sendportal_{$baseName}")) {
-            return "sendportal_{$baseName}";
+        if (Schema::hasTable("targetforce_{$baseName}")) {
+            return "targetforce_{$baseName}";
         }
 
         if (Schema::hasTable($baseName)) {

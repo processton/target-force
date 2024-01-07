@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Providers;
+namespace Targetforce\Base\Providers;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Campaigns\MySqlCampaignTenantRepository;
-use Sendportal\Base\Repositories\Campaigns\PostgresCampaignTenantRepository;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Messages\MySqlMessageTenantRepository;
-use Sendportal\Base\Repositories\Messages\PostgresMessageTenantRepository;
-use Sendportal\Base\Repositories\Subscribers\MySqlSubscriberTenantRepository;
-use Sendportal\Base\Repositories\Subscribers\PostgresSubscriberTenantRepository;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Sendportal\Base\Services\Helper;
-use Sendportal\Base\Services\QuotaService;
-use Sendportal\Base\Traits\ResolvesDatabaseDriver;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Campaigns\MySqlCampaignTenantRepository;
+use Targetforce\Base\Repositories\Campaigns\PostgresCampaignTenantRepository;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Messages\MySqlMessageTenantRepository;
+use Targetforce\Base\Repositories\Messages\PostgresMessageTenantRepository;
+use Targetforce\Base\Repositories\Subscribers\MySqlSubscriberTenantRepository;
+use Targetforce\Base\Repositories\Subscribers\PostgresSubscriberTenantRepository;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Services\Helper;
+use Targetforce\Base\Services\QuotaService;
+use Targetforce\Base\Traits\ResolvesDatabaseDriver;
 
-class SendportalAppServiceProvider extends ServiceProvider
+class TargetforceAppServiceProvider extends ServiceProvider
 {
     use ResolvesDatabaseDriver;
 
@@ -60,7 +60,7 @@ class SendportalAppServiceProvider extends ServiceProvider
 
         $this->app->bind(QuotaServiceInterface::class, QuotaService::class);
 
-        $this->app->singleton('sendportal.helper', function () {
+        $this->app->singleton('targetforce.helper', function () {
             return new Helper();
         });
     }

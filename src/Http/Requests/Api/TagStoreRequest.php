@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Requests\Api;
+namespace Targetforce\Base\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
+use Targetforce\Base\Facades\Targetforce;
 
 class TagStoreRequest extends FormRequest
 {
@@ -15,8 +15,8 @@ class TagStoreRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('sendportal_tags')
-                    ->where('workspace_id', Sendportal::currentWorkspaceId()),
+                Rule::unique('targetforce_tags')
+                    ->where('workspace_id', Targetforce::currentWorkspaceId()),
             ],
             'subscribers' => [
                 'array',

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateSubscribersTable extends UpgradeMigration
 {
@@ -15,7 +15,7 @@ class CreateSubscribersTable extends UpgradeMigration
     {
         $unsubscribe_event_types = $this->getTableName('unsubscribe_event_types');
 
-        Schema::create('sendportal_subscribers', function (Blueprint $table) use ($unsubscribe_event_types) {
+        Schema::create('targetforce_subscribers', function (Blueprint $table) use ($unsubscribe_event_types) {
             $table->increments('id');
             $table->unsignedInteger('workspace_id')->index();
             $table->uuid('hash')->unique();

@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\EmailServices;
+namespace Targetforce\Base\Http\Controllers\EmailServices;
 
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\EmailServiceRequest;
-use Sendportal\Base\Repositories\EmailServiceTenantRepository;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\EmailServiceRequest;
+use Targetforce\Base\Repositories\EmailServiceTenantRepository;
 
 class EmailServicesController extends Controller
 {
@@ -28,16 +28,16 @@ class EmailServicesController extends Controller
      */
     public function index(): View
     {
-        $emailServices = $this->emailServices->all(Sendportal::currentWorkspaceId());
+        $emailServices = $this->emailServices->all(Targetforce::currentWorkspaceId());
 
-        return view('sendportal::email_services.index', compact('emailServices'));
+        return view('targetforce::email_services.index', compact('emailServices'));
     }
 
     public function create(): View
     {
         $emailServiceTypes = $this->emailServices->getEmailServiceTypes()->pluck('name', 'id');
 
-        return view('sendportal::email_services.create', compact('emailServiceTypes'));
+        return view('targetforce::email_services.create', compact('emailServiceTypes'));
     }
 
     /**
@@ -49,13 +49,13 @@ class EmailServicesController extends Controller
 
         $settings = $request->get('settings', []);
 
-        $this->emailServices->store(Sendportal::currentWorkspaceId(), [
+        $this->emailServices->store(Targetforce::currentWorkspaceId(), [
             'name' => $request->name,
             'type_id' => $emailServiceType->id,
             'settings' => $settings,
         ]);
 
-        return redirect()->route('sendportal.email_services.index');
+        return redirect()->route('targetforce.email_services.index');
     }
 
     /**
@@ -64,10 +64,10 @@ class EmailServicesController extends Controller
     public function edit(int $emailServiceId)
     {
         $emailServiceTypes = $this->emailServices->getEmailServiceTypes()->pluck('name', 'id');
-        $emailService = $this->emailServices->find(Sendportal::currentWorkspaceId(), $emailServiceId);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId);
         $emailServiceType = $this->emailServices->findType($emailService->type_id);
 
-        return view('sendportal::email_services.edit', compact('emailServiceTypes', 'emailService', 'emailServiceType'));
+        return view('targetforce::email_services.edit', compact('emailServiceTypes', 'emailService', 'emailServiceType'));
     }
 
     /**
@@ -75,7 +75,7 @@ class EmailServicesController extends Controller
      */
     public function update(EmailServiceRequest $request, int $emailServiceId): RedirectResponse
     {
-        $emailService = $this->emailServices->find(Sendportal::currentWorkspaceId(), $emailServiceId, ['type']);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId, ['type']);
 
         $settings = $request->get('settings');
 
@@ -83,7 +83,7 @@ class EmailServicesController extends Controller
         $emailService->settings = $settings;
         $emailService->save();
 
-        return redirect()->route('sendportal.email_services.index');
+        return redirect()->route('targetforce.email_services.index');
     }
 
     /**
@@ -91,15 +91,15 @@ class EmailServicesController extends Controller
      */
     public function delete(int $emailServiceId): RedirectResponse
     {
-        $emailService = $this->emailServices->find(Sendportal::currentWorkspaceId(), $emailServiceId, ['campaigns']);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId, ['campaigns']);
 
         if ($emailService->in_use) {
             return redirect()->back()->withErrors(__("You cannot delete an email service that is currently used by a campaign or automation."));
         }
 
-        $this->emailServices->destroy(Sendportal::currentWorkspaceId(), $emailServiceId);
+        $this->emailServices->destroy(Targetforce::currentWorkspaceId(), $emailServiceId);
 
-        return redirect()->route('sendportal.email_services.index');
+        return redirect()->route('targetforce.email_services.index');
     }
 
     public function emailServicesTypeAjax($emailServiceTypeId): JsonResponse
@@ -107,7 +107,7 @@ class EmailServicesController extends Controller
         $emailServiceType = $this->emailServices->findType($emailServiceTypeId);
 
         $view = view()
-            ->make('sendportal::email_services.options.' . strtolower($emailServiceType->name))
+            ->make('targetforce::email_services.options.' . strtolower($emailServiceType->name))
             ->render();
 
         return response()->json([

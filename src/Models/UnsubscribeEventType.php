@@ -1,10 +1,10 @@
 <?php
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 class UnsubscribeEventType extends BaseModel
 {
-    protected $table = 'sendportal_unsubscribe_event_types';
+    protected $table = 'targetforce_unsubscribe_event_types';
 
     const BOUNCE = 1;
     const COMPLAINT = 2;

@@ -7,10 +7,10 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
+use Targetforce\Base\Models\Message;
 use Tests\TestCase;
 
 class MailgunWebhooksTest extends TestCase
@@ -19,7 +19,7 @@ class MailgunWebhooksTest extends TestCase
     use WithFaker;
 
     /** @var string */
-    protected $route = 'sendportal.api.webhooks.mailgun';
+    protected $route = 'targetforce.api.webhooks.mailgun';
 
     /** @var string */
     protected $webHookKey;
@@ -134,7 +134,7 @@ class MailgunWebhooksTest extends TestCase
         self::assertNotNull($message->refresh()->bounced_at);
 
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'permanent',
@@ -159,7 +159,7 @@ class MailgunWebhooksTest extends TestCase
         $response->assertOk();
 
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'temporary',

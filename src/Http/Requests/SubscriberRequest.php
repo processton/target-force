@@ -1,11 +1,11 @@
 <?php
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
+use Targetforce\Base\Facades\Targetforce;
 
 /**
  * @property-read string $subscriber
@@ -19,10 +19,10 @@ class SubscriberRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('sendportal_subscribers', 'email')
+                Rule::unique('targetforce_subscribers', 'email')
                     ->ignore($this->subscriber, 'id')
                     ->where(static function (Builder $query) {
-                        $query->where('workspace_id', Sendportal::currentWorkspaceId());
+                        $query->where('workspace_id', Targetforce::currentWorkspaceId());
                     })
             ],
             'first_name' => [

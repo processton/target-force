@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Requests\Api;
+namespace Targetforce\Base\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Sendportal\Base\Rules\CanAccessSubscriber;
+use Targetforce\Base\Rules\CanAccessSubscriber;
 
 class TagSubscriberStoreRequest extends FormRequest
 {

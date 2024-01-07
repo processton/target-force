@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Resources;
+namespace Targetforce\Base\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

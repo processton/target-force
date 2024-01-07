@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Workspaces;
+namespace Targetforce\Base\Http\Controllers\Workspaces;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Models\Invitation;
-use Sendportal\Base\Services\Workspaces\AcceptInvitation;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Models\Invitation;
+use Targetforce\Base\Services\Workspaces\AcceptInvitation;
 
 class PendingInvitationController extends Controller
 {
@@ -34,7 +34,7 @@ class PendingInvitationController extends Controller
 
         $this->acceptInvitation->handle($request->user(), $invitation);
 
-        return redirect()->route('sendportal.workspaces.index');
+        return redirect()->route('targetforce.workspaces.index');
     }
 
     /**
@@ -46,6 +46,6 @@ class PendingInvitationController extends Controller
 
         $invitation->delete();
 
-        return redirect()->route('sendportal.workspaces.index');
+        return redirect()->route('targetforce.workspaces.index');
     }
 }

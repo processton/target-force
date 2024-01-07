@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Services;
+namespace Targetforce\Base\Services;
 
 use Carbon\Carbon;
 
@@ -25,6 +25,6 @@ class Helper
 
     public function isPro(): bool
     {
-        return class_exists(\Sendportal\Pro\SendportalProServiceProvider::class);
+        return class_exists(\Targetforce\Pro\TargetforceProServiceProvider::class);
     }
 }

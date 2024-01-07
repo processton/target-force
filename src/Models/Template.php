@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\TemplateFactory;
@@ -34,7 +34,7 @@ class Template extends BaseModel
     }
 
     /** @var string */
-    protected $table = 'sendportal_templates';
+    protected $table = 'targetforce_templates';
 
     /** @var array */
     protected $guarded = [];

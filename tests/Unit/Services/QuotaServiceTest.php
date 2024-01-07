@@ -6,9 +6,9 @@ namespace Tests\Unit\Services;
 
 use Aws\Sdk;
 use Aws\Ses\SesClient;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
 use Tests\TestCase;
 
 class QuotaServiceTest extends TestCase

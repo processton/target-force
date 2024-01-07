@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Models\EmailServiceType;
 
 class AddPostalEmailServiceType extends Migration
 {
@@ -13,7 +13,7 @@ class AddPostalEmailServiceType extends Migration
      */
     public function up()
     {
-        DB::table('sendportal_email_service_types')
+        DB::table('targetforce_email_service_types')
             ->insert(
                 [
                     'id' => EmailServiceType::POSTAL,

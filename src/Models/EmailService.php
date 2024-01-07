@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\EmailServiceFactory;
@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Sendportal\Base\Facades\Helper;
-use Sendportal\Pro\Models\Automation;
+use Targetforce\Base\Facades\Helper;
+use Targetforce\Pro\Models\Automation;
 
 /**
  * @property int $id
@@ -39,7 +39,7 @@ class EmailService extends BaseModel
     }
 
     /** @var string */
-    protected $table = 'sendportal_email_services';
+    protected $table = 'targetforce_email_services';
 
     /** @var array */
     protected $fillable = [

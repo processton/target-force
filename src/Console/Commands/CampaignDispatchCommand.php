@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Console\Commands;
+namespace Targetforce\Base\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Services\Campaigns\CampaignDispatchService;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Services\Campaigns\CampaignDispatchService;
 
 class CampaignDispatchCommand extends Command
 {
     /** @var string */
-    protected $signature = 'sp:campaigns:dispatch';
+    protected $signature = 'tf:campaigns:dispatch';
 
     /** @var string */
     protected $description = 'Dispatch all campaigns waiting in the queue';

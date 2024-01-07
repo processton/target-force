@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Cancel Campaign'))
 
@@ -8,9 +8,9 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.campaigns.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.campaigns.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('Create Campaign') }}
             </a>
         @endslot
@@ -35,9 +35,9 @@
                 @endif
             </p>
 
-            <form action="{{ route('sendportal.campaigns.cancel', $campaign->id) }}" method="post">
+            <form action="{{ route('targetforce.campaigns.cancel', $campaign->id) }}" method="post">
                 @csrf
-                <a href="{{ route('sendportal.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Go Back') }}</a>
+                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Go Back') }}</a>
                 <button type="submit" class="btn btn-md btn-danger">{{ __('CANCEL') }}</button>
             </form>
         </div>

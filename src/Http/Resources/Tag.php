@@ -1,9 +1,9 @@
 <?php
 
-namespace Sendportal\Base\Http\Resources;
+namespace Targetforce\Base\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Sendportal\Base\Http\Resources\Subscriber as SubscriberResource;
+use Targetforce\Base\Http\Resources\Subscriber as SubscriberResource;
 
 class Tag extends JsonResource
 {

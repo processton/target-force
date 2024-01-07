@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\Api\SubscriberStoreRequest;
-use Sendportal\Base\Http\Requests\Api\SubscriberUpdateRequest;
-use Sendportal\Base\Http\Resources\Subscriber as SubscriberResource;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Sendportal\Base\Services\Subscribers\ApiSubscriberService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\Api\SubscriberStoreRequest;
+use Targetforce\Base\Http\Requests\Api\SubscriberUpdateRequest;
+use Targetforce\Base\Http\Resources\Subscriber as SubscriberResource;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Services\Subscribers\ApiSubscriberService;
 
 class SubscribersController extends Controller
 {
@@ -36,7 +36,7 @@ class SubscribersController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscribers = $this->subscribers->paginate($workspaceId, 'last_name');
 
         return SubscriberResource::collection($subscribers);
@@ -47,7 +47,7 @@ class SubscribersController extends Controller
      */
     public function store(SubscriberStoreRequest $request): SubscriberResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscriber = $this->apiService->storeOrUpdate($workspaceId, collect($request->validated()));
 
         $subscriber->load('tags');
@@ -60,7 +60,7 @@ class SubscribersController extends Controller
      */
     public function show(int $id): SubscriberResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
 
         return new SubscriberResource($this->subscribers->find($workspaceId, $id, ['tags']));
     }
@@ -70,7 +70,7 @@ class SubscribersController extends Controller
      */
     public function update(SubscriberUpdateRequest $request, int $id): SubscriberResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscriber = $this->subscribers->update($workspaceId, $id, $request->validated());
 
         return new SubscriberResource($subscriber);
@@ -81,7 +81,7 @@ class SubscribersController extends Controller
      */
     public function destroy(int $id): Response
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $this->apiService->delete($workspaceId, $this->subscribers->find($workspaceId, $id));
 
         return response(null, 204);

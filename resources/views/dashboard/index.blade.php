@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Dashboard'))
 
@@ -50,11 +50,11 @@
                             <tr>
                                 <td>
                                     @if ($campaign->draft)
-                                        <a href="{{ route('sendportal.campaigns.edit', $campaign->id) }}">{{ $campaign->name }}</a>
+                                        <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}">{{ $campaign->name }}</a>
                                     @elseif($campaign->sent)
-                                        <a href="{{ route('sendportal.campaigns.reports.index', $campaign->id) }}">{{ $campaign->name }}</a>
+                                        <a href="{{ route('targetforce.campaigns.reports.index', $campaign->id) }}">{{ $campaign->name }}</a>
                                     @else
-                                        <a href="{{ route('sendportal.campaigns.status', $campaign->id) }}">{{ $campaign->name }}</a>
+                                        <a href="{{ route('targetforce.campaigns.status', $campaign->id) }}">{{ $campaign->name }}</a>
                                     @endif
                                 </td>
                                 <td>{{ $campaignStats[$campaign->id]['counts']['sent'] }}</td>
@@ -62,7 +62,7 @@
                                 <td>{{ number_format($campaignStats[$campaign->id]['ratios']['click'] * 100, 1) . '%' }}</td>
                                 <td><span title="{{ $campaign->created_at }}">{{ $campaign->created_at->diffForHumans() }}</span></td>
                                 <td>
-                                    @include('sendportal::campaigns.partials.status')
+                                    @include('targetforce::campaigns.partials.status')
                                 </td>
                                 <td>
                                     <div class="dropdown">
@@ -74,25 +74,25 @@
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                             @if ($campaign->draft)
-                                                <a href="{{ route('sendportal.campaigns.edit', $campaign->id) }}"
+                                                <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}"
                                                    class="dropdown-item">
                                                     {{ __('Edit') }}
                                                 </a>
                                             @else
-                                                <a href="{{ route('sendportal.campaigns.reports.index', $campaign->id) }}"
+                                                <a href="{{ route('targetforce.campaigns.reports.index', $campaign->id) }}"
                                                    class="dropdown-item">
                                                     {{ __('View Report') }}
                                                 </a>
                                             @endif
 
-                                            <a href="{{ route('sendportal.campaigns.duplicate', $campaign->id) }}"
+                                            <a href="{{ route('targetforce.campaigns.duplicate', $campaign->id) }}"
                                                class="dropdown-item">
                                                 {{ __('Duplicate') }}
                                             </a>
 
                                             @if ($campaign->draft)
                                                 <div class="dropdown-divider"></div>
-                                                <a href="{{ route('sendportal.campaigns.destroy.confirm', $campaign->id) }}"
+                                                <a href="{{ route('targetforce.campaigns.destroy.confirm', $campaign->id) }}"
                                                    class="dropdown-item">
                                                     {{ __('Delete') }}
                                                 </a>
@@ -136,7 +136,7 @@
                         @forelse($recentSubscribers as $subscriber)
                             <tr>
                                 <td>
-                                    <a href="{{ route('sendportal.subscribers.show', $subscriber->id) }}">
+                                    <a href="{{ route('targetforce.subscribers.show', $subscriber->id) }}">
                                         {{ $subscriber->email }}
                                     </a>
                                 </td>
@@ -151,7 +151,7 @@
                                         <span class="badge badge-success">{{ __('Subscribed') }}</span>
                                     @endif
                                 </td>
-                                <td><a href="{{ route('sendportal.subscribers.edit', $subscriber->id) }}"
+                                <td><a href="{{ route('targetforce.subscribers.edit', $subscriber->id) }}"
                                        class="btn btn-sm btn-light">{{ __('Edit') }}</a></td>
                             </tr>
                         @empty
@@ -171,7 +171,7 @@
 @endsection
 
 @push('js')
-    <script src="{{ asset('vendor/sendportal/js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ asset('vendor/targetforce/js/Chart.bundle.min.js') }}"></script>
 
     <script>
         $(function () {

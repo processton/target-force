@@ -1,10 +1,10 @@
 <?php
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
+use Targetforce\Base\Facades\Targetforce;
 
 class TemplateUpdateRequest extends FormRequest
 {
@@ -19,8 +19,8 @@ class TemplateUpdateRequest extends FormRequest
             'name' => [
                 'required',
                 'max:255',
-                Rule::unique('sendportal_templates')
-                    ->where('workspace_id', Sendportal::currentWorkspaceId())
+                Rule::unique('targetforce_templates')
+                    ->where('workspace_id', Targetforce::currentWorkspaceId())
                     ->ignore($this->template),
             ],
             'content' => 'required',

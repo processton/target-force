@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Content;
+namespace Targetforce\Base\Services\Content;
 
 use Exception;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Traits\NormalizeTags;
-use Sendportal\Pro\Repositories\AutomationScheduleRepository;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Traits\NormalizeTags;
+use Targetforce\Pro\Repositories\AutomationScheduleRepository;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class MergeContentService
@@ -148,7 +148,7 @@ class MergeContentService
 
     protected function generateUnsubscribeLink(Message $message): string
     {
-        return route('sendportal.subscriptions.unsubscribe', $message->hash);
+        return route('targetforce.subscriptions.unsubscribe', $message->hash);
     }
 
     protected function mergeWebviewLink(string $content, Message $message): string
@@ -160,7 +160,7 @@ class MergeContentService
 
     protected function generateWebviewLink(Message $message): string
     {
-        return route('sendportal.webview.show', $message->hash);
+        return route('targetforce.webview.show', $message->hash);
     }
 
     protected function inlineStyles(string $content): string

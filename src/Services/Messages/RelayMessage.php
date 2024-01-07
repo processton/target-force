@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
 use Exception;
-use Sendportal\Base\Factories\MailAdapterFactory;
-use Sendportal\Base\Models\EmailService;
+use Targetforce\Base\Factories\MailAdapterFactory;
+use Targetforce\Base\Models\EmailService;
 
 class RelayMessage
 {

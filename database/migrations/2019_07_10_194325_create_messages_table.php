@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateMessagesTable extends UpgradeMigration
 {
@@ -13,7 +13,7 @@ class CreateMessagesTable extends UpgradeMigration
      */
     public function up()
     {
-        Schema::create('sendportal_messages', function (Blueprint $table) {
+        Schema::create('targetforce_messages', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('hash')->unique();
             $table->unsignedInteger('workspace_id')->index();

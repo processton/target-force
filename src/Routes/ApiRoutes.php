@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Routes;
+namespace Targetforce\Base\Routes;
 
 use Illuminate\Routing\Router;
 
 class ApiRoutes
 {
-    public function sendportalApiRoutes(): callable
+    public function targetforceApiRoutes(): callable
     {
         return function () {
-            $this->name('sendportal.api.')->prefix('v1')->namespace('\Sendportal\Base\Http\Controllers\Api')->group(static function (Router $apiRouter) {
+            $this->name('targetforce.api.')->prefix('v1')->namespace('\Targetforce\Base\Http\Controllers\Api')->group(static function (Router $apiRouter) {
                 $apiRouter->apiResource('campaigns', 'CampaignsController');
                 $apiRouter->post('campaigns/{id}/send', 'CampaignDispatchController@send')->name('campaigns.send');
                 $apiRouter->apiResource('subscribers', 'SubscribersController');
@@ -36,10 +36,10 @@ class ApiRoutes
         };
     }
 
-    public function sendportalPublicApiRoutes(): callable
+    public function targetforcePublicApiRoutes(): callable
     {
         return function () {
-            $this->name('sendportal.api.webhooks.')->prefix('v1/webhooks')->namespace('\Sendportal\Base\Http\Controllers\Api\Webhooks')->group(static function (Router $webhookRouter) {
+            $this->name('targetforce.api.webhooks.')->prefix('v1/webhooks')->namespace('\Targetforce\Base\Http\Controllers\Api\Webhooks')->group(static function (Router $webhookRouter) {
                 $webhookRouter->post('aws', 'SesWebhooksController@handle')->name('aws');
                 $webhookRouter->post('mailgun', 'MailgunWebhooksController@handle')->name('mailgun');
                 $webhookRouter->post('postmark', 'PostmarkWebhooksController@handle')->name('postmark');
@@ -48,7 +48,7 @@ class ApiRoutes
                 $webhookRouter->post('postal', 'PostalWebhooksController@handle')->name('postal');
             });
 
-            $this->get('v1/ping', '\Sendportal\Base\Http\Controllers\Api\PingController@index');
+            $this->get('v1/ping', '\Targetforce\Base\Http\Controllers\Api\PingController@index');
         };
     }
 }

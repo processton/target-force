@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 class EmailServiceType extends BaseModel
 {
-    protected $table = 'sendportal_email_service_types';
+    protected $table = 'targetforce_email_service_types';
 
     public const SES = 1;
     public const SENDGRID = 2;

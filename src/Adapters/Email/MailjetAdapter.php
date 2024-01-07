@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use Illuminate\Support\Arr;
 use Mailjet\Client;
 use Mailjet\Resources;
 use Mailjet\Response;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 
 class MailjetAdapter extends BaseMailAdapter
 {

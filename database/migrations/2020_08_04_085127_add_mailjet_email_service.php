@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\DB;
-use Sendportal\Base\Models\EmailServiceType;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\Models\EmailServiceType;
+use Targetforce\Base\UpgradeMigration;
 
 class AddMailjetEmailService extends UpgradeMigration
 {

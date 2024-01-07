@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Tests\Feature\Campaigns;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class CampaignCancellationControllerTest extends TestCase
@@ -20,21 +20,21 @@ class CampaignCancellationControllerTest extends TestCase
     /** @test */
     public function the_confirm_cancel_endpoint_returns_the_confirm_cancel_view()
     {
-        $campaign = Campaign::factory()->queued()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->queued()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->get(route('sendportal.campaigns.confirm-cancel', ['id' => $campaign->id]));
+        $response = $this->get(route('targetforce.campaigns.confirm-cancel', ['id' => $campaign->id]));
 
-        $response->assertViewIs('sendportal::campaigns.cancel');
+        $response->assertViewIs('targetforce::campaigns.cancel');
     }
 
     /** @test */
     public function the_cancel_endpoint_cancels_a_queued_campaign()
     {
-        $campaign = Campaign::factory()->queued()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->queued()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
-        $response->assertRedirect(route('sendportal.campaigns.index'));
+        $response->assertRedirect(route('targetforce.campaigns.index'));
         $response->assertSessionHas('success', 'The queued campaign was cancelled successfully.');
         static::assertEquals(CampaignStatus::STATUS_CANCELLED, $campaign->refresh()->status_id);
     }
@@ -42,22 +42,22 @@ class CampaignCancellationControllerTest extends TestCase
     /** @test */
     public function the_cancel_endpoint_cancels_a_sending_campaign()
     {
-        $campaign = Campaign::factory()->sending()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->sending()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
-        $response->assertRedirect(route('sendportal.campaigns.index'));
+        $response->assertRedirect(route('targetforce.campaigns.index'));
         static::assertEquals(CampaignStatus::STATUS_CANCELLED, $campaign->refresh()->status_id);
     }
 
     /** @test */
     public function the_cancel_endpoint_does_not_allow_a_draft_campaign_to_be_cancelled()
     {
-        $campaign = Campaign::factory()->draft()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->draft()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
-        $response->assertRedirect(route('sendportal.campaigns.index'));
+        $response->assertRedirect(route('targetforce.campaigns.index'));
         $response->assertSessionHasErrors('campaignStatus', "{$campaign->status->name} campaigns cannot be cancelled.");
         static::assertEquals(CampaignStatus::STATUS_DRAFT, $campaign->refresh()->status_id);
     }
@@ -65,11 +65,11 @@ class CampaignCancellationControllerTest extends TestCase
     /** @test */
     public function the_cancel_endpoint_does_not_allow_a_sent_campaign_to_be_cancelled()
     {
-        $campaign = Campaign::factory()->sent()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->sent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
-        $response->assertRedirect(route('sendportal.campaigns.index'));
+        $response->assertRedirect(route('targetforce.campaigns.index'));
         $response->assertSessionHasErrors('campaignStatus', "{$campaign->status->name} campaigns cannot be cancelled.");
         static::assertEquals(CampaignStatus::STATUS_SENT, $campaign->refresh()->status_id);
     }
@@ -77,11 +77,11 @@ class CampaignCancellationControllerTest extends TestCase
     /** @test */
     public function the_cancel_endpoint_does_not_allow_a_cancelled_campaign_to_be_cancelled()
     {
-        $campaign = Campaign::factory()->cancelled()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $campaign = Campaign::factory()->cancelled()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
-        $response->assertRedirect(route('sendportal.campaigns.index'));
+        $response->assertRedirect(route('targetforce.campaigns.index'));
         $response->assertSessionHasErrors('campaignStatus', "{$campaign->status->name} campaigns cannot be cancelled.");
         static::assertEquals(CampaignStatus::STATUS_CANCELLED, $campaign->refresh()->status_id);
     }
@@ -90,16 +90,16 @@ class CampaignCancellationControllerTest extends TestCase
     public function when_a_sending_send_to_all_campaign_is_cancelled_the_user_is_told_how_many_messages_were_dispatched()
     {
         $campaign = Campaign::factory()->sending()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'save_as_draft' => 0,
             'send_to_all' => 1,
         ]);
 
         // Dispatched
         Message::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ])->id,
             'source_id' => $campaign->id,
             'sent_at' => now(),
@@ -107,15 +107,15 @@ class CampaignCancellationControllerTest extends TestCase
 
         // Not Sent
         Message::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ])->id,
             'source_id' => $campaign->id,
             'sent_at' => null,
         ]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
         $response->assertSessionHas('success', "The campaign was cancelled whilst being processed (~1/2 dispatched).");
     }
@@ -124,10 +124,10 @@ class CampaignCancellationControllerTest extends TestCase
     public function when_a_sending_not_send_to_all_campaign_is_cancelled_the_user_is_told_how_many_messages_were_dispatched()
     {
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $campaign = Campaign::factory()->sending()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'save_as_draft' => 0,
             'send_to_all' => 0,
         ]);
@@ -135,11 +135,11 @@ class CampaignCancellationControllerTest extends TestCase
 
         // Dispatched
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $subscriber->tags()->attach($tag->id);
         Message::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => $subscriber->id,
             'source_id' => $campaign->id,
             'sent_at' => now(),
@@ -147,17 +147,17 @@ class CampaignCancellationControllerTest extends TestCase
 
         // Not Sent
         $otherSubscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $otherSubscriber->tags()->attach($tag->id);
         Message::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => $otherSubscriber->id,
             'source_id' => $campaign->id,
             'sent_at' => null,
         ]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
         $response->assertSessionHas('success', "The campaign was cancelled whilst being processed (~1/2 dispatched).");
     }
@@ -166,16 +166,16 @@ class CampaignCancellationControllerTest extends TestCase
     public function campaigns_that_save_as_draft_cannot_be_cancelled_until_every_draft_message_has_been_created()
     {
         $campaign = Campaign::factory()->sending()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'send_to_all' => 0,
             'save_as_draft' => 1,
         ]);
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $campaign->tags()->attach($tag->id);
         $subscribers = Subscriber::factory()->count(5)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $tag->subscribers()->attach($subscribers->pluck('id'));
 
@@ -184,7 +184,7 @@ class CampaignCancellationControllerTest extends TestCase
             'source_id' => $campaign->id,
         ]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
         $response->assertSessionHasErrors(
             'messagesPendingDraft',
@@ -196,16 +196,16 @@ class CampaignCancellationControllerTest extends TestCase
     public function campaigns_that_save_as_draft_can_be_cancelled_if_every_draft_message_has_been_created()
     {
         $campaign = Campaign::factory()->sending()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'send_to_all' => 0,
             'save_as_draft' => 1,
         ]);
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $campaign->tags()->attach($tag->id);
         $subscribers = Subscriber::factory()->count(5)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
         $tag->subscribers()->attach($subscribers->pluck('id'));
 
@@ -214,7 +214,7 @@ class CampaignCancellationControllerTest extends TestCase
             'source_id' => $campaign->id,
         ]);
 
-        $response = $this->post(route('sendportal.campaigns.cancel', ['id' => $campaign->id]));
+        $response = $this->post(route('targetforce.campaigns.cancel', ['id' => $campaign->id]));
 
         $response->assertSessionHas(
             'success',

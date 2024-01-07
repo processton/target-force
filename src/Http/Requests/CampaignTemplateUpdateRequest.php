@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,7 @@ class CampaignTemplateUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'template_id' => ['required', 'exists:sendportal_templates,id'],
+            'template_id' => ['required', 'exists:targetforce_templates,id'],
         ];
     }
 }

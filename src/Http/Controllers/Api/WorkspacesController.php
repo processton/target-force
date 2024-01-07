@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Resources\Workspace as WorkspaceResource;
-use Sendportal\Base\Repositories\WorkspacesRepository;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Resources\Workspace as WorkspaceResource;
+use Targetforce\Base\Repositories\WorkspacesRepository;
 
 class WorkspacesController extends Controller
 {

@@ -6,9 +6,9 @@ namespace Tests\Feature\Templates;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Template;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Template;
 use Tests\TestCase;
 
 class TemplatesControllerTest extends TestCase
@@ -20,7 +20,7 @@ class TemplatesControllerTest extends TestCase
     public function a_logged_in_user_can_see_template_index()
     {
         // when
-        $response = $this->get(route('sendportal.templates.index'));
+        $response = $this->get(route('targetforce.templates.index'));
 
         // then
         $response->assertOk();
@@ -31,11 +31,11 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         // when
-        $response = $this->get(route('sendportal.templates.index'));
+        $response = $this->get(route('targetforce.templates.index'));
 
         // then
         $response->assertOk();
@@ -46,7 +46,7 @@ class TemplatesControllerTest extends TestCase
     public function a_logged_in_user_can_see_the_create_form()
     {
         // when
-        $response = $this->get(route('sendportal.templates.create'));
+        $response = $this->get(route('targetforce.templates.create'));
 
         // then
         $response->assertOk();
@@ -65,15 +65,15 @@ class TemplatesControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->post(route('sendportal.templates.store'), $data);
+        $response = $this->post(route('targetforce.templates.store'), $data);
 
         // then
-        $response->assertRedirect(route('sendportal.templates.index'));
+        $response->assertRedirect(route('targetforce.templates.index'));
 
-        $this->assertDatabaseHas('sendportal_templates', [
+        $this->assertDatabaseHas('targetforce_templates', [
             'name' => $data['name'],
             'content' => $data['content'],
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
     }
 
@@ -90,13 +90,13 @@ class TemplatesControllerTest extends TestCase
         ];
 
         // when
-        $namePostResponse = $this->post(route('sendportal.templates.store'), $namePostData);
+        $namePostResponse = $this->post(route('targetforce.templates.store'), $namePostData);
 
         // then
         $namePostResponse->assertSessionHasErrors('content');
 
         // when
-        $contentPostResponse = $this->post(route('sendportal.templates.store'), $contentPostData);
+        $contentPostResponse = $this->post(route('targetforce.templates.store'), $contentPostData);
 
         // then
         $contentPostResponse->assertSessionHasErrors('name');
@@ -107,11 +107,11 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         // when
-        $response = $this->get(route('sendportal.templates.edit', $template->id));
+        $response = $this->get(route('targetforce.templates.edit', $template->id));
 
         // then
         $response->assertOk();
@@ -125,7 +125,7 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         $data = [
@@ -134,18 +134,18 @@ class TemplatesControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->put(route('sendportal.templates.update', $template->id), $data);
+        $response = $this->put(route('targetforce.templates.update', $template->id), $data);
 
         // then
-        $response->assertRedirect(route('sendportal.templates.index'));
+        $response->assertRedirect(route('targetforce.templates.index'));
 
-        $this->assertDatabaseMissing('sendportal_templates', [
+        $this->assertDatabaseMissing('targetforce_templates', [
             'id' => $template->id,
             'name' => $template->name,
             'content' => $template->content
         ]);
 
-        $this->assertDatabaseHas('sendportal_templates', $data + ['id' => $template->id, 'workspace_id' => Sendportal::currentWorkspaceId()]);
+        $this->assertDatabaseHas('targetforce_templates', $data + ['id' => $template->id, 'workspace_id' => Targetforce::currentWorkspaceId()]);
     }
 
     /** @test */
@@ -153,7 +153,7 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         $namePostData = [
@@ -165,13 +165,13 @@ class TemplatesControllerTest extends TestCase
         ];
 
         // when
-        $namePostResponse = $this->put(route('sendportal.templates.update', $template->id), $namePostData);
+        $namePostResponse = $this->put(route('targetforce.templates.update', $template->id), $namePostData);
         
         // then
         $namePostResponse->assertSessionHasErrors('content');
 
         // when
-        $contentPostResponse = $this->put(route('sendportal.templates.update', $template->id), $contentPostData);
+        $contentPostResponse = $this->put(route('targetforce.templates.update', $template->id), $contentPostData);
 
         // then
         $contentPostResponse->assertSessionHasErrors('name');
@@ -182,16 +182,16 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         // when
-        $response = $this->delete(route('sendportal.templates.destroy', $template->id));
+        $response = $this->delete(route('targetforce.templates.destroy', $template->id));
 
         // then
-        $response->assertRedirect(route('sendportal.templates.index'));
+        $response->assertRedirect(route('targetforce.templates.index'));
 
-        $this->assertDatabaseMissing('sendportal_templates', [
+        $this->assertDatabaseMissing('targetforce_templates', [
             'id' => $template->id,
             'name' => $template->name
         ]);
@@ -202,7 +202,7 @@ class TemplatesControllerTest extends TestCase
     {
         // given
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         Campaign::factory()->create([
@@ -210,14 +210,14 @@ class TemplatesControllerTest extends TestCase
         ]);
 
         // when
-        $response = $this->from(route('sendportal.templates.index'))
-            ->delete(route('sendportal.templates.destroy', $template->id));
+        $response = $this->from(route('targetforce.templates.index'))
+            ->delete(route('targetforce.templates.destroy', $template->id));
 
         // then
-        $response->assertRedirect(route('sendportal.templates.index'))
+        $response->assertRedirect(route('targetforce.templates.index'))
             ->assertSessionHasErrors(['template']);
 
-        $this->assertDatabaseHas('sendportal_templates', [
+        $this->assertDatabaseHas('targetforce_templates', [
             'id' => $template->id,
             'name' => $template->name
         ]);
@@ -227,14 +227,14 @@ class TemplatesControllerTest extends TestCase
     public function a_template_name_must_be_unique_for_a_workspace()
     {
         // given
-        $template = Template::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $template = Template::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $request = [
             'name' => $template->name,
         ];
 
         // when
-        $response = $this->post(route('sendportal.templates.store'), $request);
+        $response = $this->post(route('targetforce.templates.store'), $request);
 
         // then
         $response->assertRedirect()

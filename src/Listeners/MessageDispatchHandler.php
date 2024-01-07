@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Listeners;
+namespace Targetforce\Base\Listeners;
 
 use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Sendportal\Base\Events\MessageDispatchEvent;
-use Sendportal\Base\Services\Messages\DispatchMessage;
+use Targetforce\Base\Events\MessageDispatchEvent;
+use Targetforce\Base\Services\Messages\DispatchMessage;
 
 class MessageDispatchHandler implements ShouldQueue
 {
     /** @var string */
-    public $queue = 'sendportal-message-dispatch';
+    public $queue = 'targetforce-message-dispatch';
 
     /** @var DispatchMessage */
     protected $dispatchMessage;

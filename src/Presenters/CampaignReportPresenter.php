@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Presenters;
+namespace Targetforce\Base\Presenters;
 
 use Carbon\Carbon;
 use DateInterval;
@@ -10,10 +10,10 @@ use DatePeriod;
 use Exception;
 use Illuminate\Support\Collection;
 use RuntimeException;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
-use Sendportal\Base\Repositories\MessageUrlRepository;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Repositories\MessageUrlRepository;
 
 class CampaignReportPresenter
 {

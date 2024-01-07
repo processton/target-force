@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Campaigns;
 
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\CampaignDispatchRequest;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\CampaignDispatchRequest;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignDispatchController extends Controller
 {
@@ -39,14 +39,14 @@ class CampaignDispatchController extends Controller
      */
     public function send(CampaignDispatchRequest $request, int $id): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $id, ['email_service', 'messages']);
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id, ['email_service', 'messages']);
 
         if ($campaign->status_id !== CampaignStatus::STATUS_DRAFT) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
         if (!$campaign->email_service_id) {
-            return redirect()->route('sendportal.campaigns.edit', $id)
+            return redirect()->route('targetforce.campaigns.edit', $id)
                 ->withErrors(__('Please select an Email Service'));
         }
 
@@ -57,7 +57,7 @@ class CampaignDispatchController extends Controller
         $campaign->tags()->sync($request->get('tags'));
 
         if ($this->quotaService->exceedsQuota($campaign->email_service, $campaign->unsent_count)) {
-            return redirect()->route('sendportal.campaigns.edit', $id)
+            return redirect()->route('targetforce.campaigns.edit', $id)
                 ->withErrors(__('The number of subscribers for this campaign exceeds your SES quota'));
         }
 
@@ -69,6 +69,6 @@ class CampaignDispatchController extends Controller
             'save_as_draft' => $request->get('behaviour') === 'draft',
         ]);
 
-        return redirect()->route('sendportal.campaigns.status', $id);
+        return redirect()->route('targetforce.campaigns.status', $id);
     }
 }

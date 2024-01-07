@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Campaigns;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Presenters\CampaignReportPresenter;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Presenters\CampaignReportPresenter;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 
 class CampaignReportsController extends Controller
 {
@@ -40,17 +40,17 @@ class CampaignReportsController extends Controller
      */
     public function index(int $id, Request $request)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $presenter = new CampaignReportPresenter($campaign, Sendportal::currentWorkspaceId(), (int) $request->get('interval', 24));
+        $presenter = new CampaignReportPresenter($campaign, Targetforce::currentWorkspaceId(), (int) $request->get('interval', 24));
         $presenterData = $presenter->generate();
 
         $data = [
@@ -61,7 +61,7 @@ class CampaignReportsController extends Controller
             'chartData' => json_encode(Arr::get($presenterData['chartData'], 'data', [])),
         ];
 
-        return view('sendportal::campaigns.reports.index', $data);
+        return view('targetforce::campaigns.reports.index', $data);
     }
 
     /**
@@ -72,19 +72,19 @@ class CampaignReportsController extends Controller
      */
     public function recipients(int $id)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $messages = $this->messageRepo->recipients(Sendportal::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->recipients(Targetforce::currentWorkspaceId(), Campaign::class, $id);
 
-        return view('sendportal::campaigns.reports.recipients', compact('campaign', 'messages'));
+        return view('targetforce::campaigns.reports.recipients', compact('campaign', 'messages'));
     }
 
     /**
@@ -95,20 +95,20 @@ class CampaignReportsController extends Controller
      */
     public function opens(int $id)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
         $averageTimeToOpen = $this->campaignRepo->getAverageTimeToOpen($campaign);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $messages = $this->messageRepo->opens(Sendportal::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->opens(Targetforce::currentWorkspaceId(), Campaign::class, $id);
 
-        return view('sendportal::campaigns.reports.opens', compact('campaign', 'messages', 'averageTimeToOpen'));
+        return view('targetforce::campaigns.reports.opens', compact('campaign', 'messages', 'averageTimeToOpen'));
     }
 
     /**
@@ -119,20 +119,20 @@ class CampaignReportsController extends Controller
      */
     public function clicks(int $id)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
         $averageTimeToClick = $this->campaignRepo->getAverageTimeToClick($campaign);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $messages = $this->messageRepo->clicks(Sendportal::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->clicks(Targetforce::currentWorkspaceId(), Campaign::class, $id);
 
-        return view('sendportal::campaigns.reports.clicks', compact('campaign', 'messages', 'averageTimeToClick'));
+        return view('targetforce::campaigns.reports.clicks', compact('campaign', 'messages', 'averageTimeToClick'));
     }
 
     /**
@@ -143,19 +143,19 @@ class CampaignReportsController extends Controller
      */
     public function bounces(int $id)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $messages = $this->messageRepo->bounces(Sendportal::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->bounces(Targetforce::currentWorkspaceId(), Campaign::class, $id);
 
-        return view('sendportal::campaigns.reports.bounces', compact('campaign', 'messages'));
+        return view('targetforce::campaigns.reports.bounces', compact('campaign', 'messages'));
     }
 
     /**
@@ -166,18 +166,18 @@ class CampaignReportsController extends Controller
      */
     public function unsubscribes(int $id)
     {
-        $campaign = $this->campaignRepo->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
 
         if ($campaign->draft) {
-            return redirect()->route('sendportal.campaigns.edit', $id);
+            return redirect()->route('targetforce.campaigns.edit', $id);
         }
 
         if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $messages = $this->messageRepo->unsubscribes(Sendportal::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->unsubscribes(Targetforce::currentWorkspaceId(), Campaign::class, $id);
 
-        return view('sendportal::campaigns.reports.unsubscribes', compact('campaign', 'messages'));
+        return view('targetforce::campaigns.reports.unsubscribes', compact('campaign', 'messages'));
     }
 }

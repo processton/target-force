@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateCampaignStatusesTable extends UpgradeMigration
 {
@@ -13,12 +13,12 @@ class CreateCampaignStatusesTable extends UpgradeMigration
      */
     public function up()
     {
-        Schema::create('sendportal_campaign_statuses', function (Blueprint $table) {
+        Schema::create('targetforce_campaign_statuses', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
         });
 
-        DB::table('sendportal_campaign_statuses')
+        DB::table('targetforce_campaign_statuses')
             ->insert([
                ['name' => 'Draft'],
                ['name' => 'Queued'],

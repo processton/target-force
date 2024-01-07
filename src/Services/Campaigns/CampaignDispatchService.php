@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Services\Campaigns;
+namespace Targetforce\Base\Services\Campaigns;
 
 use Illuminate\Pipeline\Pipeline;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Pipelines\Campaigns\CompleteCampaign;
-use Sendportal\Base\Pipelines\Campaigns\CreateMessages;
-use Sendportal\Base\Pipelines\Campaigns\StartCampaign;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Pipelines\Campaigns\CompleteCampaign;
+use Targetforce\Base\Pipelines\Campaigns\CreateMessages;
+use Targetforce\Base\Pipelines\Campaigns\StartCampaign;
 
 class CampaignDispatchService
 {

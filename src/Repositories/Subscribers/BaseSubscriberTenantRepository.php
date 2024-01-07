@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Subscribers;
+namespace Targetforce\Base\Repositories\Subscribers;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Repositories\BaseTenantRepository;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Repositories\BaseTenantRepository;
 
 abstract class BaseSubscriberTenantRepository extends BaseTenantRepository implements SubscriberTenantRepositoryInterface
 {
@@ -111,9 +111,9 @@ abstract class BaseSubscriberTenantRepository extends BaseTenantRepository imple
             $filterString = '%' . $name . '%';
 
             $instance->where(static function (Builder $instance) use ($filterString) {
-                $instance->where('sendportal_subscribers.first_name', 'like', $filterString)
-                    ->orWhere('sendportal_subscribers.last_name', 'like', $filterString)
-                    ->orWhere('sendportal_subscribers.email', 'like', $filterString);
+                $instance->where('targetforce_subscribers.first_name', 'like', $filterString)
+                    ->orWhere('targetforce_subscribers.last_name', 'like', $filterString)
+                    ->orWhere('targetforce_subscribers.email', 'like', $filterString);
             });
         }
     }
@@ -138,9 +138,9 @@ abstract class BaseSubscriberTenantRepository extends BaseTenantRepository imple
     protected function applyTagFilter(Builder $instance, array $filters = []): void
     {
         if ($tagIds = Arr::get($filters, 'tags')) {
-            $instance->select('sendportal_subscribers.*')
-                ->leftJoin('sendportal_tag_subscriber', 'sendportal_subscribers.id', '=', 'sendportal_tag_subscriber.subscriber_id')
-                ->whereIn('sendportal_tag_subscriber.tag_id', $tagIds)
+            $instance->select('targetforce_subscribers.*')
+                ->leftJoin('targetforce_tag_subscriber', 'targetforce_subscribers.id', '=', 'targetforce_tag_subscriber.subscriber_id')
+                ->whereIn('targetforce_tag_subscriber.tag_id', $tagIds)
                 ->distinct();
         }
     }

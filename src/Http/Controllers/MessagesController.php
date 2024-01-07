@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers;
+namespace Targetforce\Base\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
-use Sendportal\Base\Services\Content\MergeContentService;
-use Sendportal\Base\Services\Content\MergeSubjectService;
-use Sendportal\Base\Services\Messages\DispatchMessage;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Services\Content\MergeContentService;
+use Targetforce\Base\Services\Content\MergeSubjectService;
+use Targetforce\Base\Services\Messages\DispatchMessage;
 
 class MessagesController extends Controller
 {
@@ -51,14 +51,14 @@ class MessagesController extends Controller
         $params['sent'] = true;
 
         $messages = $this->messageRepo->paginateWithSource(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             'sent_atDesc',
             [],
             50,
             $params
         );
 
-        return view('sendportal::messages.index', compact('messages'));
+        return view('targetforce::messages.index', compact('messages'));
     }
 
     /**
@@ -69,14 +69,14 @@ class MessagesController extends Controller
     public function draft(): View
     {
         $messages = $this->messageRepo->paginateWithSource(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             'created_atDesc',
             [],
             50,
             ['draft' => true]
         );
 
-        return view('sendportal::messages.index', compact('messages'));
+        return view('targetforce::messages.index', compact('messages'));
     }
 
     /**
@@ -86,12 +86,12 @@ class MessagesController extends Controller
      */
     public function show(int $messageId): View
     {
-        $message = $this->messageRepo->find(Sendportal::currentWorkspaceId(), $messageId);
+        $message = $this->messageRepo->find(Targetforce::currentWorkspaceId(), $messageId);
 
         $content = $this->mergeContentService->handle($message);
         $subject = $this->mergeSubjectService->handle($message);
 
-        return view('sendportal::messages.show', compact('content', 'message', 'subject'));
+        return view('targetforce::messages.show', compact('content', 'message', 'subject'));
     }
 
     /**
@@ -102,7 +102,7 @@ class MessagesController extends Controller
     public function send(): RedirectResponse
     {
         if (!$message = $this->messageRepo->find(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             request('id'),
             ['subscriber']
         )) {
@@ -115,7 +115,7 @@ class MessagesController extends Controller
 
         $this->dispatchMessage->handle($message);
 
-        return redirect()->route('sendportal.messages.draft')->with(
+        return redirect()->route('targetforce.messages.draft')->with(
             'success',
             __('The message was sent successfully.')
         );
@@ -129,7 +129,7 @@ class MessagesController extends Controller
     public function delete(): RedirectResponse
     {
         if (!$message = $this->messageRepo->find(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             request('id')
         )) {
             return redirect()->back()->withErrors(__('Unable to locate that message'));
@@ -140,11 +140,11 @@ class MessagesController extends Controller
         }
 
         $this->messageRepo->destroy(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             $message->id
         );
 
-        return redirect()->route('sendportal.messages.draft')->with(
+        return redirect()->route('targetforce.messages.draft')->with(
             'success',
             __('The message was deleted')
         );
@@ -162,7 +162,7 @@ class MessagesController extends Controller
         }
 
         if (!$messages = $this->messageRepo->getWhereIn(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             request('messages'),
             ['subscriber']
         )) {
@@ -177,7 +177,7 @@ class MessagesController extends Controller
             $this->dispatchMessage->handle($message);
         });
 
-        return redirect()->route('sendportal.messages.draft')->with(
+        return redirect()->route('targetforce.messages.draft')->with(
             'success',
             __('The messages were sent successfully.')
         );

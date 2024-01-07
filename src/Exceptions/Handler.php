@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Exceptions;
+namespace Targetforce\Base\Exceptions;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

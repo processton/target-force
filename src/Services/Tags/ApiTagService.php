@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Tags;
+namespace Targetforce\Base\Services\Tags;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Models\Tag;
-use Sendportal\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Models\Tag;
+use Targetforce\Base\Repositories\TagTenantRepository;
 
 class ApiTagService
 {

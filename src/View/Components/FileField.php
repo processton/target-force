@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\View\Components;
+namespace Targetforce\Base\View\Components;
 
 use Illuminate\View\Component;
 
@@ -34,6 +34,6 @@ class FileField extends Component
      */
     public function render()
     {
-        return view('sendportal::components.file-field');
+        return view('targetforce::components.file-field');
     }
 }

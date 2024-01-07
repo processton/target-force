@@ -1,11 +1,11 @@
 <?php
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Repositories\TagTenantRepository;
 
 class CampaignDispatchRequest extends FormRequest
 {
@@ -13,7 +13,7 @@ class CampaignDispatchRequest extends FormRequest
     {
         /** @var TagTenantRepository $tags */
         $tags = app(TagTenantRepository::class)->pluck(
-            Sendportal::currentWorkspaceId(),
+            Targetforce::currentWorkspaceId(),
             'id'
         );
 

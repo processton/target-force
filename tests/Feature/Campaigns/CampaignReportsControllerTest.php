@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Campaigns;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
 use Tests\TestCase;
 
 class CampaignReportsControllerTest extends TestCase
@@ -20,7 +20,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.index', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.index', $campaign->id));
 
         // then
         $response->assertOk();
@@ -33,7 +33,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.recipients', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.recipients', $campaign->id));
 
         // then
         $response->assertOk();
@@ -46,7 +46,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.opens', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.opens', $campaign->id));
 
         // then
         $response->assertOk();
@@ -59,7 +59,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.clicks', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.clicks', $campaign->id));
 
         // then
         $response->assertOk();
@@ -72,7 +72,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.bounces', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.bounces', $campaign->id));
 
         // then
         $response->assertOk();
@@ -85,7 +85,7 @@ class CampaignReportsControllerTest extends TestCase
         $campaign = $this->getCampaign();
 
         // when
-        $response = $this->get(route('sendportal.campaigns.reports.unsubscribes', $campaign->id));
+        $response = $this->get(route('targetforce.campaigns.reports.unsubscribes', $campaign->id));
 
         // then
         $response->assertOk();
@@ -95,6 +95,6 @@ class CampaignReportsControllerTest extends TestCase
     {
         return Campaign::factory()
             ->sent()
-            ->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+            ->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
     }
 }

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
 
 class SubscriberFactory extends Factory
 {
@@ -16,7 +16,7 @@ class SubscriberFactory extends Factory
     public function definition(): array
     {
         return [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'hash' => $this->faker->uuid,
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,

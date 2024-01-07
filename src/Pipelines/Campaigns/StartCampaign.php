@@ -1,9 +1,9 @@
 <?php
 
-namespace Sendportal\Base\Pipelines\Campaigns;
+namespace Targetforce\Base\Pipelines\Campaigns;
 
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
 
 class StartCampaign
 {

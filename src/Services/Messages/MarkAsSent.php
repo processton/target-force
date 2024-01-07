@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Message;
 
 class MarkAsSent
 {

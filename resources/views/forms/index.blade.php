@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Forms'))
 
@@ -7,10 +7,10 @@
 @endsection
 
 @section('content')
-    <link href="{{ asset('vendor/sendportal/build/assets/app.css') }}" rel="stylesheet">
-    @component('sendportal::layouts.partials.actions')
+    <link href="{{ asset('vendor/targetforce/build/assets/app.css') }}" rel="stylesheet">
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.email_services.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.email_services.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('Add Form') }}
             </a>
         @endslot
@@ -20,5 +20,5 @@
     </div>
     
     
-    <script type="module" src="{{ asset('vendor/sendportal/build/assets/app.js') }}"></script>
+    <script type="module" src="{{ asset('vendor/targetforce/build/assets/app.js') }}"></script>
 @endsection

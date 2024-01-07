@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Events\Webhooks;
+namespace Targetforce\Base\Events\Webhooks;
 
 class SesWebhookReceived
 {

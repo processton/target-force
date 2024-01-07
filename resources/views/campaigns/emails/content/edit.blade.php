@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('heading')
     {{ __('Edit Email Content For Campaign') }} {{ $email->mailable->name }}

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Campaigns;
+namespace Targetforce\Base\Repositories\Campaigns;
 
-use Sendportal\Base\Models\Campaign;
+use Targetforce\Base\Models\Campaign;
 
 class PostgresCampaignTenantRepository extends BaseCampaignTenantRepository
 {

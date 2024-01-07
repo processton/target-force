@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Services\Campaigns;
+namespace Targetforce\Base\Services\Campaigns;
 
 use Exception;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignStatisticsService
 {

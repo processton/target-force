@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('New Subscriber'))
 
@@ -8,15 +8,15 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.card')
+    @component('targetforce::layouts.partials.card')
         @slot('cardHeader', __('Create Subscriber'))
 
         @slot('cardBody')
-            <form action="{{ route('sendportal.subscribers.store') }}" class="form-horizontal" method="POST">
+            <form action="{{ route('targetforce.subscribers.store') }}" class="form-horizontal" method="POST">
                 @csrf
-                @include('sendportal::subscribers.partials.form')
+                @include('targetforce::subscribers.partials.form')
 
-                <x-sendportal.submit-button :label="__('Save')" />
+                <x-targetforce.submit-button :label="__('Save')" />
             </form>
         @endSlot
     @endcomponent

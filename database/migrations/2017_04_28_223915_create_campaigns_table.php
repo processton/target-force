@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateCampaignsTable extends UpgradeMigration
 {
@@ -17,7 +17,7 @@ class CreateCampaignsTable extends UpgradeMigration
         $templates = $this->getTableName('templates');
         $email_services = $this->getTableName('email_services');
 
-        Schema::create('sendportal_campaigns', function (Blueprint $table) use ($campaign_statuses, $templates, $email_services) {
+        Schema::create('targetforce_campaigns', function (Blueprint $table) use ($campaign_statuses, $templates, $email_services) {
             $table->increments('id');
             $table->unsignedInteger('workspace_id')->index();
             $table->string('name');

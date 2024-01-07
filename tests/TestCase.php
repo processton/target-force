@@ -6,12 +6,12 @@ namespace Tests;
 
 use Illuminate\Support\Str;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Sendportal\Base\SendportalBaseServiceProvider;
-use Sendportal\Base\Services\Messages\RelayMessage;
+use Targetforce\Base\TargetforceBaseServiceProvider;
+use Targetforce\Base\Services\Messages\RelayMessage;
 
 abstract class TestCase extends BaseTestCase
 {
-    use SendportalTestSupportTrait;
+    use TargetforceTestSupportTrait;
 
     /**
      * @param \Illuminate\Foundation\Application $app
@@ -20,8 +20,8 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
-            SendportalBaseServiceProvider::class,
-            SendportalTestServiceProvider::class,
+            TargetforceBaseServiceProvider::class,
+            TargetforceTestServiceProvider::class,
         ];
     }
 

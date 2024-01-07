@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Repositories;
+namespace Targetforce\Base\Repositories;
 
-use Sendportal\Base\Models\MessageUrl;
+use Targetforce\Base\Models\MessageUrl;
 
 class MessageUrlRepository extends BaseEloquentRepository
 {

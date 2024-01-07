@@ -1,16 +1,16 @@
 <?php
 
 
-namespace Sendportal\Base\Http\Controllers\EmailServices;
+namespace Targetforce\Base\Http\Controllers\EmailServices;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\EmailServiceTestRequest;
-use Sendportal\Base\Repositories\EmailServiceTenantRepository;
-use Sendportal\Base\Services\Messages\DispatchTestMessage;
-use Sendportal\Base\Services\Messages\MessageOptions;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\EmailServiceTestRequest;
+use Targetforce\Base\Repositories\EmailServiceTenantRepository;
+use Targetforce\Base\Services\Messages\DispatchTestMessage;
+use Targetforce\Base\Services\Messages\MessageOptions;
 
 class TestEmailServiceController extends Controller
 {
@@ -24,9 +24,9 @@ class TestEmailServiceController extends Controller
 
     public function create(int $emailServiceId)
     {
-        $emailService = $this->emailServices->find(Sendportal::currentWorkspaceId(), $emailServiceId);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId);
 
-        return view('sendportal::email_services.test', compact('emailService'));
+        return view('targetforce::email_services.test', compact('emailService'));
     }
 
     /**
@@ -34,7 +34,7 @@ class TestEmailServiceController extends Controller
      */
     public function store(int $emailServiceId, EmailServiceTestRequest $request, DispatchTestMessage $dispatchTestMessage): RedirectResponse
     {
-        $emailService = $this->emailServices->find(Sendportal::currentWorkspaceId(), $emailServiceId);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId);
 
         $options = new MessageOptions();
         $options->setFromEmail($request->input('from'));
@@ -43,7 +43,7 @@ class TestEmailServiceController extends Controller
         $options->setBody($request->input('body'));
 
         try {
-            $messageId = $dispatchTestMessage->testService(Sendportal::currentWorkspaceId(), $emailService, $options);
+            $messageId = $dispatchTestMessage->testService(Targetforce::currentWorkspaceId(), $emailService, $options);
 
             if (!$messageId) {
                 return redirect()
@@ -52,7 +52,7 @@ class TestEmailServiceController extends Controller
             }
 
             return redirect()
-                ->route('sendportal.email_services.index')
+                ->route('targetforce.email_services.index')
                 ->with(['success' => __('The test email has been dispatched.')]);
         } catch (Exception $e) {
             return redirect()

@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\Api\TemplateStoreRequest;
-use Sendportal\Base\Http\Requests\Api\TemplateUpdateRequest;
-use Sendportal\Base\Http\Resources\Template as TemplateResource;
-use Sendportal\Base\Repositories\TemplateTenantRepository;
-use Sendportal\Base\Services\Templates\TemplateService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\Api\TemplateStoreRequest;
+use Targetforce\Base\Http\Requests\Api\TemplateUpdateRequest;
+use Targetforce\Base\Http\Resources\Template as TemplateResource;
+use Targetforce\Base\Repositories\TemplateTenantRepository;
+use Targetforce\Base\Services\Templates\TemplateService;
 
 class TemplatesController extends Controller
 {
@@ -34,7 +34,7 @@ class TemplatesController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $templates = $this->templates->paginate($workspaceId, 'name');
 
         return TemplateResource::collection($templates);
@@ -46,7 +46,7 @@ class TemplatesController extends Controller
      */
     public function show(int $id): TemplateResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
 
         return new TemplateResource($this->templates->find($workspaceId, $id));
     }
@@ -56,7 +56,7 @@ class TemplatesController extends Controller
      */
     public function store(TemplateStoreRequest $request): TemplateResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $template = $this->service->store($workspaceId, $request->validated());
 
         return new TemplateResource($template);
@@ -67,7 +67,7 @@ class TemplatesController extends Controller
      */
     public function update(TemplateUpdateRequest $request, int $id): TemplateResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $template = $this->service->update($workspaceId, $id, $request->validated());
 
         return new TemplateResource($template);
@@ -78,7 +78,7 @@ class TemplatesController extends Controller
      */
     public function destroy(int $id): Response
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $this->service->delete($workspaceId, $id);
 
         return response(null, 204);

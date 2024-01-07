@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Http\Resources;
+namespace Targetforce\Base\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 

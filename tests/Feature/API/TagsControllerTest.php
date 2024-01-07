@@ -7,8 +7,8 @@ namespace Tests\Feature\API;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class TagsControllerTest extends TestCase
@@ -21,7 +21,7 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $route = route('sendportal.api.tags.index');
+        $route = route('targetforce.api.tags.index');
 
         $this->getJson($route)
             ->assertOk()
@@ -37,7 +37,7 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $route = route('sendportal.api.tags.show', [
+        $route = route('targetforce.api.tags.show', [
             'tag' => $tag->id,
         ]);
 
@@ -51,7 +51,7 @@ class TagsControllerTest extends TestCase
     /** @test */
     public function a_new_tag_can_be_added()
     {
-        $route = route('sendportal.api.tags.store');
+        $route = route('targetforce.api.tags.store');
 
         $request = [
             'name' => $this->faker->colorName,
@@ -61,7 +61,7 @@ class TagsControllerTest extends TestCase
             ->assertStatus(201)
             ->assertJson(['data' => $request]);
 
-        $this->assertDatabaseHas('sendportal_tags', $request);
+        $this->assertDatabaseHas('targetforce_tags', $request);
     }
 
     /** @test */
@@ -69,7 +69,7 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $route = route('sendportal.api.tags.update', [
+        $route = route('targetforce.api.tags.update', [
             'tag' => $tag->id,
         ]);
 
@@ -81,8 +81,8 @@ class TagsControllerTest extends TestCase
             ->assertOk()
             ->assertJson(['data' => $request]);
 
-        $this->assertDatabaseMissing('sendportal_tags', $tag->toArray());
-        $this->assertDatabaseHas('sendportal_tags', $request);
+        $this->assertDatabaseMissing('targetforce_tags', $tag->toArray());
+        $this->assertDatabaseHas('targetforce_tags', $request);
     }
 
     /** @test */
@@ -90,14 +90,14 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $route = route('sendportal.api.tags.destroy', [
+        $route = route('targetforce.api.tags.destroy', [
             'tag' => $tag->id,
         ]);
 
         $this->deleteJson($route)
             ->assertStatus(204);
 
-        $this->assertDatabaseCount('sendportal_tags', 0);
+        $this->assertDatabaseCount('targetforce_tags', 0);
     }
 
     /** @test */
@@ -105,7 +105,7 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $route = route('sendportal.api.tags.store');
+        $route = route('targetforce.api.tags.store');
 
         $request = [
             'name' => $tag->name,
@@ -123,13 +123,13 @@ class TagsControllerTest extends TestCase
     {
         $tag = $this->createTag();
 
-        $currentWorkspaceId = Sendportal::currentWorkspaceId();
+        $currentWorkspaceId = Targetforce::currentWorkspaceId();
 
-        Sendportal::setCurrentWorkspaceIdResolver(function () use ($currentWorkspaceId) {
+        Targetforce::setCurrentWorkspaceIdResolver(function () use ($currentWorkspaceId) {
             return $currentWorkspaceId + 1;
         });
 
-        $route = route('sendportal.api.tags.store');
+        $route = route('targetforce.api.tags.store');
 
         $request = [
             'name' => $tag->name,

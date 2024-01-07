@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Listeners\Webhooks;
+namespace Targetforce\Base\Listeners\Webhooks;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
-use Sendportal\Base\Events\Webhooks\PostmarkWebhookReceived;
-use Sendportal\Base\Services\Webhooks\EmailWebhookService;
+use Targetforce\Base\Events\Webhooks\PostmarkWebhookReceived;
+use Targetforce\Base\Services\Webhooks\EmailWebhookService;
 
 class HandlePostmarkWebhook implements ShouldQueue
 {
     /** @var string */
-    public $queue = 'sendportal-webhook-process';
+    public $queue = 'targetforce-webhook-process';
 
     /** @var EmailWebhookService */
     private $emailWebhookService;

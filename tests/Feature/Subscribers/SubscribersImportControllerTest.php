@@ -8,9 +8,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class SubscribersImportControllerTest extends TestCase
@@ -29,7 +29,7 @@ class SubscribersImportControllerTest extends TestCase
     public function the_page_to_upload_subscribers_is_accessible_to_authenticated_users()
     {
         // when
-        $response = $this->get(route('sendportal.subscribers.import'));
+        $response = $this->get(route('targetforce.subscribers.import'));
 
         // then
         $response->assertOk();
@@ -42,7 +42,7 @@ class SubscribersImportControllerTest extends TestCase
         $file = UploadedFile::fake()->image('subscribers.jpg');
 
         // when
-        $response = $this->post(route('sendportal.subscribers.import.store'), [
+        $response = $this->post(route('targetforce.subscribers.import.store'), [
             'file' => $file
         ]);
 
@@ -59,17 +59,17 @@ class SubscribersImportControllerTest extends TestCase
         ]);
 
         // when
-        $response = $this->post(route('sendportal.subscribers.import.store'), [
+        $response = $this->post(route('targetforce.subscribers.import.store'), [
             'file' => $file
         ]);
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
 
         $response->assertSessionHas('success');
 
-        $this->assertDatabaseHas('sendportal_subscribers', [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+        $this->assertDatabaseHas('targetforce_subscribers', [
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email' => 'test@email.com',
             'first_name' => 'Test Name',
             'last_name' => 'Test Surname'
@@ -87,17 +87,17 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->from(route('sendportal.subscribers.import'))
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->from(route('targetforce.subscribers.import'))
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file
             ]);
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.import'));
+        $response->assertRedirect(route('targetforce.subscribers.import'));
 
         $response->assertSessionHas('errors');
 
-        $this->assertDatabaseCount('sendportal_subscribers', 0);
+        $this->assertDatabaseCount('targetforce_subscribers', 0);
     }
 
     /** @test */
@@ -105,7 +105,7 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -114,17 +114,17 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file,
                 'tags' => [$tag->id]
             ]);
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success');
 
-        $this->assertDatabaseCount('sendportal_subscribers', 1);
-        $this->assertDatabaseCount('sendportal_tag_subscriber', 1);
+        $this->assertDatabaseCount('targetforce_subscribers', 1);
+        $this->assertDatabaseCount('targetforce_tag_subscriber', 1);
     }
 
     /** @test */
@@ -132,7 +132,7 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $tags = Tag::factory()->count(2)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -141,17 +141,17 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file,
                 'tags' => $tags->pluck('id')->toArray()
             ]);
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success');
 
-        $this->assertDatabaseCount('sendportal_subscribers', 1);
-        $this->assertDatabaseCount('sendportal_tag_subscriber', 2);
+        $this->assertDatabaseCount('targetforce_subscribers', 1);
+        $this->assertDatabaseCount('targetforce_tag_subscriber', 2);
     }
 
     /** @test */
@@ -159,7 +159,7 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -168,14 +168,14 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file
             ]);
 
         $subscriber->refresh();
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success');
 
         self::assertEquals('test@email.com', $subscriber->email);
@@ -188,7 +188,7 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -197,14 +197,14 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file
             ]);
 
         $subscriber->refresh();
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success');
 
         self::assertEquals('Test Name', $subscriber->first_name);
@@ -216,7 +216,7 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -227,12 +227,12 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file
             ]);
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success', 'Imported 2 subscriber(s) and updated 1 subscriber(s) out of 3');
     }
 
@@ -241,17 +241,17 @@ class SubscribersImportControllerTest extends TestCase
     {
         // given
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $subscriber->tags()->attach(
             Tag::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ])
         );
 
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $file = $this->createFakeCsvFile([
@@ -260,7 +260,7 @@ class SubscribersImportControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.subscribers.import.store'), [
+            ->post(route('targetforce.subscribers.import.store'), [
                 'file' => $file,
                 'tags' => [$tag->id]
             ]);
@@ -268,10 +268,10 @@ class SubscribersImportControllerTest extends TestCase
         $subscriber->refresh();
 
         // then
-        $response->assertRedirect(route('sendportal.subscribers.index'));
+        $response->assertRedirect(route('targetforce.subscribers.index'));
         $response->assertSessionHas('success');
 
-        $this->assertDatabaseCount('sendportal_tag_subscriber', 2);
+        $this->assertDatabaseCount('targetforce_tag_subscriber', 2);
     }
 
     protected function createFakeCsvFile(array $rows)

@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Delete Campaign'))
 
@@ -8,9 +8,9 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.campaigns.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.campaigns.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('Create Campaign') }}
             </a>
         @endslot
@@ -26,11 +26,11 @@
             <p>
                 {!! __('Are you sure that you want to delete the <b>:name</b> campaign?', ['name' => $campaign->name]) !!}
             </p>
-            <form action="{{ route('sendportal.campaigns.destroy', $campaign->id) }}" method="post">
+            <form action="{{ route('targetforce.campaigns.destroy', $campaign->id) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="id" value="{{ $campaign->id }}">
-                <a href="{{ route('sendportal.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Cancel') }}</a>
+                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Cancel') }}</a>
                 <button type="submit" class="btn btn-md btn-danger">{{ __('DELETE') }}</button>
             </form>
         </div>

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Template;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Template;
 
 class TemplateFactory extends Factory
 {
@@ -17,7 +17,7 @@ class TemplateFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'content' => '{{content}}'
         ];
     }

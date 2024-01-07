@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Create Campaign'))
 
@@ -10,7 +10,7 @@
         <div class="callout callout-danger">
             <h4>{{ __('You haven\'t added any email service!') }}</h4>
             <p>{{ __('Before you can create a campaign, you must first') }} <a
-                    href="{{ route('sendportal.email_services.create') }}">{{ __('add an email service') }}</a>.
+                    href="{{ route('targetforce.email_services.create') }}">{{ __('add an email service') }}</a>.
             </p>
         </div>
     @else
@@ -21,9 +21,9 @@
                         {{ __('Create Campaign') }}
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('sendportal.campaigns.store') }}" method="POST" class="form-horizontal">
+                        <form action="{{ route('targetforce.campaigns.store') }}" method="POST" class="form-horizontal">
                             @csrf
-                            @include('sendportal::campaigns.partials.form')
+                            @include('targetforce::campaigns.partials.form')
                         </form>
                     </div>
                 </div>

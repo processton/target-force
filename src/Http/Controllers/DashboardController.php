@@ -1,15 +1,15 @@
 <?php
 
-namespace Sendportal\Base\Http\Controllers;
+namespace Targetforce\Base\Http\Controllers;
 
 use Carbon\CarbonPeriod;
 use Exception;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Sendportal\Base\Services\Campaigns\CampaignStatisticsService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Services\Campaigns\CampaignStatisticsService;
 
 class DashboardController extends Controller
 {
@@ -46,11 +46,11 @@ class DashboardController extends Controller
      */
     public function index(): View
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $completedCampaigns = $this->campaigns->completedCampaigns($workspaceId, ['status']);
         $subscriberGrowthChart = $this->getSubscriberGrowthChart($workspaceId);
 
-        return view('sendportal::dashboard.index', [
+        return view('targetforce::dashboard.index', [
             'recentSubscribers' => $this->subscribers->getRecentSubscribers($workspaceId),
             'completedCampaigns' => $completedCampaigns,
             'campaignStats' => $this->campaignStatisticsService->getForCollection($completedCampaigns, $workspaceId),

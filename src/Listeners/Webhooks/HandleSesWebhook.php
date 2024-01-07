@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Listeners\Webhooks;
+namespace Targetforce\Base\Listeners\Webhooks;
 
 use Carbon\Carbon;
 use Exception;
@@ -10,8 +10,8 @@ use GuzzleHttp\Client;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Events\Webhooks\SesWebhookReceived;
-use Sendportal\Base\Services\Webhooks\EmailWebhookService;
+use Targetforce\Base\Events\Webhooks\SesWebhookReceived;
+use Targetforce\Base\Services\Webhooks\EmailWebhookService;
 
 class HandleSesWebhook implements ShouldQueue
 {

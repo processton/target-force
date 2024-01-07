@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use Aws\Result;
 use Aws\Ses\SesClient;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
-use Sendportal\Base\Traits\ThrottlesSending;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Traits\ThrottlesSending;
 
 class SesMailAdapter extends BaseMailAdapter
 {

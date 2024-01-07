@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Webhooks\Mailgun;
+namespace Targetforce\Base\Services\Webhooks\Mailgun;
 
 class WebhookVerifier
 {

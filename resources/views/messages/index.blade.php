@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Messages'))
 
@@ -6,17 +6,17 @@
 
 @section('content')
 
-    @include('sendportal::messages.partials.nav')
+    @include('targetforce::messages.partials.nav')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('left')
-            <form action="{{ route('sendportal.messages.index') }}" method="GET" class="form-inline">
+            <form action="{{ route('targetforce.messages.index') }}" method="GET" class="form-inline">
                 <div class="mr-2">
                     <input type="text" class="form-control" placeholder="Search..." name="search"
                            value="{{ request('search') }}">
                 </div>
 
-                @if(request()->route()->named('sendportal.messages.index'))
+                @if(request()->route()->named('targetforce.messages.index'))
                     <div class="mr-2">
                         <select name="status" class="form-control">
                             <option
@@ -40,7 +40,7 @@
                 <button type="submit" class="btn btn-light">{{ __('Search') }}</button>
 
                 @if(request()->anyFilled(['search', 'status']))
-                    <a href="{{ route('sendportal.messages.index') }}" class="btn btn-light">{{ __('Clear') }}</a>
+                    <a href="{{ route('targetforce.messages.index') }}" class="btn btn-light">{{ __('Clear') }}</a>
                 @endif
             </form>
         @endslot
@@ -56,11 +56,11 @@
                     <th>{{ __('Source') }}</th>
                     <th>{{ __('Recipient') }}</th>
                     <th>{{ __('Status') }}</th>
-                    @if(request()->route()->named('sendportal.messages.draft'))
+                    @if(request()->route()->named('targetforce.messages.draft'))
                         <th>{{ __('Actions') }}</th>
                         <th>
                             <button class="btn btn-xs btn-light" id="select-all">Select All</button>
-                            <form action="{{ route('sendportal.messages.send-selected') }}" method="post" id="send-selected-form" style="display: inline-block;">
+                            <form action="{{ route('targetforce.messages.send-selected') }}" method="post" id="send-selected-form" style="display: inline-block;">
                                 @csrf
                                 <button type="submit" class="btn btn-xs btn-light">{{ __('Send Selected') }}</button>
                             </form>
@@ -78,29 +78,29 @@
                             <td>
                                 @if($message->isCampaign())
                                     <i class="fas fa-envelope color-gray-300"></i>
-                                    <a href="{{ route('sendportal.campaigns.reports.index', $message->source_id) }}">
+                                    <a href="{{ route('targetforce.campaigns.reports.index', $message->source_id) }}">
                                         {{ $message->source->name }}
                                     </a>
                                 @elseif($message->isAutomation())
                                     <i class="fas fa-sync-alt color-gray-300"></i>
-                                    <a href="{{ route('sendportal.automations.show', $message->source->automation_step->automation_id) }}">
+                                    <a href="{{ route('targetforce.automations.show', $message->source->automation_step->automation_id) }}">
                                         {{ $message->source->automation_step->automation->name }}
                                     </a>
                                 @endif
                             </td>
-                            <td><a href="{{ route('sendportal.subscribers.show', $message->subscriber_id) }}">{{ $message->recipient_email }}</a></td>
+                            <td><a href="{{ route('targetforce.subscribers.show', $message->subscriber_id) }}">{{ $message->recipient_email }}</a></td>
                             <td>
-                                @include('sendportal::messages.partials.status-row')
+                                @include('targetforce::messages.partials.status-row')
                             </td>
-                            @if(request()->route()->named('sendportal.messages.draft') &&  ! $message->sent_at)
+                            @if(request()->route()->named('targetforce.messages.draft') &&  ! $message->sent_at)
                                 <td>
-                                    <form action="{{ route('sendportal.messages.send') }}" method="post" class="d-inline-block">
+                                    <form action="{{ route('targetforce.messages.send') }}" method="post" class="d-inline-block">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $message->id }}">
-                                        <a href="{{ route('sendportal.messages.show', $message->id) }}" class="btn btn-xs btn-light">{{ __('Preview') }}</a>
+                                        <a href="{{ route('targetforce.messages.show', $message->id) }}" class="btn btn-xs btn-light">{{ __('Preview') }}</a>
                                         <button type="submit" class="btn btn-xs btn-light">{{ __('Send Now') }}</button>
                                     </form>
-                                    <form action="{{ route('sendportal.messages.delete', $message->id) }}" method="post" class="d-inline-block delete-message">
+                                    <form action="{{ route('targetforce.messages.delete', $message->id) }}" method="post" class="d-inline-block delete-message">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-xs btn-light">{{ __('Delete') }}</button>
@@ -123,7 +123,7 @@
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.pagination', ['records' => $messages])
+    @include('targetforce::layouts.partials.pagination', ['records' => $messages])
 
     @push('js')
         <script>

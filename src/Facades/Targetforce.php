@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Facades;
+namespace Targetforce\Base\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setHeaderHtmlContentResolver(callable $resolver)
  * @method static string|null headerHtmlContent
  */
-class Sendportal extends Facade
+class Targetforce extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return 'sendportal';
+        return 'targetforce';
     }
 }

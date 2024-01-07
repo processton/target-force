@@ -7,7 +7,7 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Message;
 use Tests\TestCase;
 
 class PostmarkWebhooksTest extends TestCase
@@ -16,7 +16,7 @@ class PostmarkWebhooksTest extends TestCase
     use WithFaker;
 
     /** @var string */
-    protected $route = 'sendportal.api.webhooks.postmark';
+    protected $route = 'targetforce.api.webhooks.postmark';
 
     /** @test */
     public function it_accepts_delivery_webhooks()
@@ -125,7 +125,7 @@ class PostmarkWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Temporary',
@@ -153,7 +153,7 @@ class PostmarkWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Permanent',

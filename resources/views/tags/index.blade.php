@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Tags'))
 
@@ -7,10 +7,10 @@
 @endsection
 
 @section('content')
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
 
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.tags.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.tags.create') }}">
                 <i class="fa fa-plus"></i> {{ __('New Tag') }}
             </a>
         @endslot
@@ -30,13 +30,13 @@
                 @forelse($tags as $tag)
                     <tr>
                         <td>
-                            <a href="{{ route('sendportal.tags.edit', $tag->id) }}">
+                            <a href="{{ route('targetforce.tags.edit', $tag->id) }}">
                                 {{ $tag->name }}
                             </a>
                         </td>
                         <td>{{ $tag->subscribers_count }}</td>
                         <td>
-                            @include('sendportal::tags.partials.actions')
+                            @include('targetforce::tags.partials.actions')
                         </td>
                     </tr>
                 @empty
@@ -51,6 +51,6 @@
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.pagination', ['records' => $tags])
+    @include('targetforce::layouts.partials.pagination', ['records' => $tags])
 
 @endsection

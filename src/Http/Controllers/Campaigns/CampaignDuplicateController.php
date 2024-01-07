@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Campaigns;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignDuplicateController extends Controller
 {
@@ -28,9 +28,9 @@ class CampaignDuplicateController extends Controller
      */
     public function duplicate(int $campaignId): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $campaignId);
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $campaignId);
 
-        return redirect()->route('sendportal.campaigns.create')->withInput([
+        return redirect()->route('targetforce.campaigns.create')->withInput([
             'name' => $campaign->name . ' - Duplicate',
             'status_id' => CampaignStatus::STATUS_DRAFT,
             'template_id' => $campaign->template_id,

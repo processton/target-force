@@ -13,7 +13,7 @@ class PrefixTables extends Migration
     public function up()
     {
         foreach ($this->getTables() as $table) {
-            if (Schema::hasTable("sendportal_{$table}")) {
+            if (Schema::hasTable("targetforce_{$table}")) {
                 continue;
             }
 
@@ -21,7 +21,7 @@ class PrefixTables extends Migration
                 continue;
             }
 
-            Schema::rename($table, "sendportal_{$table}");
+            Schema::rename($table, "targetforce_{$table}");
         }
     }
 

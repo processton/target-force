@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('heading')
     {{ __('Add Email Service') }}
@@ -6,18 +6,18 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.card')
+    @component('targetforce::layouts.partials.card')
         @slot('cardHeader', __('Create Email Service'))
 
         @slot('cardBody')
-            <form action="{{ route('sendportal.email_services.store') }}" method="POST" class="form-horizontal">
+            <form action="{{ route('targetforce.email_services.store') }}" method="POST" class="form-horizontal">
                 @csrf
-                <x-sendportal.text-field name="name" :label="__('Name')" />
-                <x-sendportal.select-field name="type_id" :label="__('Email Service')" :options="$emailServiceTypes" />
+                <x-targetforce.text-field name="name" :label="__('Name')" />
+                <x-targetforce.select-field name="type_id" :label="__('Email Service')" :options="$emailServiceTypes" />
 
                 <div id="services-fields"></div>
 
-                <x-sendportal.submit-button :label="__('Save')" />
+                <x-targetforce.submit-button :label="__('Save')" />
             </form>
         @endSlot
     @endcomponent
@@ -27,7 +27,7 @@
 @push('js')
     <script>
 
-        let url = '{{ route('sendportal.email_services.ajax', 1) }}';
+        let url = '{{ route('targetforce.email_services.ajax', 1) }}';
 
         $(function () {
             let type_id = $('select[name="type_id"]').val();

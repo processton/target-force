@@ -1,6 +1,6 @@
 {
-    "name": "processton-io/target-mail",
-    "homepage": "https://github.com/processton-io/target-mail",
+    "name": "processton-io/target-force",
+    "homepage": "https://github.com/processton/target-force",
     "description": "Target Mail",
     "type": "library",
     "license": "MIT",
@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sendportal\\Base\\": "src",
+            "Targetforce\\Base\\": "src",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         }
@@ -52,7 +52,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Sendportal\\Base\\SendportalBaseServiceProvider"
+                "Targetforce\\Base\\TargetforceBaseServiceProvider"
             ]
         }
     }

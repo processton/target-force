@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Listeners\Webhooks;
+namespace Targetforce\Base\Listeners\Webhooks;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,13 +10,13 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use RuntimeException;
-use Sendportal\Base\Events\Webhooks\SendgridWebhookReceived;
-use Sendportal\Base\Services\Webhooks\EmailWebhookService;
+use Targetforce\Base\Events\Webhooks\SendgridWebhookReceived;
+use Targetforce\Base\Services\Webhooks\EmailWebhookService;
 
 class HandleSendgridWebhook implements ShouldQueue
 {
     /** @var string */
-    public $queue = 'sendportal-webhook-process';
+    public $queue = 'targetforce-webhook-process';
 
     /** @var EmailWebhookService */
     private $emailWebhookService;

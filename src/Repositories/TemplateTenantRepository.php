@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Repositories;
+namespace Targetforce\Base\Repositories;
 
-use Sendportal\Base\Models\Template;
+use Targetforce\Base\Models\Template;
 
 class TemplateTenantRepository extends BaseTenantRepository
 {

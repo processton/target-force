@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use DomainException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Postal\Client;
 use Postal\SendMessage;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 use Symfony\Component\HttpFoundation\Response;
 
 class PostalAdapter extends BaseMailAdapter

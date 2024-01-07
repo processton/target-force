@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api\Webhooks;
+namespace Targetforce\Base\Http\Controllers\Api\Webhooks;
 
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Events\Webhooks\SesWebhookReceived;
-use Sendportal\Base\Http\Controllers\Controller;
+use Targetforce\Base\Events\Webhooks\SesWebhookReceived;
+use Targetforce\Base\Http\Controllers\Controller;
 
 class SesWebhooksController extends Controller
 {

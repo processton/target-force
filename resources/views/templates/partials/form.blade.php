@@ -5,7 +5,7 @@
     </div>
 </div>
 
-@include('sendportal::templates.partials.editor')
+@include('targetforce::templates.partials.editor')
 
 <div class="form-group row">
     <div class="offset-2 col-10">

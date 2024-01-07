@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Traits;
+namespace Targetforce\Base\Traits;
 
 trait SecondsToHms
 {

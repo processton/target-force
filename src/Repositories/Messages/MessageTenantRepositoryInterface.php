@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Messages;
+namespace Targetforce\Base\Repositories\Messages;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Interfaces\BaseTenantInterface;
+use Targetforce\Base\Interfaces\BaseTenantInterface;
 
 interface MessageTenantRepositoryInterface extends BaseTenantInterface
 {

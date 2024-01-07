@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Templates;
+namespace Targetforce\Base\Services\Templates;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
-use Sendportal\Base\Models\Template;
-use Sendportal\Base\Repositories\TemplateTenantRepository;
-use Sendportal\Base\Traits\NormalizeTags;
+use Targetforce\Base\Models\Template;
+use Targetforce\Base\Repositories\TemplateTenantRepository;
+use Targetforce\Base\Traits\NormalizeTags;
 
 class TemplateService
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Events;
+namespace Targetforce\Base\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Message;
 
 class MessageDispatchEvent
 {

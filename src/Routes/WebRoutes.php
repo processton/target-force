@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Routes;
+namespace Targetforce\Base\Routes;
 
 use Illuminate\Routing\Router;
 
 class WebRoutes
 {
-    public function sendportalPublicWebRoutes(): callable
+    public function targetforcePublicWebRoutes(): callable
     {
         return function () {
-            $this->name('sendportal.')->namespace('\Sendportal\Base\Http\Controllers')->group(static function (
+            $this->name('targetforce.')->namespace('\Targetforce\Base\Http\Controllers')->group(static function (
                 Router $appRouter
             ) {
                 // Subscriptions
@@ -40,10 +40,10 @@ class WebRoutes
         };
     }
 
-    public function sendportalWebRoutes(): callable
+    public function targetforceWebRoutes(): callable
     {
         return function () {
-            $this->name('sendportal.')->namespace('\Sendportal\Base\Http\Controllers')->group(static function (
+            $this->name('targetforce.')->namespace('\Targetforce\Base\Http\Controllers')->group(static function (
                 Router $appRouter
             ) {
 

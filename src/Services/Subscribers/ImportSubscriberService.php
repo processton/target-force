@@ -1,11 +1,11 @@
 <?php
 
-namespace Sendportal\Base\Services\Subscribers;
+namespace Targetforce\Base\Services\Subscribers;
 
 use Exception;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
 
 class ImportSubscriberService
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Services\Content\MergeContentService;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Services\Content\MergeContentService;
 
 class DispatchTestMessage
 {
@@ -73,7 +73,7 @@ class DispatchTestMessage
             'workspace_id' => $workspaceId,
             'recipient_email' => $options->getTo(),
             'subject' => $options->getSubject(),
-            'from_name' => 'Sendportal',
+            'from_name' => 'Targetforce',
             'from_email' => $options->getFromEmail(),
             'hash' => 'abc123',
         ]);

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Http\Controllers\Subscribers;
+namespace Targetforce\Base\Http\Controllers\Subscribers;
 
 use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Common\Exception\UnsupportedTypeException;
@@ -15,11 +15,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 use Illuminate\Validation\ValidationException;
 use Rap2hpoutre\FastExcel\FastExcel;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\SubscribersImportRequest;
-use Sendportal\Base\Repositories\TagTenantRepository;
-use Sendportal\Base\Services\Subscribers\ImportSubscriberService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\SubscribersImportRequest;
+use Targetforce\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Services\Subscribers\ImportSubscriberService;
 
 class SubscribersImportController extends Controller
 {
@@ -36,9 +36,9 @@ class SubscribersImportController extends Controller
      */
     public function show(TagTenantRepository $tagRepo): ViewContract
     {
-        $tags = $tagRepo->pluck(Sendportal::currentWorkspaceId(), 'name', 'id');
+        $tags = $tagRepo->pluck(Targetforce::currentWorkspaceId(), 'name', 'id');
 
-        return view('sendportal::subscribers.import', compact('tags'));
+        return view('targetforce::subscribers.import', compact('tags'));
     }
 
     /**
@@ -73,7 +73,7 @@ class SubscribersImportController extends Controller
                 $data = Arr::only($line, ['id', 'email', 'first_name', 'last_name']);
 
                 $data['tags'] = $request->get('tags') ?? [];
-                $subscriber = $this->subscriberService->import(Sendportal::currentWorkspaceId(), $data);
+                $subscriber = $this->subscriberService->import(Targetforce::currentWorkspaceId(), $data);
 
                 if ($subscriber->wasRecentlyCreated) {
                     $counter['created']++;
@@ -84,7 +84,7 @@ class SubscribersImportController extends Controller
 
             Storage::disk('local')->delete($path);
 
-            return redirect()->route('sendportal.subscribers.index')
+            return redirect()->route('targetforce.subscribers.index')
                 ->with('success', __('Imported :created subscriber(s) and updated :updated subscriber(s) out of :total', [
                     'created' => $counter['created'],
                     'updated' => $counter['updated'],
@@ -92,7 +92,7 @@ class SubscribersImportController extends Controller
                 ]));
         }
 
-        return redirect()->route('sendportal.subscribers.index')
+        return redirect()->route('targetforce.subscribers.index')
             ->with('errors', __('The uploaded file is not valid'));
     }
 

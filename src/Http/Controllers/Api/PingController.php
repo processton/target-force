@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 class PingController
 {

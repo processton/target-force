@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Email Services'))
 
@@ -8,9 +8,9 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.email_services.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.email_services.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('Add Email Service') }}
             </a>
         @endslot
@@ -32,12 +32,12 @@
                         <td>{{ $service->name }}</td>
                         <td>{{ $service->type->name }}</td>
                         <td>
-                            <a href="{{ route('sendportal.email_services.test.create', $service->id) }}" class="btn btn-sm btn-light">
+                            <a href="{{ route('targetforce.email_services.test.create', $service->id) }}" class="btn btn-sm btn-light">
                                 {{ __('Test') }}
                             </a>
                             <a class="btn btn-sm btn-light"
-                               href="{{ route('sendportal.email_services.edit', $service->id) }}">{{ __('Edit') }}</a>
-                            <form action="{{ route('sendportal.email_services.delete', $service->id) }}" method="POST"
+                               href="{{ route('targetforce.email_services.edit', $service->id) }}">{{ __('Edit') }}</a>
+                            <form action="{{ route('targetforce.email_services.delete', $service->id) }}" method="POST"
                                   style="display: inline">
                                 @csrf
                                 @method('DELETE')

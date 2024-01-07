@@ -6,9 +6,9 @@ namespace Tests\Feature\Subscribers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class SubscribersControllerTest extends TestCase
@@ -27,13 +27,13 @@ class SubscribersControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->post(route('sendportal.subscribers.store'), $subscriberStoreData);
+        $response = $this->post(route('targetforce.subscribers.store'), $subscriberStoreData);
 
         // then
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('sendportal_subscribers', [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+        $this->assertDatabaseHas('targetforce_subscribers', [
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email' => $subscriberStoreData['email']
         ]);
     }
@@ -42,10 +42,10 @@ class SubscribersControllerTest extends TestCase
     public function the_edit_view_is_accessible_by_authenticated_users()
     {
         // given
-        $subscriber = Subscriber::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $subscriber = Subscriber::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.subscribers.edit', $subscriber->id));
+        $response = $this->get(route('targetforce.subscribers.edit', $subscriber->id));
 
         // then
         $response->assertOk();
@@ -55,7 +55,7 @@ class SubscribersControllerTest extends TestCase
     public function a_subscriber_is_updateable_by_an_authenticated_user()
     {
         // given
-        $subscriber = Subscriber::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $subscriber = Subscriber::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $subscriberUpdateData = [
             'email' => $this->faker->email,
@@ -65,12 +65,12 @@ class SubscribersControllerTest extends TestCase
 
         // when
         $response = $this
-            ->put(route('sendportal.subscribers.update', $subscriber->id), $subscriberUpdateData);
+            ->put(route('targetforce.subscribers.update', $subscriber->id), $subscriberUpdateData);
 
         // then
         $response->assertRedirect();
 
-        $this->assertDatabaseHas('sendportal_subscribers', [
+        $this->assertDatabaseHas('targetforce_subscribers', [
             'id' => $subscriber->id,
             'email' => $subscriberUpdateData['email'],
             'first_name' => $subscriberUpdateData['first_name'],
@@ -82,10 +82,10 @@ class SubscribersControllerTest extends TestCase
     public function the_show_view_is_accessible_by_an_authenticated_user()
     {
         // given
-        $subscriber = Subscriber::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $subscriber = Subscriber::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.subscribers.show', $subscriber->id));
+        $response = $this->get(route('targetforce.subscribers.show', $subscriber->id));
 
         // then
         $response->assertOk();
@@ -96,11 +96,11 @@ class SubscribersControllerTest extends TestCase
     {
         // given
         $subscriber = Subscriber::factory()->count(5)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         // when
-        $response = $this->get(route('sendportal.subscribers.index'));
+        $response = $this->get(route('targetforce.subscribers.index'));
 
         // then
         $subscriber->each(static function (Subscriber $subscriber) use ($response) {
@@ -114,27 +114,27 @@ class SubscribersControllerTest extends TestCase
     {
         // given
         $firstTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $secondTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $thirdTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $firstTagSubscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $secondTagSubscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $thirdTagSubscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $firstTag->subscribers()->attach($firstTagSubscriber->id);
@@ -142,7 +142,7 @@ class SubscribersControllerTest extends TestCase
         $thirdTag->subscribers()->attach($thirdTagSubscriber->id);
 
         // when
-        $response = $this->get(route('sendportal.subscribers.index', [
+        $response = $this->get(route('targetforce.subscribers.index', [
             'tags' => [$firstTag->id, $secondTag->id]
         ]));
 

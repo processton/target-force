@@ -1,6 +1,6 @@
-<?php namespace Sendportal\Base\Repositories;
+<?php namespace Targetforce\Base\Repositories;
 
-use Sendportal\Base\Interfaces\BaseEloquentInterface;
+use Targetforce\Base\Interfaces\BaseEloquentInterface;
 
 class BaseEloquentRepository implements BaseEloquentInterface
 {

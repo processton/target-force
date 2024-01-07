@@ -1,9 +1,9 @@
 <?php
 
-namespace Sendportal\Base\Repositories;
+namespace Targetforce\Base\Repositories;
 
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
 
 class EmailServiceTenantRepository extends BaseTenantRepository
 {

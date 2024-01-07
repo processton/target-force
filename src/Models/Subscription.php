@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

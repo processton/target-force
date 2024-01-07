@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Campaigns;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignDeleteController extends Controller
 {
@@ -30,14 +30,14 @@ class CampaignDeleteController extends Controller
      */
     public function confirm(int $id)
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
 
         if (!$campaign->draft) {
-            return redirect()->route('sendportal.campaigns.index')
+            return redirect()->route('targetforce.campaigns.index')
                 ->withErrors(__('Unable to delete a campaign that is not in draft status'));
         }
 
-        return view('sendportal::campaigns.delete', compact('campaign'));
+        return view('targetforce::campaigns.delete', compact('campaign'));
     }
 
     /**
@@ -47,16 +47,16 @@ class CampaignDeleteController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $request->get('id'));
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $request->get('id'));
 
         if (!$campaign->draft) {
-            return redirect()->route('sendportal.campaigns.index')
+            return redirect()->route('targetforce.campaigns.index')
                 ->withErrors(__('Unable to delete a campaign that is not in draft status'));
         }
 
-        $this->campaigns->destroy(Sendportal::currentWorkspaceId(), $request->get('id'));
+        $this->campaigns->destroy(Targetforce::currentWorkspaceId(), $request->get('id'));
 
-        return redirect()->route('sendportal.campaigns.index')
+        return redirect()->route('targetforce.campaigns.index')
             ->with('success', __('The Campaign has been successfully deleted'));
     }
 }

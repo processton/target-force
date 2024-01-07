@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Pipelines\Campaigns;
+namespace Targetforce\Base\Pipelines\Campaigns;
 
-use Sendportal\Base\Events\MessageDispatchEvent;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Events\MessageDispatchEvent;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 
 class CreateMessages
 {
@@ -77,7 +77,7 @@ class CreateMessages
 
         $tag->subscribers()->whereNull('unsubscribed_at')->chunkById(1000, function ($subscribers) use ($campaign) {
             $this->dispatchToSubscriber($campaign, $subscribers);
-        }, 'sendportal_subscribers.id');
+        }, 'targetforce_subscribers.id');
     }
 
     /**

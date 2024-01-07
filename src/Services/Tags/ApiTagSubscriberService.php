@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Tags;
+namespace Targetforce\Base\Services\Tags;
 
 use Exception;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Repositories\TagTenantRepository;
 
 class ApiTagSubscriberService
 {
@@ -29,7 +29,7 @@ class ApiTagSubscriberService
         $tag = $this->tags->find($workspaceId, $tagId);
 
         /** @var Collection $existingSubscribers */
-        $existingSubscribers = $tag->subscribers()->pluck('sendportal_subscribers.id')->toBase();
+        $existingSubscribers = $tag->subscribers()->pluck('targetforce_subscribers.id')->toBase();
 
         $subscribersToStore = $subscriberIds->diff($existingSubscribers);
 

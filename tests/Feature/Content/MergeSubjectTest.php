@@ -6,11 +6,11 @@ namespace Tests\Feature\Content;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Services\Content\MergeSubjectService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Services\Content\MergeSubjectService;
 use Tests\TestCase;
 
 class MergeSubjectTest extends TestCase
@@ -112,19 +112,19 @@ class MergeSubjectTest extends TestCase
         $campaign = Campaign::factory()->create([
             'content' => '<p>Content</p>',
             'subject' => $campaignSubject,
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         /** @var Subscriber $subscriber */
         $subscriber = Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email' => $email,
             'first_name' => $firstName,
             'last_name' => $lastName,
         ]);
 
         return Message::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => $subscriber->id,
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,

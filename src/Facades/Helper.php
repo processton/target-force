@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Facades;
+namespace Targetforce\Base\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
@@ -12,6 +12,6 @@ class Helper extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'sendportal.helper';
+        return 'targetforce.helper';
     }
 }

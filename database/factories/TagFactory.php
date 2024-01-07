@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Tag;
 
 class TagFactory extends Factory
 {
@@ -16,7 +16,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'name' => ucwords($this->faker->unique()->word)
         ];
     }

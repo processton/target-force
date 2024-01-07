@@ -6,10 +6,10 @@ namespace Tests\Unit\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\MessageFailure;
-use Sendportal\Base\Models\Subscriber;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\MessageFailure;
+use Targetforce\Base\Models\Subscriber;
 use Tests\TestCase;
 
 class SubscriberTest extends TestCase

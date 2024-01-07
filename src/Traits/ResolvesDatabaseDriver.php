@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Traits;
+namespace Targetforce\Base\Traits;
 
 use Illuminate\Database\MySqlConnection;
 use Illuminate\Database\PostgresConnection;

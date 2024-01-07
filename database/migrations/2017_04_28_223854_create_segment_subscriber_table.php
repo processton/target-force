@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateSegmentSubscriberTable extends UpgradeMigration
 {
@@ -16,7 +16,7 @@ class CreateSegmentSubscriberTable extends UpgradeMigration
         $segments = $this->getTableName('segments');
         $subscribers = $this->getTableName('subscribers');
 
-        Schema::create('sendportal_segment_subscriber', function (Blueprint $table) use ($segments, $subscribers) {
+        Schema::create('targetforce_segment_subscriber', function (Blueprint $table) use ($segments, $subscribers) {
             $table->increments('id');
             $table->unsignedInteger('segment_id');
             $table->unsignedInteger('subscriber_id');

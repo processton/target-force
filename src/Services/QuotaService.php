@@ -1,14 +1,14 @@
 <?php
 
-namespace Sendportal\Base\Services;
+namespace Targetforce\Base\Services;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Adapters\BaseMailAdapter;
-use Sendportal\Base\Factories\MailAdapterFactory;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Adapters\BaseMailAdapter;
+use Targetforce\Base\Factories\MailAdapterFactory;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
 
 class QuotaService implements QuotaServiceInterface
 {

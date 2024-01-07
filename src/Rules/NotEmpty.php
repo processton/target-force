@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Rules;
+namespace Targetforce\Base\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 

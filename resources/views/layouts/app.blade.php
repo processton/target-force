@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.base')
+@extends('targetforce::layouts.base')
 
 @section('htmlBody')
     <div class="container-fluid">
@@ -8,18 +8,18 @@
 
                 <div class="mt-4">
                     <div class="logo text-center">
-                        <a href="{{ route('sendportal.dashboard') }}">
-                            <img src="{{ asset('/vendor/sendportal/img/logo-main.png') }}" alt="" width="175px">
+                        <a href="{{ route('targetforce.dashboard') }}">
+                            <img src="{{ asset('/vendor/targetforce/img/logo-main.png') }}" alt="" width="175px">
                         </a>
                     </div>
                 </div>
 
                 <div class="mt-5">
-                    @include('sendportal::layouts.partials.sidebar')
+                    @include('targetforce::layouts.partials.sidebar')
                 </div>
             </div>
 
-            @include('sendportal::layouts.main')
+            @include('targetforce::layouts.main')
         </div>
     </div>
 @endsection

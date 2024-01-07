@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Campaigns;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class CampaignDispatchControllerTest extends TestCase
@@ -19,15 +19,15 @@ class CampaignDispatchControllerTest extends TestCase
     {
         // given
         $campaign = Campaign::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $validTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         // when
-        $response = $this->put(route('sendportal.campaigns.send', $campaign->id), [
+        $response = $this->put(route('targetforce.campaigns.send', $campaign->id), [
             'recipients' => 'send_to_tags',
             'tags' => [$validTag->id],
         ]);
@@ -41,19 +41,19 @@ class CampaignDispatchControllerTest extends TestCase
     {
         // given
         $campaign = Campaign::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $validTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $invalidTag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId() + 1,
+            'workspace_id' => Targetforce::currentWorkspaceId() + 1,
         ]);
 
         // when
-        $response = $this->put(route('sendportal.campaigns.send', $campaign->id), [
+        $response = $this->put(route('targetforce.campaigns.send', $campaign->id), [
             'recipients' => 'send_to_tags',
             'tags' => [$validTag->id, $invalidTag->id],
         ]);

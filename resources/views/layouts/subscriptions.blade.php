@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="mt-5">
-        @include('sendportal::layouts.partials.success')
+        @include('targetforce::layouts.partials.success')
 
         @yield('content')
     </div>

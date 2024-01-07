@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Subscribers;
+namespace Targetforce\Base\Services\Subscribers;
 
 use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Sendportal\Base\Events\SubscriberAddedEvent;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Events\SubscriberAddedEvent;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
 
 class ApiSubscriberService
 {

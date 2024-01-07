@@ -7,8 +7,8 @@ namespace Tests\Feature\API;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -25,7 +25,7 @@ class CampaignsControllerTest extends TestCase
         $campaign = $this->createCampaign($emailService);
 
         $this
-            ->getJson(route('sendportal.api.campaigns.index'))
+            ->getJson(route('targetforce.api.campaigns.index'))
             ->assertOk()
             ->assertJson([
                 'data' => [
@@ -42,7 +42,7 @@ class CampaignsControllerTest extends TestCase
         $campaign = $this->createCampaign($emailService);
 
         $this
-            ->getJson(route('sendportal.api.campaigns.show', [
+            ->getJson(route('targetforce.api.campaigns.show', [
                 'campaign' => $campaign->id,
             ]))
             ->assertOk()
@@ -69,13 +69,13 @@ class CampaignsControllerTest extends TestCase
 
         $this
             ->postJson(
-                route('sendportal.api.campaigns.store'),
+                route('targetforce.api.campaigns.store'),
                 $request
             )
             ->assertStatus(Response::HTTP_CREATED)
             ->assertJson(['data' => $request]);
 
-        $this->assertDatabaseHas('sendportal_campaigns', $request);
+        $this->assertDatabaseHas('targetforce_campaigns', $request);
     }
 
     /** @test */
@@ -84,7 +84,7 @@ class CampaignsControllerTest extends TestCase
         $emailService = $this->createEmailService();
 
         $campaign = Campaign::factory()->draft()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id,
         ]);
 
@@ -100,14 +100,14 @@ class CampaignsControllerTest extends TestCase
         ];
 
         $this
-            ->putJson(route('sendportal.api.campaigns.update', [
+            ->putJson(route('targetforce.api.campaigns.update', [
                 'campaign' => $campaign->id,
             ]), $request)
             ->assertOk()
             ->assertJson(['data' => $request]);
 
-        $this->assertDatabaseMissing('sendportal_campaigns', $campaign->toArray());
-        $this->assertDatabaseHas('sendportal_campaigns', $request);
+        $this->assertDatabaseMissing('targetforce_campaigns', $campaign->toArray());
+        $this->assertDatabaseHas('targetforce_campaigns', $request);
     }
 
     /** @test */
@@ -129,7 +129,7 @@ class CampaignsControllerTest extends TestCase
         ];
 
         $this
-            ->putJson(route('sendportal.api.campaigns.update', [
+            ->putJson(route('targetforce.api.campaigns.update', [
                 'campaign' => $campaign->id,
             ]), $request)
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -137,7 +137,7 @@ class CampaignsControllerTest extends TestCase
                 'status_id' => 'A campaign cannot be updated if its status is not draft'
             ]);
 
-        $this->assertDatabaseMissing('sendportal_campaigns', $request);
+        $this->assertDatabaseMissing('targetforce_campaigns', $request);
         self::assertEquals($campaign->updated_at, $campaign->fresh()->updated_at);
     }
 }

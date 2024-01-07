@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

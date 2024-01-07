@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Events;
+namespace Targetforce\Base\Events;
 
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Sendportal\Base\Models\Subscriber;
+use Targetforce\Base\Models\Subscriber;
 
 class SubscriberAddedEvent
 {

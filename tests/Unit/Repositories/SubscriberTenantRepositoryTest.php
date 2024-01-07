@@ -6,16 +6,16 @@ namespace Tests\Unit\Repositories;
 
 use Carbon\CarbonPeriod;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Tests\SendportalTestSupportTrait;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Tests\TargetforceTestSupportTrait;
 use Tests\TestCase;
 
 class SubscriberTenantRepositoryTest extends TestCase
 {
     use RefreshDatabase;
-    use SendportalTestSupportTrait;
+    use TargetforceTestSupportTrait;
 
     protected $repository;
 
@@ -33,7 +33,7 @@ class SubscriberTenantRepositoryTest extends TestCase
         $period = CarbonPeriod::create('2019-04-01', '2019-04-30');
 
         // when
-        $data = $this->repository->getGrowthChartData($period, Sendportal::currentWorkspaceId());
+        $data = $this->repository->getGrowthChartData($period, Targetforce::currentWorkspaceId());
 
         // then
         self::assertArrayHasKey('startingValue', $data);
@@ -48,12 +48,12 @@ class SubscriberTenantRepositoryTest extends TestCase
         $period = CarbonPeriod::create('2019-04-01', '2019-04-30');
 
         Subscriber::factory()->count(2)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getStartDate()->subDay()
         ]);
 
         // when
-        $data = $this->repository->getGrowthChartData($period, Sendportal::currentWorkspaceId());
+        $data = $this->repository->getGrowthChartData($period, Targetforce::currentWorkspaceId());
 
         // then
         self::assertEquals(2, $data['startingValue']);
@@ -66,22 +66,22 @@ class SubscriberTenantRepositoryTest extends TestCase
         $period = CarbonPeriod::create('2019-04-01', '2019-04-30');
 
         Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getStartDate()->addDay()
         ]);
 
         Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getEndDate()->subDay()
         ]);
 
         Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getEndDate()->addDay() // should be ignored
         ]);
 
         // when
-        $runningTotal = $this->repository->getGrowthChartData($period, Sendportal::currentWorkspaceId())['runningTotal'];
+        $runningTotal = $this->repository->getGrowthChartData($period, Targetforce::currentWorkspaceId())['runningTotal'];
 
         // then
         self::assertEquals(2, $runningTotal->count());
@@ -96,18 +96,18 @@ class SubscriberTenantRepositoryTest extends TestCase
         $unsubscribed_at = $period->getStartDate()->addWeek();
 
         Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getStartDate()->addDay(),
             'unsubscribed_at' => $unsubscribed_at
         ]);
 
         Subscriber::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'created_at' => $period->getEndDate()->subDay()
         ]);
 
         // when
-        $unsubscribers = $this->repository->getGrowthChartData($period, Sendportal::currentWorkspaceId())['unsubscribers'];
+        $unsubscribers = $this->repository->getGrowthChartData($period, Targetforce::currentWorkspaceId())['unsubscribers'];
 
         // then
         self::assertEquals(1, $unsubscribers->count());

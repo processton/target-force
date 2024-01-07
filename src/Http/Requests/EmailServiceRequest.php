@@ -1,9 +1,9 @@
 <?php
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Models\EmailServiceType;
 
 class EmailServiceRequest extends FormRequest
 {

@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.12/dist/css/bootstrap-select.min.css">
@@ -26,7 +26,7 @@
         </div>
     @endif
 
-    @component('sendportal::layouts.partials.card')
+    @component('targetforce::layouts.partials.card')
         @slot('cardHeader', __('Import via CSV file'))
 
         @slot('cardBody')
@@ -45,7 +45,7 @@
                     <tbody>
                         <tr>
                             <td></td>
-                            <td>me@sendportal.io</td>
+                            <td>me@targetforce.io</td>
                             <td>Myself</td>
                             <td>Included</td>
                         </tr>
@@ -54,16 +54,16 @@
             </div>
 
 
-            <form action="{{ route('sendportal.subscribers.import.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+            <form action="{{ route('targetforce.subscribers.import.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                 @csrf
 
-                <x-sendportal.file-field name="file" :label="__('File')" required="required" />
+                <x-targetforce.file-field name="file" :label="__('File')" required="required" />
 
-                <x-sendportal.select-field name="tags[]" :label="__('Tags')" :options="$tags" multiple />
+                <x-targetforce.select-field name="tags[]" :label="__('Tags')" :options="$tags" multiple />
 
                 <div class="form-group row">
                     <div class="offset-sm-3 col-sm-9">
-                        <a href="{{ route('sendportal.subscribers.index') }}" class="btn btn-light">{{ __('Back') }}</a>
+                        <a href="{{ route('targetforce.subscribers.index') }}" class="btn btn-light">{{ __('Back') }}</a>
                         <button type="submit" class="btn btn-primary">{{ __('Upload') }}</button>
                     </div>
                 </div>

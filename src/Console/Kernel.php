@@ -1,10 +1,10 @@
 <?php
 
-namespace Sendportal\Base\Console;
+namespace Targetforce\Base\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Sendportal\Base\Console\Commands\CampaignDispatchCommand;
+use Targetforce\Base\Console\Commands\CampaignDispatchCommand;
 
 class Kernel extends ConsoleKernel
 {

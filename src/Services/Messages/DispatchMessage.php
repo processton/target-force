@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Services\Content\MergeContentService;
-use Sendportal\Base\Services\Content\MergeSubjectService;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Services\Content\MergeContentService;
+use Targetforce\Base\Services\Content\MergeSubjectService;
 
 class DispatchMessage
 {

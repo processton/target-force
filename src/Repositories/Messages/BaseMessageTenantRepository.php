@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Messages;
+namespace Targetforce\Base\Repositories\Messages;
 
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Sendportal\Base\Facades\Helper;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Repositories\BaseTenantRepository;
+use Targetforce\Base\Facades\Helper;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Repositories\BaseTenantRepository;
 
 abstract class BaseMessageTenantRepository extends BaseTenantRepository implements MessageTenantRepositoryInterface
 {
@@ -129,7 +129,7 @@ abstract class BaseMessageTenantRepository extends BaseTenantRepository implemen
      */
     public function getFirstOpenedAt(int $workspaceId, string $sourceType, int $sourceId)
     {
-        return DB::table('sendportal_messages')
+        return DB::table('targetforce_messages')
             ->select(DB::raw('MIN(opened_at) as first'))
             ->where('workspace_id', $workspaceId)
             ->where('source_type', $sourceType)
@@ -169,8 +169,8 @@ abstract class BaseMessageTenantRepository extends BaseTenantRepository implemen
             $searchString = '%' . $search . '%';
 
             $instance->where(static function (Builder $instance) use ($searchString) {
-                $instance->where('sendportal_messages.recipient_email', 'like', $searchString)
-                    ->orWhere('sendportal_messages.subject', 'like', $searchString);
+                $instance->where('targetforce_messages.recipient_email', 'like', $searchString)
+                    ->orWhere('targetforce_messages.subject', 'like', $searchString);
             });
         }
     }

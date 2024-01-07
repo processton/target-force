@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Rules;
+namespace Targetforce\Base\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Tag;
 
 class CanAccessTag implements Rule
 {
@@ -18,7 +18,7 @@ class CanAccessTag implements Rule
             return false;
         }
 
-        return $tag->workspace_id == Sendportal::currentWorkspaceId();
+        return $tag->workspace_id == Targetforce::currentWorkspaceId();
     }
 
     /**

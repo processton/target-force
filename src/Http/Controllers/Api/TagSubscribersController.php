@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\Api\TagSubscriberDestroyRequest;
-use Sendportal\Base\Http\Requests\Api\TagSubscriberStoreRequest;
-use Sendportal\Base\Http\Requests\Api\TagSubscriberUpdateRequest;
-use Sendportal\Base\Http\Resources\Subscriber as SubscriberResource;
-use Sendportal\Base\Repositories\TagTenantRepository;
-use Sendportal\Base\Services\Tags\ApiTagSubscriberService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\Api\TagSubscriberDestroyRequest;
+use Targetforce\Base\Http\Requests\Api\TagSubscriberStoreRequest;
+use Targetforce\Base\Http\Requests\Api\TagSubscriberUpdateRequest;
+use Targetforce\Base\Http\Resources\Subscriber as SubscriberResource;
+use Targetforce\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Services\Tags\ApiTagSubscriberService;
 
 class TagSubscribersController extends Controller
 {
@@ -36,7 +36,7 @@ class TagSubscribersController extends Controller
      */
     public function index(int $tagId): AnonymousResourceCollection
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $tag = $this->tags->find($workspaceId, $tagId, ['subscribers']);
 
         return SubscriberResource::collection($tag->subscribers);
@@ -48,7 +48,7 @@ class TagSubscribersController extends Controller
     public function store(TagSubscriberStoreRequest $request, int $tagId): AnonymousResourceCollection
     {
         $input = $request->validated();
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscribers = $this->apiService->store($workspaceId, $tagId, collect($input['subscribers']));
 
         return SubscriberResource::collection($subscribers);
@@ -60,7 +60,7 @@ class TagSubscribersController extends Controller
     public function update(TagSubscriberUpdateRequest $request, int $tagId): AnonymousResourceCollection
     {
         $input = $request->validated();
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscribers = $this->apiService->update($workspaceId, $tagId, collect($input['subscribers']));
 
         return SubscriberResource::collection($subscribers);
@@ -72,7 +72,7 @@ class TagSubscribersController extends Controller
     public function destroy(TagSubscriberDestroyRequest $request, int $tagId): AnonymousResourceCollection
     {
         $input = $request->validated();
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $subscribers = $this->apiService->destroy($workspaceId, $tagId, collect($input['subscribers']));
 
         return SubscriberResource::collection($subscribers);

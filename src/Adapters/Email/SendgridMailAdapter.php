@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use DomainException;
 use Illuminate\Support\Arr;
@@ -11,7 +11,7 @@ use SendGrid;
 use SendGrid\Mail\Mail;
 use SendGrid\Mail\TypeException;
 use SendGrid\Response as SendgridResponse;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 use Symfony\Component\HttpFoundation\Response;
 
 class SendgridMailAdapter extends BaseMailAdapter

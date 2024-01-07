@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services;
+namespace Targetforce\Base\Services;
 
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 
-class Sendportal
+class Targetforce
 {
     /** @var Application */
     private $app;
@@ -22,7 +22,7 @@ class Sendportal
      */
     public function publicApiRoutes(): void
     {
-        $this->app->make('router')->sendportalPublicApiRoutes();
+        $this->app->make('router')->targetforcePublicApiRoutes();
     }
     
     /**
@@ -30,7 +30,7 @@ class Sendportal
      */
     public function apiRoutes(): void
     {
-        $this->app->make('router')->sendportalApiRoutes();
+        $this->app->make('router')->targetforceApiRoutes();
     }
 
     /**
@@ -38,7 +38,7 @@ class Sendportal
      */
     public function publicWebRoutes(): void
     {
-        $this->app->make('router')->sendportalPublicWebRoutes();
+        $this->app->make('router')->targetforcePublicWebRoutes();
     }
 
     /**
@@ -46,7 +46,7 @@ class Sendportal
      */
     public function webRoutes(): void
     {
-        $this->app->make('router')->sendportalWebRoutes();
+        $this->app->make('router')->targetforceWebRoutes();
     }
 
     /**
@@ -54,7 +54,7 @@ class Sendportal
      */
     public function setCurrentWorkspaceIdResolver(callable $resolver): void
     {
-        $this->app->make('sendportal.resolver')->setCurrentWorkspaceIdResolver($resolver);
+        $this->app->make('targetforce.resolver')->setCurrentWorkspaceIdResolver($resolver);
     }
 
     /**
@@ -62,7 +62,7 @@ class Sendportal
      */
     public function currentWorkspaceId(): ?int
     {
-        return $this->app->make('sendportal.resolver')->resolveCurrentWorkspaceId();
+        return $this->app->make('targetforce.resolver')->resolveCurrentWorkspaceId();
     }
 
     /**
@@ -70,7 +70,7 @@ class Sendportal
      */
     public function setSidebarHtmlContentResolver(callable $resolver): void
     {
-        $this->app->make('sendportal.resolver')->setSidebarHtmlContentResolver($resolver);
+        $this->app->make('targetforce.resolver')->setSidebarHtmlContentResolver($resolver);
     }
 
     /**
@@ -78,7 +78,7 @@ class Sendportal
      */
     public function sidebarHtmlContent(): ?string
     {
-        return $this->app->make('sendportal.resolver')->resolveSidebarHtmlContent();
+        return $this->app->make('targetforce.resolver')->resolveSidebarHtmlContent();
     }
 
     /**
@@ -86,7 +86,7 @@ class Sendportal
      */
     public function setHeaderHtmlContentResolver(callable $resolver): void
     {
-        $this->app->make('sendportal.resolver')->setHeaderHtmlContentResolver($resolver);
+        $this->app->make('targetforce.resolver')->setHeaderHtmlContentResolver($resolver);
     }
 
     /**
@@ -94,6 +94,6 @@ class Sendportal
      */
     public function headerHtmlContent(): ?string
     {
-        return $this->app->make('sendportal.resolver')->resolveHeaderHtmlContent();
+        return $this->app->make('targetforce.resolver')->resolveHeaderHtmlContent();
     }
 }

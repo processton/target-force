@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', $campaign->name)
 
@@ -6,7 +6,7 @@
 
 @section('content')
 
-    @include('sendportal::campaigns.reports.partials.nav')
+    @include('targetforce::campaigns.reports.partials.nav')
 
     <div class="row mb-4">
         <div class="col-md-4 col-sm-6 mb-md-0 mb-3">
@@ -61,10 +61,10 @@
                 @forelse($messages as $message)
                     <tr>
                         <td>
-                            <a href="{{ route('sendportal.subscribers.show', $message->subscriber_id) }}">{{ $message->recipient_email }}</a>
+                            <a href="{{ route('targetforce.subscribers.show', $message->subscriber_id) }}">{{ $message->recipient_email }}</a>
                         </td>
                         <td>{{ $message->subject }}</td>
-                        <td>{{ \Sendportal\Base\Facades\Helper::displayDate($message->clicked_at) }}</td>
+                        <td>{{ \Targetforce\Base\Facades\Helper::displayDate($message->clicked_at) }}</td>
                         <td>{{ $message->click_count }}</td>
                     </tr>
                 @empty
@@ -79,6 +79,6 @@
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.pagination', ['records' => $messages])
+    @include('targetforce::layouts.partials.pagination', ['records' => $messages])
 
 @endsection

@@ -25,7 +25,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    @include('sendportal::layouts.partials.favicons')
+    @include('targetforce::layouts.partials.favicons')
 
     <title>
         @hasSection('title')
@@ -34,9 +34,9 @@
         {{ config('app.name') }}
     </title>
 
-    <link href="{{ asset('vendor/sendportal/css/fontawesome-all.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/sendportal/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset(mix('app.css', 'vendor/sendportal')) }}" rel="stylesheet">
+    <link href="{{ asset('vendor/targetforce/css/fontawesome-all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/targetforce/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset(mix('app.css', 'vendor/targetforce')) }}" rel="stylesheet">
 
     @stack('css')
     {{-- Global configuration object --}}
@@ -49,9 +49,9 @@
 
 @yield('htmlBody')
 
-<script src="{{ asset('vendor/sendportal/js/jquery-3.6.0.min.js') }}"></script>
-<script src="{{ asset('vendor/sendportal/js/popper.min.js') }}"></script>
-<script src="{{ asset('vendor/sendportal/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/targetforce/js/jquery-3.6.0.min.js') }}"></script>
+<script src="{{ asset('vendor/targetforce/js/popper.min.js') }}"></script>
+<script src="{{ asset('vendor/targetforce/js/bootstrap.min.js') }}"></script>
 
 <script>
     $('.sidebar-toggle').click(function (e) {

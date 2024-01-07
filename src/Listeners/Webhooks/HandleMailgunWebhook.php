@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Listeners\Webhooks;
+namespace Targetforce\Base\Listeners\Webhooks;
 
 use Carbon\Carbon;
 use Exception;
@@ -10,16 +10,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
 use RuntimeException;
-use Sendportal\Base\Events\Webhooks\MailgunWebhookReceived;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Services\Webhooks\EmailWebhookService;
-use Sendportal\Base\Services\Webhooks\Mailgun\WebhookVerifier;
+use Targetforce\Base\Events\Webhooks\MailgunWebhookReceived;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Services\Webhooks\EmailWebhookService;
+use Targetforce\Base\Services\Webhooks\Mailgun\WebhookVerifier;
 
 class HandleMailgunWebhook implements ShouldQueue
 {
     /** @var string */
-    public $queue = 'sendportal-webhook-process';
+    public $queue = 'targetforce-webhook-process';
 
     /** @var EmailWebhookService */
     private $emailWebhookService;

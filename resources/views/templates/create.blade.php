@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('New Template'))
 
@@ -13,9 +13,9 @@
             {{ __('Create Template') }}
         </div>
         <div class="card-body">
-            <form action="{{ route('sendportal.templates.store') }}" method="POST" class="form-horizontal">
+            <form action="{{ route('targetforce.templates.store') }}" method="POST" class="form-horizontal">
                 @csrf
-                @include('sendportal::templates.partials.form')
+                @include('targetforce::templates.partials.form')
             </form>
         </div>
     </div>

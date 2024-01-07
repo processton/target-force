@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Rules;
+namespace Targetforce\Base\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
 
 class CanAccessSubscriber implements Rule
 {
@@ -18,7 +18,7 @@ class CanAccessSubscriber implements Rule
             return false;
         }
 
-        return $subscriber->workspace_id == Sendportal::currentWorkspaceId();
+        return $subscriber->workspace_id == Targetforce::currentWorkspaceId();
     }
 
     /**

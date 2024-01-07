@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Requests;
+namespace Targetforce\Base\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -40,11 +40,11 @@ class CampaignStoreRequest extends FormRequest
             'email_service_id' => [
                 'required',
                 'integer',
-                'exists:sendportal_email_services,id',
+                'exists:targetforce_email_services,id',
             ],
             'template_id' => [
                 'nullable',
-                'exists:sendportal_templates,id',
+                'exists:targetforce_templates,id',
             ],
             'content' => [
                 Rule::requiredIf($this->template_id === null),

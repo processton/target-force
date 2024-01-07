@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Repositories;
+namespace Targetforce\Base\Repositories;
 
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Models\Tag;
 
 class TagTenantRepository extends BaseTenantRepository
 {

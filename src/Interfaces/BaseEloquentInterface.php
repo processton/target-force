@@ -1,4 +1,4 @@
-<?php namespace Sendportal\Base\Interfaces;
+<?php namespace Targetforce\Base\Interfaces;
 
 interface BaseEloquentInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
-use Sendportal\Base\Interfaces\MailAdapterInterface;
+use Targetforce\Base\Interfaces\MailAdapterInterface;
 
 abstract class BaseMailAdapter implements MailAdapterInterface
 {

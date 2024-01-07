@@ -22,7 +22,7 @@ class SubscriberTagsControllerTest extends TestCase
 
         $subscriber->tags()->save($tag);
 
-        $route = route('sendportal.api.subscribers.tags.index', [
+        $route = route('targetforce.api.subscribers.tags.index', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -45,7 +45,7 @@ class SubscriberTagsControllerTest extends TestCase
         $tag = $this->createTag();
         $subscriber = $this->createSubscriber();
 
-        $route = route('sendportal.api.subscribers.tags.store', [
+        $route = route('targetforce.api.subscribers.tags.store', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -57,7 +57,7 @@ class SubscriberTagsControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('sendportal_tag_subscriber', [
+        $this->assertDatabaseHas('targetforce_tag_subscriber', [
             'tag_id' => $tag->id,
             'subscriber_id' => $subscriber->id,
         ]);
@@ -80,7 +80,7 @@ class SubscriberTagsControllerTest extends TestCase
 
         $subscriber->tags()->save($oldTag);
 
-        $route = route('sendportal.api.subscribers.tags.update', [
+        $route = route('targetforce.api.subscribers.tags.update', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -92,12 +92,12 @@ class SubscriberTagsControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('sendportal_tag_subscriber', [
+        $this->assertDatabaseMissing('targetforce_tag_subscriber', [
             'tag_id' => $oldTag->id,
             'subscriber_id' => $subscriber->id,
         ]);
 
-        $this->assertDatabaseHas('sendportal_tag_subscriber', [
+        $this->assertDatabaseHas('targetforce_tag_subscriber', [
             'tag_id' => $newTag->id,
             'subscriber_id' => $subscriber->id,
         ]);
@@ -119,7 +119,7 @@ class SubscriberTagsControllerTest extends TestCase
 
         $subscriber->tags()->save($tag);
 
-        $route = route('sendportal.api.subscribers.tags.destroy', [
+        $route = route('targetforce.api.subscribers.tags.destroy', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -131,7 +131,7 @@ class SubscriberTagsControllerTest extends TestCase
 
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('sendportal_tag_subscriber', [
+        $this->assertDatabaseMissing('targetforce_tag_subscriber', [
             'tag_id' => $tag->id,
             'subscriber_id' => $subscriber->id,
         ]);

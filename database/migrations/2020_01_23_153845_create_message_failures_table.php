@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateMessageFailuresTable extends UpgradeMigration
 {
@@ -15,7 +15,7 @@ class CreateMessageFailuresTable extends UpgradeMigration
     {
         $messages = $this->getTableName('messages');
 
-        Schema::create('sendportal_message_failures', function (Blueprint $table) use ($messages) {
+        Schema::create('targetforce_message_failures', function (Blueprint $table) use ($messages) {
             $table->bigIncrements('id');
             $table->unsignedInteger('message_id');
             $table->string('severity')->nullable()->default(null);

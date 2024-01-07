@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\SubscriberFactory;
@@ -44,7 +44,7 @@ class Subscriber extends BaseModel
     }
 
     /** @var string */
-    protected $table = 'sendportal_subscribers';
+    protected $table = 'targetforce_subscribers';
 
     /** @var string[] */
     protected $fillable = [
@@ -64,7 +64,7 @@ class Subscriber extends BaseModel
 
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'sendportal_tag_subscriber')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'targetforce_tag_subscriber')->withTimestamps();
     }
 
     public function messages(): HasMany

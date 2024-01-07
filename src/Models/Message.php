@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\MessageFactory;
@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Ramsey\Uuid\Uuid;
-use Sendportal\Base\Facades\Helper;
-use Sendportal\Pro\Models\AutomationSchedule;
+use Targetforce\Base\Facades\Helper;
+use Targetforce\Pro\Models\AutomationSchedule;
 
 /**
  * @property int $id
@@ -60,7 +60,7 @@ class Message extends BaseModel
         return MessageFactory::new();
     }
 
-    protected $table = 'sendportal_messages';
+    protected $table = 'targetforce_messages';
 
     /** @var array */
     protected $guarded = [];

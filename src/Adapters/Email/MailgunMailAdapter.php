@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use Illuminate\Support\Arr;
 use Mailgun\Mailgun;
 use Mailgun\Model\Message\SendResponse;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 
 class MailgunMailAdapter extends BaseMailAdapter
 {

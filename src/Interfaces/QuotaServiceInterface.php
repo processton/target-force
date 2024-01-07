@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Interfaces;
+namespace Targetforce\Base\Interfaces;
 
-use Sendportal\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailService;
 
 interface QuotaServiceInterface
 {

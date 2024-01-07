@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Campaign Design'))
 
@@ -12,11 +12,11 @@
         @csrf
         @method('PUT')
 
-        @include('sendportal::templates.partials.editor')
+        @include('targetforce::templates.partials.editor')
 
         <br>
 
-        <a href="{{ route('sendportal.campaigns.template', $campaign->id) }}" class="btn btn-link"><i
+        <a href="{{ route('targetforce.campaigns.template', $campaign->id) }}" class="btn btn-link"><i
                 class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
 
         <button class="btn btn-primary" type="submit">{{ __('Save and continue') }}</button>

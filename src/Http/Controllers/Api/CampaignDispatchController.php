@@ -1,14 +1,14 @@
 <?php
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\Api\CampaignDispatchRequest;
-use Sendportal\Base\Http\Resources\Campaign as CampaignResource;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\Api\CampaignDispatchRequest;
+use Targetforce\Base\Http\Resources\Campaign as CampaignResource;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignDispatchController extends Controller
 {
@@ -36,7 +36,7 @@ class CampaignDispatchController extends Controller
     public function send(CampaignDispatchRequest $request, $campaignId)
     {
         $campaign = $request->getCampaign(['email_service', 'messages']);
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
 
         if ($this->quotaService->exceedsQuota($campaign->email_service, $campaign->unsent_count)) {
             return response([

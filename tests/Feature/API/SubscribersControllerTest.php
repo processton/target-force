@@ -7,9 +7,9 @@ namespace Tests\Feature\API;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class SubscribersControllerTest extends TestCase
@@ -24,7 +24,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber = $this->createSubscriber();
 
         // when
-        $route = route('sendportal.api.subscribers.index');
+        $route = route('targetforce.api.subscribers.index');
 
         $response = $this->get($route);
 
@@ -45,7 +45,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber = $this->createSubscriber();
 
         // when
-        $route = route('sendportal.api.subscribers.show', [
+        $route = route('targetforce.api.subscribers.show', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -64,7 +64,7 @@ class SubscribersControllerTest extends TestCase
     public function a_subscriber_can_be_created_by_authorised_users()
     {
         // when
-        $route = route('sendportal.api.subscribers.store');
+        $route = route('targetforce.api.subscribers.store');
 
         $request = [
             'first_name' => $this->faker->firstName,
@@ -76,7 +76,7 @@ class SubscribersControllerTest extends TestCase
 
         // then
         $response->assertStatus(201);
-        $this->assertDatabaseHas('sendportal_subscribers', $request);
+        $this->assertDatabaseHas('targetforce_subscribers', $request);
         $response->assertJson(['data' => $request]);
     }
 
@@ -87,7 +87,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber = $this->createSubscriber();
 
         // when
-        $route = route('sendportal.api.subscribers.update', [
+        $route = route('targetforce.api.subscribers.update', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -101,8 +101,8 @@ class SubscribersControllerTest extends TestCase
 
         // then
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('sendportal_subscribers', $subscriber->toArray());
-        $this->assertDatabaseHas('sendportal_subscribers', $request);
+        $this->assertDatabaseMissing('targetforce_subscribers', $subscriber->toArray());
+        $this->assertDatabaseHas('targetforce_subscribers', $request);
         $response->assertJson(['data' => $request]);
     }
 
@@ -113,7 +113,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber = $this->createSubscriber();
 
         // when
-        $route = route('sendportal.api.subscribers.destroy', [
+        $route = route('targetforce.api.subscribers.destroy', [
             'subscriber' => $subscriber->id,
         ]);
 
@@ -121,7 +121,7 @@ class SubscribersControllerTest extends TestCase
 
         // then
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('sendportal_subscribers', ['id' => $subscriber->id]);
+        $this->assertDatabaseMissing('targetforce_subscribers', ['id' => $subscriber->id]);
     }
 
     /** @test */
@@ -129,18 +129,18 @@ class SubscribersControllerTest extends TestCase
     {
         // given
         $subscriber = $this->createSubscriber();
-        $tag = Tag::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $tag = Tag::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
         $subscriber->tags()->attach($tag->id);
 
         // when
-        $response = $this->delete(route('sendportal.api.subscribers.destroy', [
+        $response = $this->delete(route('targetforce.api.subscribers.destroy', [
             'subscriber' => $subscriber->id,
         ]));
 
         // then
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('sendportal_subscribers', ['id' => $subscriber->id]);
-        $this->assertDatabaseMissing('sendportal_tag_subscriber', [
+        $this->assertDatabaseMissing('targetforce_subscribers', ['id' => $subscriber->id]);
+        $this->assertDatabaseMissing('targetforce_tag_subscriber', [
             'subscriber_id' => $subscriber->id
         ]);
     }
@@ -152,7 +152,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber = $this->createSubscriber();
 
         // when
-        $route = route('sendportal.api.subscribers.store');
+        $route = route('targetforce.api.subscribers.store');
 
         $updateData = [
             'first_name' => $this->faker->firstName,
@@ -165,8 +165,8 @@ class SubscribersControllerTest extends TestCase
         // then
         $response->assertStatus(200);
 
-        $this->assertDatabaseHas('sendportal_subscribers', array_merge($updateData, ['id' => $subscriber->id]));
-        $this->assertDatabaseCount('sendportal_subscribers', 1);
+        $this->assertDatabaseHas('targetforce_subscribers', array_merge($updateData, ['id' => $subscriber->id]));
+        $this->assertDatabaseCount('targetforce_subscribers', 1);
 
         $response->assertJson(['data' => $updateData]);
     }
@@ -178,7 +178,7 @@ class SubscribersControllerTest extends TestCase
         $tag = $this->createTag();
 
         // when
-        $route = route('sendportal.api.subscribers.store');
+        $route = route('targetforce.api.subscribers.store');
 
         $request = [
             'first_name' => $this->faker->firstName,
@@ -192,7 +192,7 @@ class SubscribersControllerTest extends TestCase
         // then
         $response->assertStatus(201);
 
-        $this->assertDatabaseHas('sendportal_subscribers', ['email' => $request['email']]);
+        $this->assertDatabaseHas('targetforce_subscribers', ['email' => $request['email']]);
 
         $subscriber = Subscriber::with('tags')->where('email', $request['email'])->first();
 
@@ -210,7 +210,7 @@ class SubscribersControllerTest extends TestCase
         $subscriber->tags()->save($tag1);
 
         // when
-        $route = route('sendportal.api.subscribers.store');
+        $route = route('targetforce.api.subscribers.store');
 
         $request = [
             'first_name' => $this->faker->firstName,

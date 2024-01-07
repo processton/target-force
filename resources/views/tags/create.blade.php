@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('New Tag'))
 
@@ -8,16 +8,16 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.card')
+    @component('targetforce::layouts.partials.card')
         @slot('cardHeader', __('Create Tag'))
 
         @slot('cardBody')
-            <form action="{{ route('sendportal.tags.store') }}" method="POST" class="form-horizontal">
+            <form action="{{ route('targetforce.tags.store') }}" method="POST" class="form-horizontal">
                 @csrf
 
-                @include('sendportal::tags.partials.form')
+                @include('targetforce::tags.partials.form')
 
-                <x-sendportal.submit-button :label="__('Save')" />
+                <x-targetforce.submit-button :label="__('Save')" />
             </form>
         @endSlot
     @endcomponent

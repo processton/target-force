@@ -7,10 +7,10 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\UnsubscribeEventType;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\UnsubscribeEventType;
 use Tests\TestCase;
 
 class MailjetWebhooksTest extends TestCase
@@ -19,7 +19,7 @@ class MailjetWebhooksTest extends TestCase
     use WithFaker;
 
     /** @var string */
-    protected $route = 'sendportal.api.webhooks.mailjet';
+    protected $route = 'targetforce.api.webhooks.mailjet';
 
     /** @test */
     public function it_accepts_delivery_webhooks()
@@ -154,7 +154,7 @@ class MailjetWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Temporary',
@@ -188,7 +188,7 @@ class MailjetWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Permanent',
@@ -219,7 +219,7 @@ class MailjetWebhooksTest extends TestCase
 
         // then
         $this->assertDatabaseHas(
-            'sendportal_message_failures',
+            'targetforce_message_failures',
             [
                 'message_id' => $message->id,
                 'severity' => 'Temporary',

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Carbon\Carbon;
 use Database\Factories\CampaignFactory;
@@ -75,7 +75,7 @@ class Campaign extends BaseModel
     }
 
     /** @var string */
-    protected $table = 'sendportal_campaigns';
+    protected $table = 'targetforce_campaigns';
 
     /** @var array */
     protected $guarded = [];
@@ -105,7 +105,7 @@ class Campaign extends BaseModel
      */
     public function tags(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class, 'sendportal_campaign_tag')->withTimestamps();
+        return $this->belongsToMany(Tag::class, 'targetforce_campaign_tag')->withTimestamps();
     }
     /**
      * Status of the campaign.
@@ -169,7 +169,7 @@ class Campaign extends BaseModel
             ->whereNull('unsubscribed_at')
             ->when(!$this->send_to_all, function (Builder $query) {
                 $query->whereHas('tags', function (Builder $subQuery) {
-                    $subQuery->whereIn('sendportal_tags.id', $this->tags->pluck('id'));
+                    $subQuery->whereIn('targetforce_tags.id', $this->tags->pluck('id'));
                 });
             })
             ->count();

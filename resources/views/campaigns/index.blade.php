@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Campaigns'))
 
@@ -8,11 +8,11 @@
 
 @section('content')
 
-    @include('sendportal::campaigns.partials.nav')
+    @include('targetforce::campaigns.partials.nav')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.campaigns.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.campaigns.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('New Campaign') }}
             </a>
         @endslot
@@ -24,7 +24,7 @@
                 <thead>
                 <tr>
                     <th>{{ __('Name') }}</th>
-                    @if (request()->routeIs('sendportal.campaigns.sent'))
+                    @if (request()->routeIs('targetforce.campaigns.sent'))
                         <th>{{ __('Sent') }}</th>
                         <th>{{ __('Opened') }}</th>
                         <th>{{ __('Clicked') }}</th>
@@ -39,14 +39,14 @@
                     <tr>
                         <td>
                             @if ($campaign->draft)
-                                <a href="{{ route('sendportal.campaigns.edit', $campaign->id) }}">{{ $campaign->name }}</a>
+                                <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}">{{ $campaign->name }}</a>
                             @elseif($campaign->sent)
-                                <a href="{{ route('sendportal.campaigns.reports.index', $campaign->id) }}">{{ $campaign->name }}</a>
+                                <a href="{{ route('targetforce.campaigns.reports.index', $campaign->id) }}">{{ $campaign->name }}</a>
                             @else
-                                <a href="{{ route('sendportal.campaigns.status', $campaign->id) }}">{{ $campaign->name }}</a>
+                                <a href="{{ route('targetforce.campaigns.status', $campaign->id) }}">{{ $campaign->name }}</a>
                             @endif
                         </td>
-                        @if (request()->routeIs('sendportal.campaigns.sent'))
+                        @if (request()->routeIs('targetforce.campaigns.sent'))
                             <td>{{ $campaignStats[$campaign->id]['counts']['sent'] }}</td>
                             <td>{{ number_format($campaignStats[$campaign->id]['ratios']['open'] * 100, 1) . '%' }}</td>
                             <td>
@@ -55,7 +55,7 @@
                         @endif
                         <td><span title="{{ $campaign->created_at }}">{{ $campaign->created_at->diffForHumans() }}</span></td>
                         <td>
-                            @include('sendportal::campaigns.partials.status')
+                            @include('targetforce::campaigns.partials.status')
                         </td>
                         <td>
                             <div class="dropdown">
@@ -65,25 +65,25 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     @if ($campaign->draft)
-                                        <a href="{{ route('sendportal.campaigns.edit', $campaign->id) }}"
+                                        <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}"
                                            class="dropdown-item">
                                             {{ __('Edit') }}
                                         </a>
                                     @else
-                                        <a href="{{ route('sendportal.campaigns.reports.index', $campaign->id) }}"
+                                        <a href="{{ route('targetforce.campaigns.reports.index', $campaign->id) }}"
                                            class="dropdown-item">
                                             {{ __('View Report') }}
                                         </a>
                                     @endif
 
-                                    <a href="{{ route('sendportal.campaigns.duplicate', $campaign->id) }}"
+                                    <a href="{{ route('targetforce.campaigns.duplicate', $campaign->id) }}"
                                        class="dropdown-item">
                                         {{ __('Duplicate') }}
                                     </a>
 
                                     @if($campaign->canBeCancelled())
                                         <div class="dropdown-divider"></div>
-                                        <a href="{{ route('sendportal.campaigns.confirm-cancel', $campaign->id) }}"
+                                        <a href="{{ route('targetforce.campaigns.confirm-cancel', $campaign->id) }}"
                                            class="dropdown-item">
                                             {{ __('Cancel') }}
                                         </a>
@@ -91,7 +91,7 @@
 
                                     @if ($campaign->draft)
                                         <div class="dropdown-divider"></div>
-                                        <a href="{{ route('sendportal.campaigns.destroy.confirm', $campaign->id) }}"
+                                        <a href="{{ route('targetforce.campaigns.destroy.confirm', $campaign->id) }}"
                                            class="dropdown-item">
                                             {{ __('Delete') }}
                                         </a>
@@ -104,7 +104,7 @@
                     <tr>
                         <td colspan="100%">
                             <p class="empty-table-text">
-                                @if (request()->routeIs('sendportal.campaigns.index'))
+                                @if (request()->routeIs('targetforce.campaigns.index'))
                                     {{ __('You do not have any draft campaigns.') }}
                                 @else
                                     {{ __('You do not have any sent campaigns.') }}
@@ -118,6 +118,6 @@
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.pagination', ['records' => $campaigns])
+    @include('targetforce::layouts.partials.pagination', ['records' => $campaigns])
 
 @endsection

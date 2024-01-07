@@ -1,8 +1,8 @@
 <?php
 
-namespace Sendportal\Base\Interfaces;
+namespace Targetforce\Base\Interfaces;
 
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 
 interface MailAdapterInterface
 {

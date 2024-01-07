@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Campaign Template'))
 
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="card-body">
-                        @include('sendportal::templates.partials.griditem')
+                        @include('targetforce::templates.partials.griditem')
                     </div>
                 </div>
             </div>
@@ -42,7 +42,7 @@
 
     {{ $templates->links() }}
 
-    <a href="{{ route('sendportal.campaigns.edit', $campaign->id) }}" class="btn btn-link"><i
+    <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}" class="btn btn-link"><i
             class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
 
     <button class="btn btn-primary" type="submit">{{ __('Save and continue') }}</button>

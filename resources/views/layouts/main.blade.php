@@ -11,18 +11,18 @@
                     </button>
 
                     <div class="logo text-center mt-4">
-                        <a href="{{ route('sendportal.dashboard') }}">
-                            <img src="{{ asset('/vendor/sendportal/img/logo-main.png') }}" alt="SendPortal" width="130">
+                        <a href="{{ route('targetforce.dashboard') }}">
+                            <img src="{{ asset('/vendor/targetforce/img/logo-main.png') }}" alt="SendPortal" width="130">
                         </a>
                     </div>
 
-                    @include('sendportal::layouts.partials.sidebar')
+                    @include('targetforce::layouts.partials.sidebar')
                 </div>
             </div>
         </div>
     </div>
 
-    @include('sendportal::layouts.partials.header')
+    @include('targetforce::layouts.partials.header')
 
 
     <div class="main-content pl-4-half pr-4-half pb-4-half">
@@ -32,12 +32,12 @@
             'register',
             'password.reset',
         ]))
-            @include('sendportal::layouts.partials.errors')
+            @include('targetforce::layouts.partials.errors')
         @endif
 
-        @include('sendportal::layouts.partials.success')
-        @include('sendportal::layouts.partials.warning')
-        @include('sendportal::layouts.partials.error')
+        @include('targetforce::layouts.partials.success')
+        @include('targetforce::layouts.partials.warning')
+        @include('targetforce::layouts.partials.error')
 
         @yield('content')
     </div>

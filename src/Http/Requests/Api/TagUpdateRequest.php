@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Requests\Api;
+namespace Targetforce\Base\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -14,7 +14,7 @@ class TagUpdateRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                Rule::unique('sendportal_tags')
+                Rule::unique('targetforce_tags')
                     ->where('workspace_id', $this->route('workspaceId'))
                     ->ignore($this->route('tag')),
             ],

@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Factories;
 
 use InvalidArgumentException;
-use Sendportal\Base\Adapters\MailgunMailAdapter;
-use Sendportal\Base\Adapters\PostmarkMailAdapter;
-use Sendportal\Base\Adapters\SendgridMailAdapter;
-use Sendportal\Base\Adapters\SesMailAdapter;
-use Sendportal\Base\Factories\MailAdapterFactory;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Adapters\MailgunMailAdapter;
+use Targetforce\Base\Adapters\PostmarkMailAdapter;
+use Targetforce\Base\Adapters\SendgridMailAdapter;
+use Targetforce\Base\Adapters\SesMailAdapter;
+use Targetforce\Base\Factories\MailAdapterFactory;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
 use Tests\TestCase;
 
 class MailAdapterFactoryTest extends TestCase

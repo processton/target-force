@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Forms;
+namespace Targetforce\Base\Http\Controllers\Forms;
 
 use Exception;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\CampaignStoreRequest;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Base\Repositories\EmailServiceTenantRepository;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Sendportal\Base\Repositories\TagTenantRepository;
-use Sendportal\Base\Repositories\TemplateTenantRepository;
-use Sendportal\Base\Services\Campaigns\CampaignStatisticsService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\CampaignStoreRequest;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\EmailServiceTenantRepository;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Repositories\TagTenantRepository;
+use Targetforce\Base\Repositories\TemplateTenantRepository;
+use Targetforce\Base\Services\Campaigns\CampaignStatisticsService;
 
 class FormsController extends Controller
 {
@@ -61,11 +61,11 @@ class FormsController extends Controller
      */
     public function index(): ViewContract
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $params = ['draft' => true];
         $campaigns = $this->campaigns->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
 
-        return view('sendportal::forms.index', [
+        return view('targetforce::forms.index', [
             'campaigns' => $campaigns,
             'campaignStats' => $this->campaignStatisticsService->getForPaginator($campaigns, $workspaceId),
         ]);
@@ -76,11 +76,11 @@ class FormsController extends Controller
      */
     public function sent(): ViewContract
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $params = ['sent' => true];
         $campaigns = $this->campaigns->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
 
-        return view('sendportal::campaigns.index', [
+        return view('targetforce::campaigns.index', [
             'campaigns' => $campaigns,
             'campaignStats' => $this->campaignStatisticsService->getForPaginator($campaigns, $workspaceId),
         ]);
@@ -91,15 +91,15 @@ class FormsController extends Controller
      */
     public function create(): ViewContract
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $templates = [null => '- None -'] + $this->templates->pluck($workspaceId);
-        $emailServices = $this->emailServices->all(Sendportal::currentWorkspaceId(), 'id', ['type'])
+        $emailServices = $this->emailServices->all(Targetforce::currentWorkspaceId(), 'id', ['type'])
             ->map(static function (EmailService $emailService) {
                 $emailService->formatted_name = "{$emailService->name} ({$emailService->type->name})";
                 return $emailService;
             });
 
-        return view('sendportal::campaigns.create', compact('templates', 'emailServices'));
+        return view('targetforce::campaigns.create', compact('templates', 'emailServices'));
     }
 
     /**
@@ -107,10 +107,10 @@ class FormsController extends Controller
      */
     public function store(CampaignStoreRequest $request): RedirectResponse
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $campaign = $this->campaigns->store($workspaceId, $this->handleCheckboxes($request->validated()));
 
-        return redirect()->route('sendportal.campaigns.preview', $campaign->id);
+        return redirect()->route('targetforce.campaigns.preview', $campaign->id);
     }
 
     /**
@@ -118,9 +118,9 @@ class FormsController extends Controller
      */
     public function show(int $id): ViewContract
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $id);
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
 
-        return view('sendportal::campaigns.show', compact('campaign'));
+        return view('targetforce::campaigns.show', compact('campaign'));
     }
 
     /**
@@ -128,7 +128,7 @@ class FormsController extends Controller
      */
     public function edit(int $id): ViewContract
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $campaign = $this->campaigns->find($workspaceId, $id);
         $emailServices = $this->emailServices->all($workspaceId, 'id', ['type'])
             ->map(static function (EmailService $emailService) {
@@ -137,7 +137,7 @@ class FormsController extends Controller
             });
         $templates = [null => '- None -'] + $this->templates->pluck($workspaceId);
 
-        return view('sendportal::campaigns.edit', compact('campaign', 'emailServices', 'templates'));
+        return view('targetforce::campaigns.edit', compact('campaign', 'emailServices', 'templates'));
     }
 
     /**
@@ -145,14 +145,14 @@ class FormsController extends Controller
      */
     public function update(int $campaignId, CampaignStoreRequest $request): RedirectResponse
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $campaign = $this->campaigns->update(
             $workspaceId,
             $campaignId,
             $this->handleCheckboxes($request->validated())
         );
 
-        return redirect()->route('sendportal.campaigns.preview', $campaign->id);
+        return redirect()->route('targetforce.campaigns.preview', $campaign->id);
     }
 
     /**
@@ -161,16 +161,16 @@ class FormsController extends Controller
      */
     public function preview(int $id)
     {
-        $campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $id);
-        $subscriberCount = $this->subscribers->countActive(Sendportal::currentWorkspaceId());
+        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
+        $subscriberCount = $this->subscribers->countActive(Targetforce::currentWorkspaceId());
 
         if (!$campaign->draft) {
-            return redirect()->route('sendportal.campaigns.status', $id);
+            return redirect()->route('targetforce.campaigns.status', $id);
         }
 
-        $tags = $this->tags->all(Sendportal::currentWorkspaceId(), 'name');
+        $tags = $this->tags->all(Targetforce::currentWorkspaceId(), 'name');
 
-        return view('sendportal::campaigns.preview', compact('campaign', 'tags', 'subscriberCount'));
+        return view('targetforce::campaigns.preview', compact('campaign', 'tags', 'subscriberCount'));
     }
 
     /**
@@ -179,14 +179,14 @@ class FormsController extends Controller
      */
     public function status(int $id)
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $campaign = $this->campaigns->find($workspaceId, $id, ['status']);
 
         if ($campaign->sent) {
-            return redirect()->route('sendportal.campaigns.reports.index', $id);
+            return redirect()->route('targetforce.campaigns.reports.index', $id);
         }
 
-        return view('sendportal::campaigns.status', [
+        return view('targetforce::campaigns.status', [
             'campaign' => $campaign,
             'campaignStats' => $this->campaignStatisticsService->getForCampaign($campaign, $workspaceId),
         ]);

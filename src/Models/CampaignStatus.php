@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 class CampaignStatus extends BaseModel
 {
-    protected $table = 'sendportal_campaign_statuses';
+    protected $table = 'targetforce_campaign_statuses';
 
     /** @var bool */
     public $timestamps = false;

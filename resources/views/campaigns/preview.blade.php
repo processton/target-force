@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Confirm Campaign'))
 
@@ -47,7 +47,7 @@
 
     <div class="col-md-4">
 
-        <form action="{{ route('sendportal.campaigns.test', $campaign->id) }}" method="POST">
+        <form action="{{ route('targetforce.campaigns.test', $campaign->id) }}" method="POST">
             @csrf
 
             <div class="card mb-4">
@@ -70,7 +70,7 @@
             </div>
         </form>
 
-        <form action="{{ route('sendportal.campaigns.send', $campaign->id) }}" method="POST">
+        <form action="{{ route('targetforce.campaigns.send', $campaign->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card mb-4">
@@ -136,7 +136,7 @@
             </div>
 
             <div>
-                <a href="{{ route('sendportal.campaigns.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
+                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
                 <button type="submit" class="btn btn-primary">{{ __('Send campaign') }}</button>
             </div>
 

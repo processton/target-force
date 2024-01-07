@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Sendportal\Base\UpgradeMigration;
+use Targetforce\Base\UpgradeMigration;
 
 class CreateCampaignSegmentTable extends UpgradeMigration
 {
@@ -16,7 +16,7 @@ class CreateCampaignSegmentTable extends UpgradeMigration
         $segments = $this->getTableName('segments');
         $campaigns = $this->getTableName('campaigns');
 
-        Schema::create('sendportal_campaign_segment', function (Blueprint $table) use ($campaigns, $segments) {
+        Schema::create('targetforce_campaign_segment', function (Blueprint $table) use ($campaigns, $segments) {
             $table->increments('id');
             $table->unsignedInteger('segment_id');
             $table->unsignedInteger('campaign_id');

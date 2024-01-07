@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Webview;
+namespace Targetforce\Base\Http\Controllers\Webview;
 
 use Exception;
 use Illuminate\Contracts\View\View as ViewContract;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Services\Content\MergeContentService;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Services\Content\MergeContentService;
 
 class WebviewController extends Controller
 {
@@ -30,6 +30,6 @@ class WebviewController extends Controller
 
         $content = $this->merger->handle($message);
 
-        return view('sendportal::webview.show', compact('content'));
+        return view('targetforce::webview.show', compact('content'));
     }
 }

@@ -6,12 +6,12 @@ namespace Tests\Feature\Content;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Template;
-use Sendportal\Base\Services\Content\MergeContentService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Template;
+use Targetforce\Base\Services\Content\MergeContentService;
 use Tests\TestCase;
 
 class MergeContentTest extends TestCase
@@ -61,7 +61,7 @@ class MergeContentTest extends TestCase
         $mergedContent = $this->mergeContent($message);
 
         // then
-        $route = route('sendportal.subscriptions.unsubscribe', $message->hash);
+        $route = route('targetforce.subscriptions.unsubscribe', $message->hash);
 
         // NOTE(david): the string has to be formatted like this to match!
         $expectedHtml = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
@@ -167,20 +167,20 @@ class MergeContentTest extends TestCase
         /** @var Template $template */
         $template = Template::factory()->create([
             'content' => $templateContent ?? '<p>{{content}}</p>',
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         /** @var Campaign $campaign */
         $campaign = Campaign::factory()->create([
             'template_id' => $template->id,
             'content' => $campaignContent,
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         return Message::factory()->create([
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services;
+namespace Targetforce\Base\Services;
 
 use Illuminate\Support\Arr;
 

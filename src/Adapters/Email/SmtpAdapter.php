@@ -1,9 +1,9 @@
 <?php
 
-namespace Sendportal\Base\Adapters;
+namespace Targetforce\Base\Adapters\Email;
 
 use Illuminate\Support\Arr;
-use Sendportal\Base\Services\Messages\MessageTrackingOptions;
+use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;

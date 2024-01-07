@@ -6,13 +6,13 @@ namespace Tests\Feature\API;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Interfaces\QuotaServiceInterface;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
-use Sendportal\Base\Services\QuotaService;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Interfaces\QuotaServiceInterface;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
+use Targetforce\Base\Services\QuotaService;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -30,12 +30,12 @@ class CampaignDispatchControllerTest extends TestCase
         $campaign = Campaign::factory()
             ->draft()
             ->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
                 'email_service_id' => $emailService->id,
             ]);
 
         $this
-            ->postJson(route('sendportal.api.campaigns.send', [
+            ->postJson(route('targetforce.api.campaigns.send', [
                 'id' => $campaign->id
             ]))
             ->assertOk()
@@ -56,7 +56,7 @@ class CampaignDispatchControllerTest extends TestCase
         $campaign = $this->createCampaign($emailService);
 
         $this
-            ->postJson(route('sendportal.api.campaigns.send', [
+            ->postJson(route('targetforce.api.campaigns.send', [
                 'id' => $campaign->id,
             ]))
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
@@ -73,17 +73,17 @@ class CampaignDispatchControllerTest extends TestCase
         }));
 
         $emailService = EmailService::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'type_id' => EmailServiceType::SES
         ]);
 
         $campaign = Campaign::factory()->draft()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id,
         ]);
 
         $this
-            ->postJson(route('sendportal.api.campaigns.send', [
+            ->postJson(route('targetforce.api.campaigns.send', [
                 'id' => $campaign->id,
             ]))
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)

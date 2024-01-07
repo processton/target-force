@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api;
+namespace Targetforce\Base\Http\Controllers\Api;
 
 use Exception;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\Api\CampaignStoreRequest;
-use Sendportal\Base\Http\Resources\Campaign as CampaignResource;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\Api\CampaignStoreRequest;
+use Targetforce\Base\Http\Resources\Campaign as CampaignResource;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignsController extends Controller
 {
@@ -28,7 +28,7 @@ class CampaignsController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
 
         return CampaignResource::collection($this->campaigns->paginate($workspaceId, 'id', ['tags']));
     }
@@ -38,7 +38,7 @@ class CampaignsController extends Controller
      */
     public function store(CampaignStoreRequest $request): CampaignResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $data = Arr::except($request->validated(), ['tags']);
 
         $data['save_as_draft'] = $request->get('save_as_draft') ?? 0;
@@ -55,7 +55,7 @@ class CampaignsController extends Controller
      */
     public function show(int $id): CampaignResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $campaign = $this->campaigns->find($workspaceId, $id);
 
         return new CampaignResource($campaign);
@@ -66,7 +66,7 @@ class CampaignsController extends Controller
      */
     public function update(CampaignStoreRequest $request, int $id): CampaignResource
     {
-        $workspaceId = Sendportal::currentWorkspaceId();
+        $workspaceId = Targetforce::currentWorkspaceId();
         $data = Arr::except($request->validated(), ['tags']);
 
         $data['save_as_draft'] = $request->get('save_as_draft') ?? 0;

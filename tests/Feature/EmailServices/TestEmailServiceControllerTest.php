@@ -7,10 +7,10 @@ namespace Tests\Feature\EmailServices;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Services\Messages\DispatchTestMessage;
-use Sendportal\Base\Services\Messages\MessageOptions;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Services\Messages\DispatchTestMessage;
+use Targetforce\Base\Services\Messages\MessageOptions;
 use Tests\TestCase;
 
 class TestEmailServiceControllerTest extends TestCase
@@ -21,10 +21,10 @@ class TestEmailServiceControllerTest extends TestCase
     public function the_test_email_service_page_is_accessible_by_authenticated_users()
     {
         // given
-        $service = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $service = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.email_services.test.create', $service->id));
+        $response = $this->get(route('targetforce.email_services.test.create', $service->id));
 
         // then
         $response->assertOk();
@@ -34,7 +34,7 @@ class TestEmailServiceControllerTest extends TestCase
     public function an_email_service_cannot_be_tested_without_a_from_email_address()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $postData = [
             'to' => 'example@example.org',
@@ -43,11 +43,11 @@ class TestEmailServiceControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->from(route('sendportal.email_services.test.create', $emailService->id))
-            ->post(route('sendportal.email_services.test.store', $emailService->id), $postData);
+        $response = $this->from(route('targetforce.email_services.test.create', $emailService->id))
+            ->post(route('targetforce.email_services.test.store', $emailService->id), $postData);
 
         // then
-        $response->assertRedirect(route('sendportal.email_services.test.create', $emailService->id));
+        $response->assertRedirect(route('targetforce.email_services.test.create', $emailService->id));
         $response->assertSessionHasErrors('from');
     }
 
@@ -55,7 +55,7 @@ class TestEmailServiceControllerTest extends TestCase
     public function an_email_service_cannot_be_tested_without_a_subject()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $postData = [
             'to' => 'example@example.org',
@@ -64,11 +64,11 @@ class TestEmailServiceControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->from(route('sendportal.email_services.test.create', $emailService->id))
-            ->post(route('sendportal.email_services.test.store', $emailService->id), $postData);
+        $response = $this->from(route('targetforce.email_services.test.create', $emailService->id))
+            ->post(route('targetforce.email_services.test.store', $emailService->id), $postData);
 
         // then
-        $response->assertRedirect(route('sendportal.email_services.test.create', $emailService->id));
+        $response->assertRedirect(route('targetforce.email_services.test.create', $emailService->id));
         $response->assertSessionHasErrors('subject');
     }
 
@@ -76,7 +76,7 @@ class TestEmailServiceControllerTest extends TestCase
     public function an_email_service_cannot_be_tested_without_a_body()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $postData = [
             'to' => 'example@example.org',
@@ -85,11 +85,11 @@ class TestEmailServiceControllerTest extends TestCase
         ];
 
         // when
-        $response = $this->from(route('sendportal.email_services.test.create', $emailService->id))
-            ->post(route('sendportal.email_services.test.store', $emailService->id), $postData);
+        $response = $this->from(route('targetforce.email_services.test.create', $emailService->id))
+            ->post(route('targetforce.email_services.test.store', $emailService->id), $postData);
 
         // then
-        $response->assertRedirect(route('sendportal.email_services.test.create', $emailService->id));
+        $response->assertRedirect(route('targetforce.email_services.test.create', $emailService->id));
         $response->assertSessionHasErrors('body');
     }
 
@@ -97,9 +97,9 @@ class TestEmailServiceControllerTest extends TestCase
     public function an_email_service_can_be_tested_by_an_authenticated_user()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $from = 'test@sendportal.io';
+        $from = 'test@targetforce.io';
 
         $postData = [
             'to' => 'example@example.org',
@@ -112,7 +112,7 @@ class TestEmailServiceControllerTest extends TestCase
             $mock->shouldReceive('testService')
                 ->once()
                 ->withArgs(function ($workspaceId, $targetService, MessageOptions $options) use ($emailService, $from) {
-                    return $workspaceId === Sendportal::currentWorkspaceId()
+                    return $workspaceId === Targetforce::currentWorkspaceId()
                         && $targetService->id === $emailService->id
                         && $options->getTo() === 'example@example.org'
                         && $options->getFromEmail() === $from;
@@ -121,11 +121,11 @@ class TestEmailServiceControllerTest extends TestCase
         }));
 
         // when
-        $response = $this->from(route('sendportal.email_services.test.create', $emailService->id))
-            ->post(route('sendportal.email_services.test.store', $emailService->id), $postData);
+        $response = $this->from(route('targetforce.email_services.test.create', $emailService->id))
+            ->post(route('targetforce.email_services.test.store', $emailService->id), $postData);
 
         // then
-        $response->assertRedirect(route('sendportal.email_services.index'));
+        $response->assertRedirect(route('targetforce.email_services.index'));
         $response->assertSessionHas('success');
     }
 
@@ -133,9 +133,9 @@ class TestEmailServiceControllerTest extends TestCase
     public function it_should_redirect_the_user_to_the_email_service_test_page_if_the_email_service_test_fails()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        $from = 'test@sendportal.io';
+        $from = 'test@targetforce.io';
 
         $postData = [
             'to' => 'example@example.org',
@@ -148,7 +148,7 @@ class TestEmailServiceControllerTest extends TestCase
             $mock->shouldReceive('testService')
                 ->once()
                 ->withArgs(function ($workspaceId, $targetService, MessageOptions $options) use ($emailService, $from) {
-                    return $workspaceId === Sendportal::currentWorkspaceId()
+                    return $workspaceId === Targetforce::currentWorkspaceId()
                         && $targetService->id === $emailService->id
                         && $options->getTo() === 'example@example.org'
                         && $options->getFromEmail() === $from;
@@ -157,11 +157,11 @@ class TestEmailServiceControllerTest extends TestCase
         }));
 
         // when
-        $response = $this->from(route('sendportal.email_services.test.create', $emailService->id))
-            ->post(route('sendportal.email_services.test.store', $emailService->id), $postData);
+        $response = $this->from(route('targetforce.email_services.test.create', $emailService->id))
+            ->post(route('targetforce.email_services.test.store', $emailService->id), $postData);
 
         // then
-        $response->assertRedirect(route('sendportal.email_services.test.create', $emailService->id));
+        $response->assertRedirect(route('targetforce.email_services.test.create', $emailService->id));
         $response->assertSessionHas('error', 'Response: whoops');
     }
 }

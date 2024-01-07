@@ -6,9 +6,9 @@ namespace Tests\Feature\Tags;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Models\Tag;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Models\Tag;
 use Tests\TestCase;
 
 class TagsControllerTest extends TestCase
@@ -20,10 +20,10 @@ class TagsControllerTest extends TestCase
     public function the_index_of_tags_is_accessible_to_authenticated_users()
     {
         // given
-        Tag::factory()->count(3)->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        Tag::factory()->count(3)->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.tags.index'));
+        $response = $this->get(route('targetforce.tags.index'));
 
         // then
         $response->assertOk();
@@ -33,7 +33,7 @@ class TagsControllerTest extends TestCase
     public function the_tag_create_form_is_accessible_to_authenticated_users()
     {
         // when
-        $response = $this->get(route('sendportal.tags.create'));
+        $response = $this->get(route('targetforce.tags.create'));
 
         // then
         $response->assertOk();
@@ -49,12 +49,12 @@ class TagsControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.tags.store'), $tagStoreData);
+            ->post(route('targetforce.tags.store'), $tagStoreData);
 
         // then
         $response->assertRedirect();
-        $this->assertDatabaseHas('sendportal_tags', [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+        $this->assertDatabaseHas('targetforce_tags', [
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'name' => $tagStoreData['name']
         ]);
     }
@@ -63,10 +63,10 @@ class TagsControllerTest extends TestCase
     public function the_tag_edit_view_is_accessible_by_authenticated_users()
     {
         // given
-        $tag = Tag::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $tag = Tag::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.tags.edit', $tag->id));
+        $response = $this->get(route('targetforce.tags.edit', $tag->id));
 
         // then
         $response->assertOk();
@@ -76,7 +76,7 @@ class TagsControllerTest extends TestCase
     public function a_tag_is_updateable_by_an_authenticated_user()
     {
         // given
-        $tag = Tag::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $tag = Tag::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $tagUpdateData = [
             'name' => $this->faker->word
@@ -84,11 +84,11 @@ class TagsControllerTest extends TestCase
 
         // when
         $response = $this
-            ->put(route('sendportal.tags.update', $tag->id), $tagUpdateData);
+            ->put(route('targetforce.tags.update', $tag->id), $tagUpdateData);
 
         // then
         $response->assertRedirect();
-        $this->assertDatabaseHas('sendportal_tags', [
+        $this->assertDatabaseHas('targetforce_tags', [
             'id' => $tag->id,
             'name' => $tagUpdateData['name']
         ]);
@@ -99,11 +99,11 @@ class TagsControllerTest extends TestCase
     {
         // given
         $subscribers = Subscriber::factory()->count(5)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
         ]);
 
         $tag = Tag::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         $tag->subscribers()->attach($subscribers);
@@ -111,7 +111,7 @@ class TagsControllerTest extends TestCase
         self::assertCount($subscribers->count(), $tag->subscribers);
 
         // when
-        $this->put(route('sendportal.tags.update', $tag->id), [
+        $this->put(route('targetforce.tags.update', $tag->id), [
             'name' => 'Very Cool New Name',
         ]);
 
@@ -126,16 +126,16 @@ class TagsControllerTest extends TestCase
     public function a_tag_can_be_deleted()
     {
         // given
-        $tag = Tag::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $tag = Tag::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
         $response = $this
-            ->delete(route('sendportal.tags.destroy', $tag->id));
+            ->delete(route('targetforce.tags.destroy', $tag->id));
 
         // then
         $response->assertRedirect();
 
-        $this->assertDatabaseMissing('sendportal_tags', [
+        $this->assertDatabaseMissing('targetforce_tags', [
             'id' => $tag->id,
         ]);
     }
@@ -144,14 +144,14 @@ class TagsControllerTest extends TestCase
     public function a_tag_name_must_be_unique_for_a_workspace()
     {
         // given
-        $tag = Tag::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $tag = Tag::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $request = [
             'name' => $tag->name,
         ];
 
         // when
-        $response = $this->post(route('sendportal.tags.store'), $request);
+        $response = $this->post(route('targetforce.tags.store'), $request);
 
         // then
         $response->assertRedirect()

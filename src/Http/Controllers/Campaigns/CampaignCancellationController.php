@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Campaigns;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignCancellationController extends Controller
 {
@@ -27,9 +27,9 @@ class CampaignCancellationController extends Controller
      */
     public function confirm(int $campaignId)
     {
-        $campaign = $this->campaignRepository->find(Sendportal::currentWorkspaceId(), $campaignId, ['status']);
+        $campaign = $this->campaignRepository->find(Targetforce::currentWorkspaceId(), $campaignId, ['status']);
 
-        return view('sendportal::campaigns.cancel', [
+        return view('targetforce::campaigns.cancel', [
             'campaign' => $campaign,
         ]);
     }
@@ -40,24 +40,24 @@ class CampaignCancellationController extends Controller
     public function cancel(int $campaignId)
     {
         /** @var Campaign $campaign */
-        $campaign = $this->campaignRepository->find(Sendportal::currentWorkspaceId(), $campaignId, ['status']);
+        $campaign = $this->campaignRepository->find(Targetforce::currentWorkspaceId(), $campaignId, ['status']);
         $originalStatus = $campaign->status;
 
         if (!$campaign->canBeCancelled()) {
             throw ValidationException::withMessages([
                 'campaignStatus' => "{$campaign->status->name} campaigns cannot be cancelled.",
-            ])->redirectTo(route('sendportal.campaigns.index'));
+            ])->redirectTo(route('targetforce.campaigns.index'));
         }
 
         if ($campaign->save_as_draft && !$campaign->allDraftsCreated()) {
             throw ValidationException::withMessages([
                 'messagesPendingDraft' => __('Campaigns that save draft messages cannot be cancelled until all drafts have been created.'),
-            ])->redirectTo(route('sendportal.campaigns.index'));
+            ])->redirectTo(route('targetforce.campaigns.index'));
         }
 
         $this->campaignRepository->cancelCampaign($campaign);
 
-        return redirect()->route('sendportal.campaigns.index')->with([
+        return redirect()->route('targetforce.campaigns.index')->with([
             'success' => $this->getSuccessMessage($originalStatus, $campaign),
         ]);
     }

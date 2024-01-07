@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Email Templates'))
 
@@ -8,14 +8,14 @@
 
 @section('content')
 
-    @component('sendportal::layouts.partials.actions')
+    @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('sendportal.templates.create') }}">
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.templates.create') }}">
                 <i class="fa fa-plus mr-1"></i> {{ __('New Template') }}
             </a>
         @endslot
     @endcomponent
 
-    @include('sendportal::templates.partials.grid')
+    @include('targetforce::templates.partials.grid')
 
 @endsection

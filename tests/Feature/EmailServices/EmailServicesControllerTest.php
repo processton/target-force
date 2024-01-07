@@ -7,10 +7,10 @@ namespace Tests\Feature\EmailServices;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\EmailServiceType;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\EmailServiceType;
 use Tests\TestCase;
 
 class EmailServicesControllerTest extends TestCase
@@ -22,7 +22,7 @@ class EmailServicesControllerTest extends TestCase
     public function the_provider_create_form_is_accessible_to_authenticated_users()
     {
         // when
-        $response = $this->get(route('sendportal.email_services.create'));
+        $response = $this->get(route('targetforce.email_services.create'));
 
         // then
         $response->assertOk();
@@ -42,12 +42,12 @@ class EmailServicesControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.email_services.store'), $emailServiceStoreData);
+            ->post(route('targetforce.email_services.store'), $emailServiceStoreData);
 
         // then
         $response->assertRedirect();
-        $this->assertDatabaseHas('sendportal_email_services', [
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+        $this->assertDatabaseHas('targetforce_email_services', [
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'name' => $emailServiceStoreData['name'],
             'type_id' => $emailServiceStoreData['type_id']
         ]);
@@ -57,10 +57,10 @@ class EmailServicesControllerTest extends TestCase
     public function the_email_service_edit_view_is_accessible_by_authenticated_users()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
-        $response = $this->get(route('sendportal.email_services.edit', $emailService->id));
+        $response = $this->get(route('targetforce.email_services.edit', $emailService->id));
 
         // then
         $response->assertOk();
@@ -70,7 +70,7 @@ class EmailServicesControllerTest extends TestCase
     public function an_email_service_is_updateable_by_an_authenticated_user()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $emailServiceUpdateData = [
             'name' => $this->faker->word,
@@ -81,11 +81,11 @@ class EmailServicesControllerTest extends TestCase
 
         // when
         $response = $this
-            ->put(route('sendportal.email_services.update', $emailService->id), $emailServiceUpdateData);
+            ->put(route('targetforce.email_services.update', $emailService->id), $emailServiceUpdateData);
 
         // then
         $response->assertRedirect();
-        $this->assertDatabaseHas('sendportal_email_services', [
+        $this->assertDatabaseHas('targetforce_email_services', [
             'id' => $emailService->id,
             'name' => $emailServiceUpdateData['name']
         ]);
@@ -95,14 +95,14 @@ class EmailServicesControllerTest extends TestCase
     public function an_email_service_can_be_deleted_by_an_authenticated_user()
     {
         // given
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         // when
         $this
-            ->delete(route('sendportal.email_services.delete', $emailService->id));
+            ->delete(route('targetforce.email_services.delete', $emailService->id));
 
         // then
-        $this->assertDatabaseMissing('sendportal_email_services', [
+        $this->assertDatabaseMissing('targetforce_email_services', [
             'id' => $emailService->id
         ]);
     }
@@ -118,7 +118,7 @@ class EmailServicesControllerTest extends TestCase
 
         // when
         $response = $this
-            ->post(route('sendportal.email_services.store'), $emailServiceStoreData);
+            ->post(route('targetforce.email_services.store'), $emailServiceStoreData);
 
         // then
         $response->assertRedirect();
@@ -128,22 +128,22 @@ class EmailServicesControllerTest extends TestCase
     /** @test */
     public function email_services_cannot_be_deleted_if_they_are_being_used()
     {
-        $emailService = EmailService::factory()->create(['workspace_id' => Sendportal::currentWorkspaceId()]);
+        $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         Campaign::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id
         ]);
 
         // when
         $response = $this
-            ->delete(route('sendportal.email_services.delete', $emailService->id));
+            ->delete(route('targetforce.email_services.delete', $emailService->id));
 
         // then
         $response->assertRedirect();
         $response->assertSessionHasErrors();
 
-        $this->assertDatabaseHas('sendportal_email_services', [
+        $this->assertDatabaseHas('targetforce_email_services', [
             'id' => $emailService->id
         ]);
     }

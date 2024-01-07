@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Subscriptions;
+namespace Targetforce\Base\Http\Controllers\Subscriptions;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Sendportal\Base\Http\Controllers\Controller;
-use Sendportal\Base\Http\Requests\SubscriptionToggleRequest;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\UnsubscribeEventType;
-use Sendportal\Base\Repositories\Messages\MessageTenantRepositoryInterface;
+use Targetforce\Base\Http\Controllers\Controller;
+use Targetforce\Base\Http\Requests\SubscriptionToggleRequest;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\UnsubscribeEventType;
+use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 
 class SubscriptionsController extends Controller
 {
@@ -29,7 +29,7 @@ class SubscriptionsController extends Controller
     {
         $message = Message::with('subscriber')->where('hash', $messageHash)->first();
 
-        return view('sendportal::subscriptions.unsubscribe', compact('message'));
+        return view('targetforce::subscriptions.unsubscribe', compact('message'));
     }
 
     /**
@@ -39,7 +39,7 @@ class SubscriptionsController extends Controller
     {
         $message = Message::with('subscriber')->where('hash', $messageHash)->first();
 
-        return view('sendportal::subscriptions.subscribe', compact('message'));
+        return view('targetforce::subscriptions.subscribe', compact('message'));
     }
 
     /**
@@ -60,7 +60,7 @@ class SubscriptionsController extends Controller
             $subscriber->unsubscribe_event_id = UnsubscribeEventType::MANUAL_BY_SUBSCRIBER;
             $subscriber->save();
 
-            return redirect()->route('sendportal.subscriptions.subscribe', $message->hash)
+            return redirect()->route('targetforce.subscriptions.subscribe', $message->hash)
                 ->with('success', __('You have been successfully removed from the mailing list.'));
         }
 
@@ -71,7 +71,7 @@ class SubscriptionsController extends Controller
         $subscriber->unsubscribe_event_id = null;
         $subscriber->save();
 
-        return redirect()->route('sendportal.subscriptions.unsubscribe', $message->hash)
+        return redirect()->route('targetforce.subscriptions.unsubscribe', $message->hash)
             ->with('success', __('You have been added to the mailing list.'));
     }
 }

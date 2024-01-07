@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Message;
 
 class MessageTrackingOptions
 {

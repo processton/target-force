@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers\Api\Webhooks;
+namespace Targetforce\Base\Http\Controllers\Api\Webhooks;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
-use Sendportal\Base\Events\Webhooks\MailgunWebhookReceived;
-use Sendportal\Base\Http\Controllers\Controller;
+use Targetforce\Base\Events\Webhooks\MailgunWebhookReceived;
+use Targetforce\Base\Http\Controllers\Controller;
 
 class MailgunWebhooksController extends Controller
 {

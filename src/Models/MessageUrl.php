@@ -1,10 +1,10 @@
 <?php
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 class MessageUrl extends BaseModel
 {
-    protected $table = 'sendportal_message_urls';
+    protected $table = 'targetforce_message_urls';
 
     /** @var array */
     protected $guarded = [];

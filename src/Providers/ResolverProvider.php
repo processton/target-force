@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Providers;
+namespace Targetforce\Base\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Sendportal\Base\Services\ResolverService;
+use Targetforce\Base\Services\ResolverService;
 
 class ResolverProvider extends ServiceProvider
 {
@@ -17,7 +17,7 @@ class ResolverProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('sendportal.resolver', function () {
+        $this->app->singleton('targetforce.resolver', function () {
             return new ResolverService();
         });
     }

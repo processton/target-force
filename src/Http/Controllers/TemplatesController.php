@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Controllers;
+namespace Targetforce\Base\Http\Controllers;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Http\Requests\TemplateStoreRequest;
-use Sendportal\Base\Http\Requests\TemplateUpdateRequest;
-use Sendportal\Base\Repositories\TemplateTenantRepository;
-use Sendportal\Base\Services\Templates\TemplateService;
-use Sendportal\Base\Traits\NormalizeTags;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Http\Requests\TemplateStoreRequest;
+use Targetforce\Base\Http\Requests\TemplateUpdateRequest;
+use Targetforce\Base\Repositories\TemplateTenantRepository;
+use Targetforce\Base\Services\Templates\TemplateService;
+use Targetforce\Base\Traits\NormalizeTags;
 use Throwable;
 
 class TemplatesController extends Controller
@@ -36,14 +36,14 @@ class TemplatesController extends Controller
      */
     public function index(): View
     {
-        $templates = $this->templates->paginate(Sendportal::currentWorkspaceId(), 'name');
+        $templates = $this->templates->paginate(Targetforce::currentWorkspaceId(), 'name');
 
-        return view('sendportal::templates.index', compact('templates'));
+        return view('targetforce::templates.index', compact('templates'));
     }
 
     public function create(): View
     {
-        return view('sendportal::templates.create');
+        return view('targetforce::templates.create');
     }
 
     /**
@@ -53,10 +53,10 @@ class TemplatesController extends Controller
     {
         $data = $request->validated();
 
-        $this->service->store(Sendportal::currentWorkspaceId(), $data);
+        $this->service->store(Targetforce::currentWorkspaceId(), $data);
 
         return redirect()
-            ->route('sendportal.templates.index');
+            ->route('targetforce.templates.index');
     }
 
     /**
@@ -64,9 +64,9 @@ class TemplatesController extends Controller
      */
     public function edit(int $id): View
     {
-        $template = $this->templates->find(Sendportal::currentWorkspaceId(), $id);
+        $template = $this->templates->find(Targetforce::currentWorkspaceId(), $id);
 
-        return view('sendportal::templates.edit', compact('template'));
+        return view('targetforce::templates.edit', compact('template'));
     }
 
     /**
@@ -76,10 +76,10 @@ class TemplatesController extends Controller
     {
         $data = $request->validated();
 
-        $this->service->update(Sendportal::currentWorkspaceId(), $id, $data);
+        $this->service->update(Targetforce::currentWorkspaceId(), $id, $data);
 
         return redirect()
-            ->route('sendportal.templates.index');
+            ->route('targetforce.templates.index');
     }
 
     /**
@@ -87,10 +87,10 @@ class TemplatesController extends Controller
      */
     public function destroy(int $id): RedirectResponse
     {
-        $this->service->delete(Sendportal::currentWorkspaceId(), $id);
+        $this->service->delete(Targetforce::currentWorkspaceId(), $id);
 
         return redirect()
-            ->route('sendportal.templates.index')
+            ->route('targetforce.templates.index')
             ->with('success', __('Template successfully deleted.'));
     }
 }

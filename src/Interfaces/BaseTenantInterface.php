@@ -1,6 +1,6 @@
 <?php
 
-namespace Sendportal\Base\Interfaces;
+namespace Targetforce\Base\Interfaces;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;

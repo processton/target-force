@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Template;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Template;
 
 class CampaignFactory extends Factory
 {
@@ -20,7 +20,7 @@ class CampaignFactory extends Factory
     {
         return [
             'name' => $this->faker->sentence,
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subject' => $this->faker->title,
             'from_name' => $this->faker->name,
             'from_email' => $this->faker->email,

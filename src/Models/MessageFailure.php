@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Models;
+namespace Targetforce\Base\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class MessageFailure extends BaseModel
 {
-    protected $table = 'sendportal_message_failures';
+    protected $table = 'targetforce_message_failures';
 
     protected $guarded = [];
 

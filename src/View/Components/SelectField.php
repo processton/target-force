@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\View\Components;
+namespace Targetforce\Base\View\Components;
 
 use Illuminate\Support\Collection;
 use Illuminate\View\Component;
@@ -66,6 +66,6 @@ class SelectField extends Component
      */
     public function render()
     {
-        return view('sendportal::components.select-field');
+        return view('targetforce::components.select-field');
     }
 }

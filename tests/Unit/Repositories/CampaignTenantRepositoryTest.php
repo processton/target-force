@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Tests\Unit\Repositories;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Models\Subscriber;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Models\Subscriber;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 use Tests\TestCase;
 
 class CampaignTenantRepositoryTest extends TestCase
@@ -132,7 +132,7 @@ class CampaignTenantRepositoryTest extends TestCase
         $emailService = $this->createEmailService();
 
         $campaign = Campaign::factory()->withContent()->sent()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id,
             'save_as_draft' => 1,
         ]);
@@ -155,7 +155,7 @@ class CampaignTenantRepositoryTest extends TestCase
         $emailService = $this->createEmailService();
 
         $campaign = Campaign::factory()->withContent()->sent()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id,
             'save_as_draft' => 1,
         ]);
@@ -191,7 +191,7 @@ class CampaignTenantRepositoryTest extends TestCase
         $this->createPendingMessages($campaign, $expectedPendingMessages);
 
         // when
-        $counts = $this->campaignRepository->getCounts(collect($campaign->id), Sendportal::currentWorkspaceId());
+        $counts = $this->campaignRepository->getCounts(collect($campaign->id), Targetforce::currentWorkspaceId());
 
         // then
         $totalSentCount = $expectedOpenedMessages
@@ -212,7 +212,7 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createCampaign(EmailService $emailService): Campaign
     {
         return Campaign::factory()->withContent()->sent()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id,
         ]);
     }
@@ -223,9 +223,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createOpenedMessages(Campaign $campaign, int $quantity = 1, array $overrides = [])
     {
         $data = array_merge([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -244,9 +244,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createUnopenedMessages(Campaign $campaign, int $count)
     {
         return Message::factory()->count($count)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -262,9 +262,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createClickedMessage(Campaign $campaign, int $quantity = 1, array $overrides = [])
     {
         $data = array_merge([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -283,9 +283,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createUnclickedMessage(Campaign $campaign, int $count)
     {
         return Message::factory()->count($count)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -301,9 +301,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createBouncedMessages(Campaign $campaign, int $count)
     {
         return Message::factory()->count($count)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -318,9 +318,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createPendingMessages(Campaign $campaign, int $count)
     {
         return Message::factory()->count($count)->create([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,
@@ -334,9 +334,9 @@ class CampaignTenantRepositoryTest extends TestCase
     protected function createClickedMessages(Campaign $campaign, int $quantity = 1, array $overrides = [])
     {
         $data = array_merge([
-            'workspace_id' => Sendportal::currentWorkspaceId(),
+            'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory()->create([
-                'workspace_id' => Sendportal::currentWorkspaceId(),
+                'workspace_id' => Targetforce::currentWorkspaceId(),
             ]),
             'source_type' => Campaign::class,
             'source_id' => $campaign->id,

@@ -1,9 +1,9 @@
-<?php namespace Sendportal\Base\Repositories;
+<?php namespace Targetforce\Base\Repositories;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use RuntimeException;
-use Sendportal\Base\Interfaces\BaseTenantInterface;
+use Targetforce\Base\Interfaces\BaseTenantInterface;
 
 abstract class BaseTenantRepository implements BaseTenantInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Subscribers;
+namespace Targetforce\Base\Repositories\Subscribers;
 
 use Carbon\CarbonPeriod;
 use Illuminate\Database\Query\Builder;
@@ -15,7 +15,7 @@ class PostgresSubscriberTenantRepository extends BaseSubscriberTenantRepository
      */
     public function getGrowthChartData(CarbonPeriod $period, int $workspaceId): array
     {
-        $startingValue = DB::table('sendportal_subscribers')
+        $startingValue = DB::table('targetforce_subscribers')
             ->where('workspace_id', $workspaceId)
             ->where(function (Builder $q) use ($period) {
                 $q->where('unsubscribed_at', '>=', $period->getStartDate())
@@ -24,7 +24,7 @@ class PostgresSubscriberTenantRepository extends BaseSubscriberTenantRepository
             ->where('created_at', '<', $period->getStartDate())
             ->count();
 
-        $runningTotal = DB::table('sendportal_subscribers')
+        $runningTotal = DB::table('targetforce_subscribers')
             ->selectRaw("to_char(created_at, 'dd-mm-YYYY') AS date, count(*) as total")
             ->where('workspace_id', $workspaceId)
             ->where('created_at', '>=', $period->getStartDate())
@@ -32,7 +32,7 @@ class PostgresSubscriberTenantRepository extends BaseSubscriberTenantRepository
             ->groupBy('date')
             ->get();
 
-        $unsubscribers = DB::table('sendportal_subscribers')
+        $unsubscribers = DB::table('targetforce_subscribers')
             ->selectRaw("to_char(unsubscribed_at, 'dd-mm-YYYY') AS date, count(*) as total")
             ->where('workspace_id', $workspaceId)
             ->where('unsubscribed_at', '>=', $period->getStartDate())

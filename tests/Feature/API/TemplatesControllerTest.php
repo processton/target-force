@@ -7,10 +7,10 @@ namespace Tests\Feature\API;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\Template;
-use Sendportal\Base\Traits\NormalizeTags;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Template;
+use Targetforce\Base\Traits\NormalizeTags;
 use Tests\TestCase;
 
 class TemplatesControllerTest extends TestCase
@@ -23,10 +23,10 @@ class TemplatesControllerTest extends TestCase
     public function the_template_index_is_accessible_to_authorised_users()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $route = route('sendportal.api.templates.index');
+        $route = route('targetforce.api.templates.index');
 
         $this->getJson($route)
             ->assertOk()
@@ -41,10 +41,10 @@ class TemplatesControllerTest extends TestCase
     public function a_single_template_is_accessible_to_authorised_users()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $route = route('sendportal.api.templates.show', [
+        $route = route('targetforce.api.templates.show', [
             'template' => $template->id,
         ]);
 
@@ -58,7 +58,7 @@ class TemplatesControllerTest extends TestCase
     /** @test */
     public function a_template_can_be_created()
     {
-        $route = route('sendportal.api.templates.store');
+        $route = route('targetforce.api.templates.store');
 
         $request = [
             'name' => $this->faker->name,
@@ -75,17 +75,17 @@ class TemplatesControllerTest extends TestCase
             ->assertStatus(201)
             ->assertJson(['data' => $normalisedRequest]);
 
-        $this->assertDatabaseHas('sendportal_templates', $normalisedRequest);
+        $this->assertDatabaseHas('targetforce_templates', $normalisedRequest);
     }
 
     /** @test */
     public function a_template_can_be_updated_by_authorised_users()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $route = route('sendportal.api.templates.update', [
+        $route = route('targetforce.api.templates.update', [
             'template' => $template->id,
         ]);
 
@@ -103,25 +103,25 @@ class TemplatesControllerTest extends TestCase
             ->assertOk()
             ->assertJson(['data' => $normalisedRequest]);
 
-        $this->assertDatabaseMissing('sendportal_templates', $template->toArray());
-        $this->assertDatabaseHas('sendportal_templates', $normalisedRequest);
+        $this->assertDatabaseMissing('targetforce_templates', $template->toArray());
+        $this->assertDatabaseHas('targetforce_templates', $normalisedRequest);
     }
 
     /** @test */
     public function a_template_can_be_deleted_by_authorised_users()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $route = route('sendportal.api.templates.destroy', [
+        $route = route('targetforce.api.templates.destroy', [
             'template' => $template->id,
         ]);
 
         $this->deleteJson($route)
             ->assertStatus(204);
 
-        $this->assertDatabaseMissing('sendportal_templates', [
+        $this->assertDatabaseMissing('targetforce_templates', [
             'id' => $template->id
         ]);
     }
@@ -130,14 +130,14 @@ class TemplatesControllerTest extends TestCase
     public function a_template_cannot_be_deleted_by_authorised_users_if_it_is_used()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         Campaign::factory()->create([
             'template_id' => $template->id
         ]);
 
-        $route = route('sendportal.api.templates.destroy', [
+        $route = route('targetforce.api.templates.destroy', [
             'template' => $template->id,
         ]);
 
@@ -150,10 +150,10 @@ class TemplatesControllerTest extends TestCase
     public function a_template_name_must_be_unique_for_a_workspace()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $route = route('sendportal.api.templates.store');
+        $route = route('targetforce.api.templates.store');
 
         $request = [
             'name' => $template->name,
@@ -171,16 +171,16 @@ class TemplatesControllerTest extends TestCase
     public function two_workspaces_can_have_the_same_name_for_a_template()
     {
         $template = Template::factory()->create([
-            'workspace_id' => Sendportal::currentWorkspaceId()
+            'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        $currentWorkspaceId = Sendportal::currentWorkspaceId();
+        $currentWorkspaceId = Targetforce::currentWorkspaceId();
 
-        Sendportal::setCurrentWorkspaceIdResolver(function () use ($currentWorkspaceId) {
+        Targetforce::setCurrentWorkspaceIdResolver(function () use ($currentWorkspaceId) {
             return $currentWorkspaceId + 1;
         });
 
-        $route = route('sendportal.api.templates.store');
+        $route = route('targetforce.api.templates.store');
 
         $request = [
             'name' => $template->name,

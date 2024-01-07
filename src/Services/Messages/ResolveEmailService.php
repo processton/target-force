@@ -1,12 +1,12 @@
 <?php
 
-namespace Sendportal\Base\Services\Messages;
+namespace Targetforce\Base\Services\Messages;
 
 use Exception;
-use Sendportal\Base\Models\EmailService;
-use Sendportal\Base\Models\Message;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Sendportal\Pro\Repositories\AutomationScheduleRepository;
+use Targetforce\Base\Models\EmailService;
+use Targetforce\Base\Models\Message;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Pro\Repositories\AutomationScheduleRepository;
 
 class ResolveEmailService
 {

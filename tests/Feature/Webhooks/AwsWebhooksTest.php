@@ -7,7 +7,7 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Sendportal\Base\Models\Message;
+use Targetforce\Base\Models\Message;
 use Tests\TestCase;
 
 class AwsWebhooksTest extends TestCase
@@ -16,7 +16,7 @@ class AwsWebhooksTest extends TestCase
     use WithFaker;
 
     /** @var string */
-    protected $route = 'sendportal.api.webhooks.aws';
+    protected $route = 'targetforce.api.webhooks.aws';
 
     /** @test */
     public function it_accepts_delivery_webhooks()

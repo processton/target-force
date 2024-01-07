@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Services\Subscribers\Tags;
+namespace Targetforce\Base\Services\Subscribers\Tags;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
 
 class ApiSubscriberTagService
 {

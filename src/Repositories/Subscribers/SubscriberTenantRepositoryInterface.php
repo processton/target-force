@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Repositories\Subscribers;
+namespace Targetforce\Base\Repositories\Subscribers;
 
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Collection;
-use Sendportal\Base\Interfaces\BaseTenantInterface;
-use Sendportal\Base\Models\Subscriber;
+use Targetforce\Base\Interfaces\BaseTenantInterface;
+use Targetforce\Base\Models\Subscriber;
 
 interface SubscriberTenantRepositoryInterface extends BaseTenantInterface
 {

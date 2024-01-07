@@ -1,17 +1,17 @@
 <?php
 
-namespace Sendportal\Base\Providers;
+namespace Targetforce\Base\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Sendportal\Base\View\Components\CheckboxField;
-use Sendportal\Base\View\Components\FieldWrapper;
-use Sendportal\Base\View\Components\FileField;
-use Sendportal\Base\View\Components\Label;
-use Sendportal\Base\View\Components\SelectField;
-use Sendportal\Base\View\Components\SubmitButton;
-use Sendportal\Base\View\Components\TextareaField;
-use Sendportal\Base\View\Components\TextField;
+use Targetforce\Base\View\Components\CheckboxField;
+use Targetforce\Base\View\Components\FieldWrapper;
+use Targetforce\Base\View\Components\FileField;
+use Targetforce\Base\View\Components\Label;
+use Targetforce\Base\View\Components\SelectField;
+use Targetforce\Base\View\Components\SubmitButton;
+use Targetforce\Base\View\Components\TextareaField;
+use Targetforce\Base\View\Components\TextField;
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -22,14 +22,14 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Blade::component(TextField::class, 'sendportal.text-field');
-        Blade::component(TextareaField::class, 'sendportal.textarea-field');
-        Blade::component(FileField::class, 'sendportal.file-field');
-        Blade::component(SelectField::class, 'sendportal.select-field');
-        Blade::component(CheckboxField::class, 'sendportal.checkbox-field');
-        Blade::component(Label::class, 'sendportal.label');
-        Blade::component(SubmitButton::class, 'sendportal.submit-button');
-        Blade::component(FieldWrapper::class, 'sendportal.field-wrapper');
+        Blade::component(TextField::class, 'targetforce.text-field');
+        Blade::component(TextareaField::class, 'targetforce.textarea-field');
+        Blade::component(FileField::class, 'targetforce.file-field');
+        Blade::component(SelectField::class, 'targetforce.select-field');
+        Blade::component(CheckboxField::class, 'targetforce.checkbox-field');
+        Blade::component(Label::class, 'targetforce.label');
+        Blade::component(SubmitButton::class, 'targetforce.submit-button');
+        Blade::component(FieldWrapper::class, 'targetforce.field-wrapper');
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('sendportal::layouts.app')
+@extends('targetforce::layouts.app')
 
 @section('title', __('Edit Campaign'))
 
@@ -15,10 +15,10 @@
                     {{ __('Edit Campaign') }}
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('sendportal.campaigns.update', $campaign->id) }}" method="POST" class="form-horizontal">
+                    <form action="{{ route('targetforce.campaigns.update', $campaign->id) }}" method="POST" class="form-horizontal">
                         @csrf
                         @method('PUT')
-                        @include('sendportal::campaigns.partials.form')
+                        @include('targetforce::campaigns.partials.form')
                     </form>
                 </div>
             </div>

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Sendportal\Base\Http\Requests\Api;
+namespace Targetforce\Base\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
-use Sendportal\Base\Facades\Sendportal;
-use Sendportal\Base\Models\Campaign;
-use Sendportal\Base\Models\CampaignStatus;
-use Sendportal\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Facades\Targetforce;
+use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
 
 class CampaignDispatchRequest extends FormRequest
 {
@@ -41,7 +41,7 @@ class CampaignDispatchRequest extends FormRequest
      */
     public function getCampaign(array $relations = []): Campaign
     {
-        return $this->campaign = $this->campaigns->find(Sendportal::currentWorkspaceId(), $this->id, $relations);
+        return $this->campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $this->id, $relations);
     }
 
     public function rules()
