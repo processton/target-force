@@ -28,6 +28,7 @@ if (process.env.SENTRY_AUTH_TOKEN) {
 }
 
 export default defineConfig({
+  base: '',
   build: {
     target: "es2015",
     sourcemap: process.env.SENTRY_AUTH_TOKEN ? true : 'inline',
