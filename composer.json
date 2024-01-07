@@ -1,0 +1,59 @@
+{
+    "name": "processton-io/target-mail",
+    "homepage": "https://github.com/processton-io/target-mail",
+    "description": "Target Mail",
+    "type": "library",
+    "license": "MIT",
+    "authors": [],
+    "require": {
+        "php": "^8.0 || ^8.1 || ^8.2",
+        "ext-json": "*",
+        "ext-zip": "*",
+        "aws/aws-sdk-php-laravel": "^3.8",
+        "doctrine/dbal": "^3.7",
+        "illuminate/support": "^9.30",
+        "kriswallsmith/buzz": "^1.2",
+        "mailgun/mailgun-php": "^3.6",
+        "mailjet/mailjet-apiv3-php": "^1.6",
+        "nyholm/psr7": "^1.8",
+        "postal/postal": "^1.0",
+        "rap2hpoutre/fast-excel": "^5.3",
+        "sendgrid/sendgrid": "^7.11",
+        "wildbit/postmark-php": "^4.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.39",
+        "phpunit/phpunit": "^9.6",
+        "roave/security-advisories": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sendportal\\Base\\": "src",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Sendportal\\Base\\SendportalBaseServiceProvider"
+            ]
+        }
+    }
+}

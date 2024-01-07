@@ -1,0 +1,532 @@
+{
+  "FormEditor.css": {
+    "file": "assets/FormEditor.css",
+    "src": "FormEditor.css"
+  },
+  "OpenCompleteForm.css": {
+    "file": "assets/OpenCompleteForm.css",
+    "src": "OpenCompleteForm.css"
+  },
+  "OpenForm.css": {
+    "file": "assets/OpenForm.css",
+    "src": "OpenForm.css"
+  },
+  "_Breadcrumb.js": {
+    "file": "assets/Breadcrumb.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_Collapse.js": {
+    "file": "assets/Collapse.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_ExtraMenu.js": {
+    "file": "assets/ExtraMenu.js",
+    "imports": [
+      "resources/js/app.js",
+      "_FormTemplateModal.js"
+    ]
+  },
+  "_FormCleanings.js": {
+    "file": "assets/FormCleanings.js",
+    "imports": [
+      "_Collapse.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_FormEditor.js": {
+    "css": [
+      "assets/FormEditor.css"
+    ],
+    "dynamicImports": [
+      "resources/js/components/open/forms/components/form-logic-components/FormBlockLogicEditor.vue",
+      "resources/js/components/open/forms/components/form-logic-components/FormBlockLogicEditor.vue"
+    ],
+    "file": "assets/FormEditor.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_index2.js",
+      "_country-flag.esm.js",
+      "_Collapse.js",
+      "_OpenForm.js",
+      "_ProTag.js",
+      "_OpenCompleteForm.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "_FormTemplateModal.js": {
+    "file": "assets/FormTemplateModal.js",
+    "imports": [
+      "_vform.es.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_OpenCompleteForm.js": {
+    "css": [
+      "assets/OpenCompleteForm.css"
+    ],
+    "file": "assets/OpenCompleteForm.js",
+    "imports": [
+      "_vform.es.js",
+      "_OpenForm.js",
+      "resources/js/app.js",
+      "_Collapse.js",
+      "_FormCleanings.js"
+    ]
+  },
+  "_OpenForm.js": {
+    "css": [
+      "assets/OpenForm.css"
+    ],
+    "dynamicImports": [
+      "_vue-hcaptcha.common.js"
+    ],
+    "file": "assets/OpenForm.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_index2.js"
+    ]
+  },
+  "_OpenFormFooter.js": {
+    "file": "assets/OpenFormFooter.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_PricingTable.js": {
+    "file": "assets/PricingTable.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js"
+    ]
+  },
+  "_ProTag.js": {
+    "file": "assets/ProTag.js",
+    "imports": [
+      "resources/js/app.js",
+      "_PricingTable.js"
+    ]
+  },
+  "_SingleTemplate.js": {
+    "file": "assets/SingleTemplate.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_TemplatesList.js": {
+    "file": "assets/TemplatesList.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_SingleTemplate.js"
+    ]
+  },
+  "_country-flag.esm.js": {
+    "file": "assets/country-flag.esm.js"
+  },
+  "_index2.js": {
+    "file": "assets/index2.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_vform.es.js": {
+    "file": "assets/vform.es.js",
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "_vue-hcaptcha.common.js": {
+    "file": "assets/vue-hcaptcha.common.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true
+  },
+  "resources/data/forms/templates/industries.json": {
+    "file": "assets/industries.js",
+    "isDynamicEntry": true,
+    "src": "resources/data/forms/templates/industries.json"
+  },
+  "resources/data/forms/templates/types.json": {
+    "file": "assets/types.js",
+    "isDynamicEntry": true,
+    "src": "resources/data/forms/templates/types.json"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "css": [
+      "assets/app.css"
+    ],
+    "dynamicImports": [
+      "resources/data/forms/templates/industries.json",
+      "resources/data/forms/templates/types.json",
+      "resources/js/pages/ai-form-builder.vue",
+      "resources/js/pages/errors/404.vue",
+      "resources/js/pages/forms/create.vue",
+      "resources/js/pages/forms/edit.vue",
+      "resources/js/pages/forms/show-public.vue",
+      "resources/js/pages/forms/show/index.vue",
+      "resources/js/pages/forms/show/share.vue",
+      "resources/js/pages/forms/show/stats.vue",
+      "resources/js/pages/forms/show/submissions.vue",
+      "resources/js/pages/home.vue",
+      "resources/js/pages/integrations.vue",
+      "resources/js/pages/pricing.vue",
+      "resources/js/pages/templates/industries-show.vue",
+      "resources/js/pages/templates/my_templates.vue",
+      "resources/js/pages/templates/show.vue",
+      "resources/js/pages/templates/templates.vue",
+      "resources/js/pages/templates/types-show.vue",
+      "resources/js/pages/welcome.vue",
+      "resources/js/components/forms/SignatureInput.vue",
+      "resources/js/components/forms/RichTextAreaInput.vue",
+      "resources/js/components/forms/DateInput.vue",
+      "resources/js/components/forms/PhoneInput.vue",
+      "_FormEditor.js",
+      "resources/js/components/open/NotionPage.vue"
+    ],
+    "file": "assets/app.js",
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/components/forms/DateInput.vue": {
+    "file": "assets/DateInput.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/forms/DateInput.vue"
+  },
+  "resources/js/components/forms/PhoneInput.vue": {
+    "file": "assets/PhoneInput.js",
+    "imports": [
+      "resources/js/app.js",
+      "_country-flag.esm.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/forms/PhoneInput.vue"
+  },
+  "resources/js/components/forms/RichTextAreaInput.css": {
+    "file": "assets/RichTextAreaInput.css",
+    "src": "resources/js/components/forms/RichTextAreaInput.css"
+  },
+  "resources/js/components/forms/RichTextAreaInput.vue": {
+    "css": [
+      "assets/RichTextAreaInput.css"
+    ],
+    "file": "assets/RichTextAreaInput.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/forms/RichTextAreaInput.vue"
+  },
+  "resources/js/components/forms/SignatureInput.vue": {
+    "file": "assets/SignatureInput.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/forms/SignatureInput.vue"
+  },
+  "resources/js/components/open/NotionPage.css": {
+    "file": "assets/NotionPage.css",
+    "src": "resources/js/components/open/NotionPage.css"
+  },
+  "resources/js/components/open/NotionPage.vue": {
+    "css": [
+      "assets/NotionPage.css"
+    ],
+    "file": "assets/NotionPage.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/open/NotionPage.vue"
+  },
+  "resources/js/components/open/forms/components/form-logic-components/FormBlockLogicEditor.vue": {
+    "file": "assets/FormBlockLogicEditor.js",
+    "imports": [
+      "_ProTag.js",
+      "resources/js/app.js",
+      "_FormEditor.js",
+      "_index2.js",
+      "_PricingTable.js",
+      "_vform.es.js",
+      "_country-flag.esm.js",
+      "_Collapse.js",
+      "_OpenForm.js",
+      "_OpenCompleteForm.js",
+      "_FormCleanings.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/components/open/forms/components/form-logic-components/FormBlockLogicEditor.vue"
+  },
+  "resources/js/pages/ai-form-builder.css": {
+    "file": "assets/ai-form-builder.css",
+    "src": "resources/js/pages/ai-form-builder.css"
+  },
+  "resources/js/pages/ai-form-builder.vue": {
+    "css": [
+      "assets/ai-form-builder.css"
+    ],
+    "file": "assets/ai-form-builder.js",
+    "imports": [
+      "resources/js/app.js",
+      "_OpenFormFooter.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/ai-form-builder.vue"
+  },
+  "resources/js/pages/errors/404.vue": {
+    "file": "assets/404.js",
+    "imports": [
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/errors/404.vue"
+  },
+  "resources/js/pages/forms/create.vue": {
+    "file": "assets/create.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/create.vue"
+  },
+  "resources/js/pages/forms/edit.vue": {
+    "file": "assets/edit.js",
+    "imports": [
+      "resources/js/app.js",
+      "_Breadcrumb.js",
+      "_vform.es.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/edit.vue"
+  },
+  "resources/js/pages/forms/show-public.vue": {
+    "file": "assets/show-public.js",
+    "imports": [
+      "resources/js/app.js",
+      "_OpenCompleteForm.js",
+      "_vform.es.js",
+      "_OpenForm.js",
+      "_index2.js",
+      "_Collapse.js",
+      "_FormCleanings.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/show-public.vue"
+  },
+  "resources/js/pages/forms/show/index.vue": {
+    "file": "assets/index.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_ProTag.js",
+      "_ExtraMenu.js",
+      "_FormCleanings.js",
+      "_PricingTable.js",
+      "_FormTemplateModal.js",
+      "_Collapse.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/show/index.vue"
+  },
+  "resources/js/pages/forms/show/share.vue": {
+    "file": "assets/share.js",
+    "imports": [
+      "resources/js/app.js",
+      "_ProTag.js",
+      "_OpenForm.js",
+      "_Collapse.js",
+      "_PricingTable.js",
+      "_vform.es.js",
+      "_index2.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/show/share.vue"
+  },
+  "resources/js/pages/forms/show/stats.vue": {
+    "file": "assets/stats.js",
+    "imports": [
+      "resources/js/app.js",
+      "_ProTag.js",
+      "_PricingTable.js",
+      "_vform.es.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/show/stats.vue"
+  },
+  "resources/js/pages/forms/show/submissions.css": {
+    "file": "assets/submissions.css",
+    "src": "resources/js/pages/forms/show/submissions.css"
+  },
+  "resources/js/pages/forms/show/submissions.vue": {
+    "css": [
+      "assets/submissions.css"
+    ],
+    "file": "assets/submissions.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_index2.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/forms/show/submissions.vue"
+  },
+  "resources/js/pages/home.vue": {
+    "file": "assets/home.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_OpenFormFooter.js",
+      "_ExtraMenu.js",
+      "_FormTemplateModal.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/home.vue"
+  },
+  "resources/js/pages/integrations.css": {
+    "file": "assets/integrations.css",
+    "src": "resources/js/pages/integrations.css"
+  },
+  "resources/js/pages/integrations.vue": {
+    "css": [
+      "assets/integrations.css"
+    ],
+    "file": "assets/integrations.js",
+    "imports": [
+      "_OpenFormFooter.js",
+      "resources/js/app.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/integrations.vue"
+  },
+  "resources/js/pages/pricing.vue": {
+    "file": "assets/pricing.js",
+    "imports": [
+      "resources/js/app.js",
+      "_OpenFormFooter.js",
+      "_PricingTable.js",
+      "_vform.es.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/pricing.vue"
+  },
+  "resources/js/pages/templates/industries-show.css": {
+    "file": "assets/industries-show.css",
+    "src": "resources/js/pages/templates/types-show.css"
+  },
+  "resources/js/pages/templates/industries-show.vue": {
+    "css": [
+      "assets/industries-show.css"
+    ],
+    "file": "assets/industries-show.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_OpenFormFooter.js",
+      "_Breadcrumb.js",
+      "_SingleTemplate.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/templates/industries-show.vue"
+  },
+  "resources/js/pages/templates/my_templates.vue": {
+    "file": "assets/my_templates.js",
+    "imports": [
+      "_TemplatesList.js",
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_SingleTemplate.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/templates/my_templates.vue"
+  },
+  "resources/js/pages/templates/show.css": {
+    "file": "assets/show.css",
+    "src": "resources/js/pages/templates/show.css"
+  },
+  "resources/js/pages/templates/show.vue": {
+    "css": [
+      "assets/show.css"
+    ],
+    "file": "assets/show.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_OpenFormFooter.js",
+      "_OpenCompleteForm.js",
+      "_Breadcrumb.js",
+      "_SingleTemplate.js",
+      "_FormTemplateModal.js",
+      "_OpenForm.js",
+      "_index2.js",
+      "_Collapse.js",
+      "_FormCleanings.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/templates/show.vue"
+  },
+  "resources/js/pages/templates/templates.vue": {
+    "file": "assets/templates.js",
+    "imports": [
+      "_OpenFormFooter.js",
+      "_TemplatesList.js",
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_SingleTemplate.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/templates/templates.vue"
+  },
+  "resources/js/pages/templates/types-show.css": {
+    "file": "assets/industries-show.css",
+    "src": "resources/js/pages/templates/types-show.css"
+  },
+  "resources/js/pages/templates/types-show.vue": {
+    "css": [
+      "assets/industries-show.css"
+    ],
+    "file": "assets/types-show.js",
+    "imports": [
+      "resources/js/app.js",
+      "_vform.es.js",
+      "_OpenFormFooter.js",
+      "_Breadcrumb.js",
+      "_SingleTemplate.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/templates/types-show.vue"
+  },
+  "resources/js/pages/welcome.css": {
+    "file": "assets/welcome.css",
+    "src": "resources/js/pages/welcome.css"
+  },
+  "resources/js/pages/welcome.vue": {
+    "css": [
+      "assets/welcome.css"
+    ],
+    "file": "assets/welcome.js",
+    "imports": [
+      "resources/js/app.js",
+      "_PricingTable.js",
+      "_OpenFormFooter.js",
+      "_SingleTemplate.js",
+      "_vform.es.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/pages/welcome.vue"
+  }
+}
