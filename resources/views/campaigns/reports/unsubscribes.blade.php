@@ -1,12 +1,12 @@
 @extends('targetforce::layouts.app')
 
-@section('title', $campaign->name)
+@section('title', $post->name)
 
-@section('heading', $campaign->name)
+@section('heading', $post->name)
 
 @section('content')
 
-    @include('targetforce::campaigns.reports.partials.nav')
+    @include('targetforce::posts.reports.partials.nav')
 
     <div class="card">
         <div class="card-table table-responsive">

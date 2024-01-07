@@ -7,7 +7,7 @@ namespace Tests\Feature\Content;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Models\Subscriber;
 use Targetforce\Base\Models\Template;
@@ -20,11 +20,11 @@ class MergeContentTest extends TestCase
         WithFaker;
 
     /** @test */
-    public function campaign_content_can_be_merged()
+    public function post_content_can_be_merged()
     {
         // given
         $content = $this->faker->sentence;
-        $message = $this->generateCampaignMessage($content);
+        $message = $this->generatePostMessage($content);
 
         // when
         $mergedContent = $this->mergeContent($message);
@@ -38,10 +38,10 @@ class MergeContentTest extends TestCase
     }
 
     /** @test */
-    public function it_can_handle_a_null_value_for_campaign_content()
+    public function it_can_handle_a_null_value_for_post_content()
     {
         $content = null;
-        $message = $this->generateCampaignMessage($content, '<p>Hello this is some {{content}}</p>');
+        $message = $this->generatePostMessage($content, '<p>Hello this is some {{content}}</p>');
 
         $mergedContent = $this->mergeContent($message);
 
@@ -55,7 +55,7 @@ class MergeContentTest extends TestCase
     public function the_unsubscribe_url_tag_is_replaced_with_a_valid_unsubscribe_link()
     {
         // given
-        $message = $this->generateCampaignMessage('<a href="{{ unsubscribe_url }}">Unsubscribe Here</a>');
+        $message = $this->generatePostMessage('<a href="{{ unsubscribe_url }}">Unsubscribe Here</a>');
 
         // when
         $mergedContent = $this->mergeContent($message);
@@ -74,7 +74,7 @@ class MergeContentTest extends TestCase
     public function the_email_tag_is_replaced_with_the_subscriber_email()
     {
         // given
-        $message = $this->generateCampaignMessage('Hi, {{ email }}');
+        $message = $this->generatePostMessage('Hi, {{ email }}');
 
         // when
         $mergedContent = $this->mergeContent($message);
@@ -91,7 +91,7 @@ class MergeContentTest extends TestCase
     public function the_first_name_tag_is_replaced_with_the_subscriber_first_name()
     {
         // given
-        $message = $this->generateCampaignMessage('Hi, {{ first_name }}');
+        $message = $this->generatePostMessage('Hi, {{ first_name }}');
 
         // when
         $mergedContent = $this->mergeContent($message);
@@ -107,7 +107,7 @@ class MergeContentTest extends TestCase
     /** @test */
     public function first_name_tag_is_replaced_with_an_empty_string_if_the_subscriber_first_name_is_null()
     {
-        $message = $this->generateCampaignMessage('Hi, {{ first_name }}');
+        $message = $this->generatePostMessage('Hi, {{ first_name }}');
 
         $message->subscriber()->associate(Subscriber::factory()->create([
             'first_name' => null,
@@ -129,7 +129,7 @@ class MergeContentTest extends TestCase
     {
         // given
         /** @var Workspace $workspace */
-        $message = $this->generateCampaignMessage('Hi, {{ last_name }}');
+        $message = $this->generatePostMessage('Hi, {{ last_name }}');
 
         // when
         $mergedContent = $this->mergeContent($message);
@@ -145,7 +145,7 @@ class MergeContentTest extends TestCase
     /** @test */
     public function last_name_tag_is_replaced_with_an_empty_string_if_the_subscriber_last_name_is_null()
     {
-        $message = $this->generateCampaignMessage('Hi, {{ last_name }}');
+        $message = $this->generatePostMessage('Hi, {{ last_name }}');
 
         $message->subscriber()->associate(Subscriber::factory()->create([
             'first_name' => $this->faker->firstName,
@@ -162,7 +162,7 @@ class MergeContentTest extends TestCase
         self::assertEquals($expectedHtml, $mergedContent);
     }
 
-    private function generateCampaignMessage(?string $campaignContent, ?string $templateContent = null): Message
+    private function generatePostMessage(?string $postContent, ?string $templateContent = null): Message
     {
         /** @var Template $template */
         $template = Template::factory()->create([
@@ -170,16 +170,16 @@ class MergeContentTest extends TestCase
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        /** @var Campaign $campaign */
-        $campaign = Campaign::factory()->create([
+        /** @var Post $post */
+        $post = Post::factory()->create([
             'template_id' => $template->id,
-            'content' => $campaignContent,
+            'content' => $postContent,
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         return Message::factory()->create([
-            'source_type' => Campaign::class,
-            'source_id' => $campaign->id,
+            'source_type' => Post::class,
+            'source_id' => $post->id,
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
     }

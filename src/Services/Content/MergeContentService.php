@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Targetforce\Base\Services\Content;
 
 use Exception;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Traits\NormalizeTags;
 use Targetforce\Pro\Repositories\AutomationScheduleRepository;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
@@ -16,17 +16,17 @@ class MergeContentService
 {
     use NormalizeTags;
 
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaignRepo;
+    /** @var PostTenantRepositoryInterface */
+    protected $postRepo;
 
     /** @var CssToInlineStyles */
     protected $cssProcessor;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaignRepo,
+        PostTenantRepositoryInterface $postRepo,
         CssToInlineStyles $cssProcessor
     ) {
-        $this->campaignRepo = $campaignRepo;
+        $this->postRepo = $postRepo;
         $this->cssProcessor = $cssProcessor;
     }
 
@@ -43,8 +43,8 @@ class MergeContentService
      */
     protected function resolveContent(Message $message): string
     {
-        if ($message->isCampaign()) {
-            $mergedContent = $this->mergeCampaignContent($message);
+        if ($message->isPost()) {
+            $mergedContent = $this->mergePostContent($message);
         } elseif ($message->isAutomation()) {
             $mergedContent = $this->mergeAutomationContent($message);
         } else {
@@ -57,18 +57,18 @@ class MergeContentService
     /**
      * @throws Exception
      */
-    protected function mergeCampaignContent(Message $message): string
+    protected function mergePostContent(Message $message): string
     {
-        /** @var Campaign $campaign */
-        $campaign = $this->campaignRepo->find($message->workspace_id, $message->source_id, ['template']);
+        /** @var Post $post */
+        $post = $this->postRepo->find($message->workspace_id, $message->source_id, ['template']);
 
-        if (!$campaign) {
-            throw new Exception('Unable to resolve campaign step for message id= ' . $message->id);
+        if (!$post) {
+            throw new Exception('Unable to resolve post step for message id= ' . $message->id);
         }
 
-        return $campaign->template
-            ? $this->mergeContent($campaign->content, $campaign->template->content)
-            : $campaign->content;
+        return $post->template
+            ? $this->mergeContent($post->content, $post->template->content)
+            : $post->content;
     }
 
     /**

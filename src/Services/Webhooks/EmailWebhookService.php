@@ -73,7 +73,7 @@ class EmailWebhookService
             $message->clicked_at = $timestamp;
         }
 
-        // Since you have to open a campaign to click a link inside it, we'll consider those clicks as opens
+        // Since you have to open a post to click a link inside it, we'll consider those clicks as opens
         // even if the tracking image didn't load.
         if (!$message->opened_at) {
             ++$message->open_count;

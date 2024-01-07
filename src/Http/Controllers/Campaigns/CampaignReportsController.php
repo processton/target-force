@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -11,173 +11,173 @@ use Illuminate\Support\Arr;
 use Illuminate\View\View;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Models\Campaign;
-use Targetforce\Base\Presenters\CampaignReportPresenter;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\Post;
+use Targetforce\Base\Presenters\PostReportPresenter;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 
-class CampaignReportsController extends Controller
+class PostReportsController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaignRepo;
+    /** @var PostTenantRepositoryInterface */
+    protected $postRepo;
 
     /** @var MessageTenantRepositoryInterface */
     protected $messageRepo;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaignRepository,
+        PostTenantRepositoryInterface $postRepository,
         MessageTenantRepositoryInterface $messageRepo
     ) {
-        $this->campaignRepo = $campaignRepository;
+        $this->postRepo = $postRepository;
         $this->messageRepo = $messageRepo;
     }
 
     /**
-     * Show campaign report view.
+     * Show post report view.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function index(int $id, Request $request)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $presenter = new CampaignReportPresenter($campaign, Targetforce::currentWorkspaceId(), (int) $request->get('interval', 24));
+        $presenter = new PostReportPresenter($post, Targetforce::currentWorkspaceId(), (int) $request->get('interval', 24));
         $presenterData = $presenter->generate();
 
         $data = [
-            'campaign' => $campaign,
-            'campaignUrls' => $presenterData['campaignUrls'],
-            'campaignStats' => $presenterData['campaignStats'],
+            'post' => $post,
+            'postUrls' => $presenterData['postUrls'],
+            'postStats' => $presenterData['postStats'],
             'chartLabels' => json_encode(Arr::get($presenterData['chartData'], 'labels', [])),
             'chartData' => json_encode(Arr::get($presenterData['chartData'], 'data', [])),
         ];
 
-        return view('targetforce::campaigns.reports.index', $data);
+        return view('targetforce::posts.reports.index', $data);
     }
 
     /**
-     * Show campaign recipients.
+     * Show post recipients.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function recipients(int $id)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $messages = $this->messageRepo->recipients(Targetforce::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->recipients(Targetforce::currentWorkspaceId(), Post::class, $id);
 
-        return view('targetforce::campaigns.reports.recipients', compact('campaign', 'messages'));
+        return view('targetforce::posts.reports.recipients', compact('post', 'messages'));
     }
 
     /**
-     * Show campaign opens.
+     * Show post opens.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function opens(int $id)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
-        $averageTimeToOpen = $this->campaignRepo->getAverageTimeToOpen($campaign);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $averageTimeToOpen = $this->postRepo->getAverageTimeToOpen($post);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $messages = $this->messageRepo->opens(Targetforce::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->opens(Targetforce::currentWorkspaceId(), Post::class, $id);
 
-        return view('targetforce::campaigns.reports.opens', compact('campaign', 'messages', 'averageTimeToOpen'));
+        return view('targetforce::posts.reports.opens', compact('post', 'messages', 'averageTimeToOpen'));
     }
 
     /**
-     * Show campaign clicks.
+     * Show post clicks.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function clicks(int $id)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
-        $averageTimeToClick = $this->campaignRepo->getAverageTimeToClick($campaign);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $averageTimeToClick = $this->postRepo->getAverageTimeToClick($post);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $messages = $this->messageRepo->clicks(Targetforce::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->clicks(Targetforce::currentWorkspaceId(), Post::class, $id);
 
-        return view('targetforce::campaigns.reports.clicks', compact('campaign', 'messages', 'averageTimeToClick'));
+        return view('targetforce::posts.reports.clicks', compact('post', 'messages', 'averageTimeToClick'));
     }
 
     /**
-     * Show campaign bounces.
+     * Show post bounces.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function bounces(int $id)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $messages = $this->messageRepo->bounces(Targetforce::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->bounces(Targetforce::currentWorkspaceId(), Post::class, $id);
 
-        return view('targetforce::campaigns.reports.bounces', compact('campaign', 'messages'));
+        return view('targetforce::posts.reports.bounces', compact('post', 'messages'));
     }
 
     /**
-     * Show campaign unsubscribes.
+     * Show post unsubscribes.
      *
      * @return RedirectResponse|View
      * @throws Exception
      */
     public function unsubscribes(int $id)
     {
-        $campaign = $this->campaignRepo->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->postRepo->find(Targetforce::currentWorkspaceId(), $id);
 
-        if ($campaign->draft) {
-            return redirect()->route('targetforce.campaigns.edit', $id);
+        if ($post->draft) {
+            return redirect()->route('targetforce.posts.edit', $id);
         }
 
-        if ($campaign->queued || $campaign->sending) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->queued || $post->sending) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        $messages = $this->messageRepo->unsubscribes(Targetforce::currentWorkspaceId(), Campaign::class, $id);
+        $messages = $this->messageRepo->unsubscribes(Targetforce::currentWorkspaceId(), Post::class, $id);
 
-        return view('targetforce::campaigns.reports.unsubscribes', compact('campaign', 'messages'));
+        return view('targetforce::posts.reports.unsubscribes', compact('post', 'messages'));
     }
 }

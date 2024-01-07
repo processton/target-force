@@ -6,10 +6,10 @@ namespace Targetforce\Base\Services\Messages;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\Message;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Services\Content\MergeContentService;
 
 class DispatchTestMessage
@@ -23,11 +23,11 @@ class DispatchTestMessage
     /** @var MergeContentService */
     protected $mergeContent;
 
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaignTenant;
+    /** @var PostTenantRepositoryInterface */
+    protected $postTenant;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaignTenant,
+        PostTenantRepositoryInterface $postTenant,
         MergeContentService $mergeContent,
         ResolveEmailService $resolveEmailService,
         RelayMessage $relayMessage
@@ -35,31 +35,31 @@ class DispatchTestMessage
         $this->resolveEmailService = $resolveEmailService;
         $this->relayMessage = $relayMessage;
         $this->mergeContent = $mergeContent;
-        $this->campaignTenant = $campaignTenant;
+        $this->postTenant = $postTenant;
     }
 
     /**
      * @throws Exception
      */
-    public function handle(int $workspaceId, int $campaignId, string $recipientEmail): ?string
+    public function handle(int $workspaceId, int $postId, string $recipientEmail): ?string
     {
-        $campaign = $this->resolveCampaign($workspaceId, $campaignId);
+        $post = $this->resolvePost($workspaceId, $postId);
 
-        if (!$campaign) {
+        if (!$post) {
             Log::error(
-                'Unable to get campaign to send test message.',
-                ['workspace_id' => $workspaceId, 'campaign_id' => $campaignId]
+                'Unable to get post to send test message.',
+                ['workspace_id' => $workspaceId, 'post_id' => $postId]
             );
             return null;
         }
 
-        $message = $this->createTestMessage($campaign, $recipientEmail);
+        $message = $this->createTestMessage($post, $recipientEmail);
 
         $mergedContent = $this->getMergedContent($message);
 
         $emailService = $this->getEmailService($message);
 
-        $trackingOptions = MessageTrackingOptions::fromCampaign($campaign);
+        $trackingOptions = MessageTrackingOptions::fromPost($post);
 
         return $this->dispatch($message, $emailService, $trackingOptions, $mergedContent);
     }
@@ -86,9 +86,9 @@ class DispatchTestMessage
     /**
      * @throws Exception
      */
-    protected function resolveCampaign(int $workspaceId, int $campaignId): ?Campaign
+    protected function resolvePost(int $workspaceId, int $postId): ?Post
     {
-        return $this->campaignTenant->find($workspaceId, $campaignId);
+        return $this->postTenant->find($workspaceId, $postId);
     }
 
     /**
@@ -126,16 +126,16 @@ class DispatchTestMessage
         return $this->resolveEmailService->handle($message);
     }
 
-    protected function createTestMessage(Campaign $campaign, string $recipientEmail): Message
+    protected function createTestMessage(Post $post, string $recipientEmail): Message
     {
         return new Message([
-            'workspace_id' => $campaign->workspace_id,
-            'source_type' => Campaign::class,
-            'source_id' => $campaign->id,
+            'workspace_id' => $post->workspace_id,
+            'source_type' => Post::class,
+            'source_id' => $post->id,
             'recipient_email' => $recipientEmail,
-            'subject' => '[Test] ' . $campaign->subject,
-            'from_name' => $campaign->from_name,
-            'from_email' => $campaign->from_email,
+            'subject' => '[Test] ' . $post->subject,
+            'from_name' => $post->from_name,
+            'from_email' => $post->from_email,
             'hash' => 'abc123',
         ]);
     }

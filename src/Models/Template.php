@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
- * @property EloquentCollection $campaigns
+ * @property EloquentCollection $posts
  *
  * @method static TemplateFactory factory
  */
@@ -40,15 +40,15 @@ class Template extends BaseModel
     protected $guarded = [];
 
     /**
-     * Campaigns using this template
+     * Posts using this template
      */
-    public function campaigns(): HasMany
+    public function posts(): HasMany
     {
-        return $this->hasMany(Campaign::class);
+        return $this->hasMany(Post::class);
     }
 
     public function isInUse(): bool
     {
-        return $this->campaigns()->count() > 0;
+        return $this->posts()->count() > 0;
     }
 }

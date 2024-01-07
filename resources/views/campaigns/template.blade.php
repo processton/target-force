@@ -1,16 +1,16 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Campaign Template'))
+@section('title', __('Post Template'))
 
 @section('heading')
-    {{ __('Campaign Template') }}
+    {{ __('Post Template') }}
 @stop
 
 @section('content')
 
-    {!! Form::model($campaign, ['id' => 'form-template-selector', 'method' => 'put', 'route' => ['campaigns.template.update', $campaign->id]]) !!}
+    {!! Form::model($post, ['id' => 'form-template-selector', 'method' => 'put', 'route' => ['posts.template.update', $post->id]]) !!}
 
-    <input type="hidden" id="field-template_id" name="template_id" value="{{ $campaign->template_id }}">
+    <input type="hidden" id="field-template_id" name="template_id" value="{{ $post->template_id }}">
 
     <div class="row">
         @foreach($templates as $template)
@@ -22,7 +22,7 @@
                                 <h4>{{ $template->name }}</h4>
                             </div>
                             <div class="float-right">
-                                @if ($campaign->template_id == $template->id)
+                                @if ($post->template_id == $template->id)
                                     <span class="label label-success">{{ __('Selected') }}</span>
                                 @else
                                     <a href="#" class="btn btn-secondary btn-xs js-select-template" data-template_id="{{ $template->id }}">{{ __('Select') }}</a>
@@ -42,7 +42,7 @@
 
     {{ $templates->links() }}
 
-    <a href="{{ route('targetforce.campaigns.edit', $campaign->id) }}" class="btn btn-link"><i
+    <a href="{{ route('targetforce.posts.edit', $post->id) }}" class="btn btn-link"><i
             class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
 
     <button class="btn btn-primary" type="submit">{{ __('Save and continue') }}</button>

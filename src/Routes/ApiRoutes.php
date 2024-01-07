@@ -12,8 +12,8 @@ class ApiRoutes
     {
         return function () {
             $this->name('targetforce.api.')->prefix('v1')->namespace('\Targetforce\Base\Http\Controllers\Api')->group(static function (Router $apiRouter) {
-                $apiRouter->apiResource('campaigns', 'CampaignsController');
-                $apiRouter->post('campaigns/{id}/send', 'CampaignDispatchController@send')->name('campaigns.send');
+                $apiRouter->apiResource('posts', 'PostsController');
+                $apiRouter->post('posts/{id}/send', 'PostDispatchController@send')->name('posts.send');
                 $apiRouter->apiResource('subscribers', 'SubscribersController');
                 $apiRouter->apiResource('tags', 'TagsController');
 

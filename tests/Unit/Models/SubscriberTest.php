@@ -6,7 +6,7 @@ namespace Tests\Unit\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Models\MessageFailure;
 use Targetforce\Base\Models\Subscriber;
@@ -22,8 +22,8 @@ class SubscriberTest extends TestCase
         // given
         $subscriber = Subscriber::factory()->create();
 
-        [$campaignOne, $messageOne] = $this->createCampaignAndMessage($subscriber);
-        [$campaignTwo, $messageTwo] = $this->createCampaignAndMessage($subscriber);
+        [$postOne, $messageOne] = $this->createPostAndMessage($subscriber);
+        [$postTwo, $messageTwo] = $this->createPostAndMessage($subscriber);
 
         $messages = $subscriber->messages;
 
@@ -32,12 +32,12 @@ class SubscriberTest extends TestCase
         static::assertCount(2, $messages);
 
         static::assertTrue($messages->contains($messageOne));
-        static::assertEquals(Campaign::class, $messageOne->source_type);
-        static::assertEquals($campaignOne->id, $messageOne->source_id);
+        static::assertEquals(Post::class, $messageOne->source_type);
+        static::assertEquals($postOne->id, $messageOne->source_id);
 
         static::assertTrue($messages->contains($messageTwo));
-        static::assertEquals(Campaign::class, $messageTwo->source_type);
-        static::assertEquals($campaignTwo->id, $messageTwo->source_id);
+        static::assertEquals(Post::class, $messageTwo->source_type);
+        static::assertEquals($postTwo->id, $messageTwo->source_id);
     }
 
     /** @test */
@@ -64,14 +64,14 @@ class SubscriberTest extends TestCase
      *
      * @return array
      */
-    protected function createCampaignAndMessage(Subscriber $subscriber)
+    protected function createPostAndMessage(Subscriber $subscriber)
     {
-        $campaign = Campaign::factory()->sent()->create();
+        $post = Post::factory()->sent()->create();
         $message = Message::factory()->create([
             'subscriber_id' => $subscriber->id,
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
         ]);
 
-        return [$campaign, $message];
+        return [$post, $message];
     }
 }

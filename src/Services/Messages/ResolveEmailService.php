@@ -5,17 +5,17 @@ namespace Targetforce\Base\Services\Messages;
 use Exception;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\Message;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Pro\Repositories\AutomationScheduleRepository;
 
 class ResolveEmailService
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaignTenantRepository;
+    /** @var PostTenantRepositoryInterface */
+    protected $postTenantRepository;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaignTenantRepository)
+    public function __construct(PostTenantRepositoryInterface $postTenantRepository)
     {
-        $this->campaignTenantRepository = $campaignTenantRepository;
+        $this->postTenantRepository = $postTenantRepository;
     }
 
     /**
@@ -27,8 +27,8 @@ class ResolveEmailService
             return $this->resolveAutomationEmailService($message);
         }
 
-        if ($message->isCampaign()) {
-            return $this->resolveCampaignEmailService($message);
+        if ($message->isPost()) {
+            return $this->resolvePostEmailService($message);
         }
 
         throw new Exception('Unable to resolve email service for message id=' . $message->id);
@@ -58,19 +58,19 @@ class ResolveEmailService
     }
 
     /**
-     * Resolve the provider for a campaign
+     * Resolve the provider for a post
      *
      * @param Message $message
      * @return EmailService
      * @throws Exception
      */
-    protected function resolveCampaignEmailService(Message $message): EmailService
+    protected function resolvePostEmailService(Message $message): EmailService
     {
-        if (! $campaign = $this->campaignTenantRepository->find($message->workspace_id, $message->source_id, ['email_service'])) {
-            throw new Exception('Unable to resolve campaign for message id=' . $message->id);
+        if (! $post = $this->postTenantRepository->find($message->workspace_id, $message->source_id, ['email_service'])) {
+            throw new Exception('Unable to resolve post for message id=' . $message->id);
         }
 
-        if (! $emailService = $campaign->email_service) {
+        if (! $emailService = $post->email_service) {
             throw new Exception('Unable to resolve email service for message id=' . $message->id);
         }
 

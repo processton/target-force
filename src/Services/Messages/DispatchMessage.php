@@ -6,8 +6,8 @@ namespace Targetforce\Base\Services\Messages;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
-use Targetforce\Base\Models\Campaign;
-use Targetforce\Base\Models\CampaignStatus;
+use Targetforce\Base\Models\Post;
+use Targetforce\Base\Models\PostStatus;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Services\Content\MergeContentService;
@@ -129,16 +129,16 @@ class DispatchMessage
             return false;
         }
 
-        if (!$message->isCampaign()) {
+        if (!$message->isPost()) {
             return true;
         }
 
-        $campaign = Campaign::find($message->source_id);
+        $post = Post::find($message->source_id);
 
-        if (!$campaign) {
+        if (!$post) {
             return false;
         }
 
-        return $campaign->status_id !== CampaignStatus::STATUS_CANCELLED;
+        return $post->status_id !== PostStatus::STATUS_CANCELLED;
     }
 }

@@ -1,19 +1,19 @@
 @extends('targetforce::layouts.app')
 
-@section('title', $campaign->name)
+@section('title', $post->name)
 
-@section('heading', $campaign->name)
+@section('heading', $post->name)
 
 
 @section('content')
 
-    @include('targetforce::campaigns.reports.partials.nav')
+    @include('targetforce::posts.reports.partials.nav')
 
     <div class="row mb-4">
         <div class="col-md-4 col-sm-6 mb-md-0 mb-3">
             <div class="widget flex-row align-items-center align-items-stretch">
                 <div class="col-8 py-4 rounded-right">
-                    <div class="h4 m-0">{{ $campaign->unique_open_count }}</div>
+                    <div class="h4 m-0">{{ $post->unique_open_count }}</div>
                     <div class="text-uppercase">{{ __('Unique Opens') }}</div>
                 </div>
                 <div class="col-4 d-flex align-items-center justify-content-center rounded-left">
@@ -25,7 +25,7 @@
         <div class="col-md-4 col-sm-6 mb-md-0 mb-3">
             <div class="widget flex-row align-items-center align-items-stretch">
                 <div class="col-8 py-4 rounded-right">
-                    <div class="h4 m-0">{{ $campaign->total_open_count }}</div>
+                    <div class="h4 m-0">{{ $post->total_open_count }}</div>
                     <div class="text-uppercase">{{ __('Total Opens') }}</div>
                 </div>
                 <div class="col-4 d-flex align-items-center justify-content-center rounded-left">

@@ -6,10 +6,10 @@ use Carbon\CarbonPeriod;
 use Exception;
 use Illuminate\View\View;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
-use Targetforce\Base\Services\Campaigns\CampaignStatisticsService;
+use Targetforce\Base\Services\Posts\PostStatisticsService;
 
 class DashboardController extends Controller
 {
@@ -19,9 +19,9 @@ class DashboardController extends Controller
     protected $subscribers;
 
     /**
-     * @var CampaignTenantRepositoryInterface
+     * @var PostTenantRepositoryInterface
      */
-    protected $campaigns;
+    protected $posts;
 
     /**
      * @var MessageTenantRepositoryInterface
@@ -29,16 +29,16 @@ class DashboardController extends Controller
     protected $messages;
 
     /**
-     * @var CampaignStatisticsService
+     * @var PostStatisticsService
      */
-    protected $campaignStatisticsService;
+    protected $postStatisticsService;
 
-    public function __construct(SubscriberTenantRepositoryInterface $subscribers, CampaignTenantRepositoryInterface $campaigns, MessageTenantRepositoryInterface $messages, CampaignStatisticsService $campaignStatisticsService)
+    public function __construct(SubscriberTenantRepositoryInterface $subscribers, PostTenantRepositoryInterface $posts, MessageTenantRepositoryInterface $messages, PostStatisticsService $postStatisticsService)
     {
         $this->subscribers = $subscribers;
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
         $this->messages = $messages;
-        $this->campaignStatisticsService = $campaignStatisticsService;
+        $this->postStatisticsService = $postStatisticsService;
     }
 
     /**
@@ -47,13 +47,13 @@ class DashboardController extends Controller
     public function index(): View
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $completedCampaigns = $this->campaigns->completedCampaigns($workspaceId, ['status']);
+        $completedPosts = $this->posts->completedPosts($workspaceId, ['status']);
         $subscriberGrowthChart = $this->getSubscriberGrowthChart($workspaceId);
 
         return view('targetforce::dashboard.index', [
             'recentSubscribers' => $this->subscribers->getRecentSubscribers($workspaceId),
-            'completedCampaigns' => $completedCampaigns,
-            'campaignStats' => $this->campaignStatisticsService->getForCollection($completedCampaigns, $workspaceId),
+            'completedPosts' => $completedPosts,
+            'postStats' => $this->postStatisticsService->getForCollection($completedPosts, $workspaceId),
             'subscriberGrowthChartLabels' => json_encode($subscriberGrowthChart['labels']),
             'subscriberGrowthChartData' => json_encode($subscriberGrowthChart['data']),
         ]);

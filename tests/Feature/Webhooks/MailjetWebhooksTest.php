@@ -7,7 +7,7 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Models\Subscriber;
 use Targetforce\Base\Models\UnsubscribeEventType;
@@ -265,17 +265,17 @@ class MailjetWebhooksTest extends TestCase
     public function it_accepts_grouped_event_webhooks()
     {
         // given
-        $campaign = Campaign::factory()->create();
+        $post = Post::factory()->create();
 
         $messageA = Message::factory()->create([
-            'workspace_id' => $campaign->workspace_id,
-            'source_id' => $campaign->id,
+            'workspace_id' => $post->workspace_id,
+            'source_id' => $post->id,
             'message_id' => Str::random(),
         ]);
 
         $messageB = Message::factory()->create([
-            'workspace_id' => $campaign->workspace_id,
-            'source_id' => $campaign->id,
+            'workspace_id' => $post->workspace_id,
+            'source_id' => $post->id,
             'message_id' => Str::random(),
         ]);
 

@@ -43,7 +43,7 @@ class TagTenantRepository extends BaseTenantRepository
         $instance = $this->find($workspaceId, $id);
 
         $instance->subscribers()->detach();
-        $instance->campaigns()->detach();
+        $instance->posts()->detach();
 
         return $instance->delete();
     }

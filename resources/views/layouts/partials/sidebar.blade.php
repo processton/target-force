@@ -5,9 +5,9 @@
                 <i class="fa-fw fas fa-home mr-2"></i><span>{{ __('Dashboard') }}</span>
             </a>
         </li>
-        <li class="nav-item {{ request()->is('*campaigns*') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('targetforce.campaigns.index') }}">
-                <i class="fa-fw fas fa-envelope mr-2"></i><span>{{ __('Campaigns') }}</span>
+        <li class="nav-item {{ request()->is('*posts*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('targetforce.posts.index') }}">
+                <i class="fa-fw fas fa-envelope mr-2"></i><span>{{ __('Posts') }}</span>
             </a>
         </li>
         <li class="nav-item {{ request()->is('*froms*') ? 'active' : '' }}">

@@ -1,11 +1,11 @@
-@if($campaign->draft)
-    <span class="badge badge-light">{{ $campaign->status->name }}</span>
-@elseif($campaign->queued)
-    <span class="badge badge-warning">{{ $campaign->status->name }}</span>
-@elseif($campaign->sending)
-    <span class="badge badge-warning">{{ $campaign->status->name }}</span>
-@elseif($campaign->sent)
-    <span class="badge badge-success">{{ $campaign->status->name }}</span>
-@elseif($campaign->cancelled)
-    <span class="badge badge-danger">{{ $campaign->status->name }}</span>
+@if($post->draft)
+    <span class="badge badge-light">{{ $post->status->name }}</span>
+@elseif($post->queued)
+    <span class="badge badge-warning">{{ $post->status->name }}</span>
+@elseif($post->sending)
+    <span class="badge badge-warning">{{ $post->status->name }}</span>
+@elseif($post->sent)
+    <span class="badge badge-success">{{ $post->status->name }}</span>
+@elseif($post->cancelled)
+    <span class="badge badge-danger">{{ $post->status->name }}</span>
 @endif

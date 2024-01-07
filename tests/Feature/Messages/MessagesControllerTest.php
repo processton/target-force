@@ -6,7 +6,7 @@ namespace Tests\Feature\Messages;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Tests\TestCase;
 
@@ -44,11 +44,11 @@ class MessagesControllerTest extends TestCase
     public function a_draft_message_can_be_viewed_by_an_authenticated_user()
     {
         // given
-        $campaign = Campaign::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
+        $post = Post::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $message = Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'sent_at' => null
         ]);
 
@@ -63,11 +63,11 @@ class MessagesControllerTest extends TestCase
     public function a_draft_message_can_be_deleted()
     {
         // given
-        $campaign = Campaign::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
+        $post = Post::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $message = Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'sent_at' => null
         ]);
 
@@ -83,11 +83,11 @@ class MessagesControllerTest extends TestCase
     public function a_sent_message_cannot_be_deleted()
     {
         // given
-        $campaign = Campaign::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
+        $post = Post::factory()->withContent()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
         $message = Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'sent_at' => now()
         ]);
 
@@ -110,17 +110,17 @@ class MessagesControllerTest extends TestCase
         // given
         $workspaceId = Targetforce::currentWorkspaceId();
 
-        $campaign = Campaign::factory()->withContent()->create(['workspace_id' => $workspaceId]);
+        $post = Post::factory()->withContent()->create(['workspace_id' => $workspaceId]);
 
         Message::factory()->create([
             'workspace_id' => $workspaceId,
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'sent_at' => now(), // Message already sent.
         ]);
 
         $draftMessage = Message::factory()->create([
             'workspace_id' => $workspaceId,
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'queued_at' => now(),
         ]);
 

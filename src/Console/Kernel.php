@@ -4,7 +4,7 @@ namespace Targetforce\Base\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use Targetforce\Base\Console\Commands\CampaignDispatchCommand;
+use Targetforce\Base\Console\Commands\PostDispatchCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command(CampaignDispatchCommand::class)->everyMinute()->withoutOverlapping();
+        $schedule->command(PostDispatchCommand::class)->everyMinute()->withoutOverlapping();
         $schedule->command('horizon:snapshot')->everyFiveMinutes();
     }
 

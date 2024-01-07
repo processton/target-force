@@ -2,43 +2,43 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignDuplicateController extends Controller
+class PostDuplicateController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaigns;
+    /** @var PostTenantRepositoryInterface */
+    protected $posts;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaigns)
+    public function __construct(PostTenantRepositoryInterface $posts)
     {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
     }
 
     /**
-     * Duplicate a campaign.
+     * Duplicate a post.
      *
      * @throws Exception
      */
-    public function duplicate(int $campaignId): RedirectResponse
+    public function duplicate(int $postId): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $campaignId);
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $postId);
 
-        return redirect()->route('targetforce.campaigns.create')->withInput([
-            'name' => $campaign->name . ' - Duplicate',
-            'status_id' => CampaignStatus::STATUS_DRAFT,
-            'template_id' => $campaign->template_id,
-            'email_service_id' => $campaign->email_service_id,
-            'subject' => $campaign->subject,
-            'content' => $campaign->content,
-            'from_name' => $campaign->from_name,
-            'from_email' => $campaign->from_email,
+        return redirect()->route('targetforce.posts.create')->withInput([
+            'name' => $post->name . ' - Duplicate',
+            'status_id' => PostStatus::STATUS_DRAFT,
+            'template_id' => $post->template_id,
+            'email_service_id' => $post->email_service_id,
+            'subject' => $post->subject,
+            'content' => $post->content,
+            'from_name' => $post->from_name,
+            'from_email' => $post->from_email,
         ]);
     }
 }

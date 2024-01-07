@@ -5,7 +5,7 @@ namespace Targetforce\Base;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Targetforce\Base\Console\Commands\CampaignDispatchCommand;
+use Targetforce\Base\Console\Commands\PostDispatchCommand;
 use Targetforce\Base\Providers\EventServiceProvider;
 use Targetforce\Base\Providers\FormServiceProvider;
 use Targetforce\Base\Providers\ResolverProvider;
@@ -38,12 +38,12 @@ class TargetforceBaseServiceProvider extends ServiceProvider
             ], 'targetforce-assets');
 
             $this->commands([
-                CampaignDispatchCommand::class,
+                PostDispatchCommand::class,
             ]);
 
             $this->app->booted(function () {
                 $schedule = $this->app->make(Schedule::class);
-                $schedule->command(CampaignDispatchCommand::class)->everyMinute()->withoutOverlapping();
+                $schedule->command(PostDispatchCommand::class)->everyMinute()->withoutOverlapping();
             });
         }
 

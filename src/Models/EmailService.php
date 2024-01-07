@@ -23,7 +23,7 @@ use Targetforce\Pro\Models\Automation;
  * @property Carbon|null $updated_at
  *
  * @property EmailServiceType $type
- * @property EloquentCollection $campaigns
+ * @property EloquentCollection $posts
  *
  * @method static EmailServiceFactory factory
  */
@@ -64,11 +64,11 @@ class EmailService extends BaseModel
     }
 
     /**
-     * Campaigns using this provider.
+     * Posts using this provider.
      */
-    public function campaigns(): HasMany
+    public function posts(): HasMany
     {
-        return $this->hasMany(Campaign::class, 'email_service_id');
+        return $this->hasMany(Post::class, 'email_service_id');
     }
 
     /**
@@ -92,9 +92,9 @@ class EmailService extends BaseModel
     public function getInUseAttribute(): bool
     {
         if (Helper::isPro()) {
-            return (bool)$this->campaigns()->count() + $this->automations()->count();
+            return (bool)$this->posts()->count() + $this->automations()->count();
         }
 
-        return (bool)$this->campaigns()->count();
+        return (bool)$this->posts()->count();
     }
 }

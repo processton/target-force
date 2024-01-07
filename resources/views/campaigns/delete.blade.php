@@ -1,17 +1,17 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Delete Campaign'))
+@section('title', __('Delete Post'))
 
 @section('heading')
-    @lang('Delete Campaign') - {{ $campaign->name }}
+    @lang('Delete Post') - {{ $post->name }}
 @endsection
 
 @section('content')
 
     @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.campaigns.create') }}">
-                <i class="fa fa-plus mr-1"></i> {{ __('Create Campaign') }}
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.posts.create') }}">
+                <i class="fa fa-plus mr-1"></i> {{ __('Create Post') }}
             </a>
         @endslot
     @endcomponent
@@ -24,13 +24,13 @@
         </div>
         <div class="card-body">
             <p>
-                {!! __('Are you sure that you want to delete the <b>:name</b> campaign?', ['name' => $campaign->name]) !!}
+                {!! __('Are you sure that you want to delete the <b>:name</b> post?', ['name' => $post->name]) !!}
             </p>
-            <form action="{{ route('targetforce.campaigns.destroy', $campaign->id) }}" method="post">
+            <form action="{{ route('targetforce.posts.destroy', $post->id) }}" method="post">
                 @csrf
                 @method('DELETE')
-                <input type="hidden" name="id" value="{{ $campaign->id }}">
-                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Cancel') }}</a>
+                <input type="hidden" name="id" value="{{ $post->id }}">
+                <a href="{{ route('targetforce.posts.index') }}" class="btn btn-md btn-light">{{ __('Cancel') }}</a>
                 <button type="submit" class="btn btn-md btn-danger">{{ __('DELETE') }}</button>
             </form>
         </div>

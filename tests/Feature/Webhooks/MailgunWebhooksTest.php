@@ -7,7 +7,7 @@ namespace Tests\Feature\Webhooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\EmailServiceType;
 use Targetforce\Base\Models\Message;
@@ -176,13 +176,13 @@ class MailgunWebhooksTest extends TestCase
             ],
         ]);
 
-        $campaign = Campaign::factory()->create([
+        $post = Post::factory()->create([
             'email_service_id' => $emailService->id,
         ]);
 
         return Message::factory()->create([
             'message_id' => '<' . Str::random() . '>',
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
         ]);
     }
 

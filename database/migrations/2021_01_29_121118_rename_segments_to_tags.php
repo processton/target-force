@@ -32,13 +32,13 @@ class RenameSegmentsToTags extends Migration
         Schema::rename("targetforce_segment_subscriber", "targetforce_tag_subscriber");
 
 
-        Schema::table('targetforce_campaign_segment', function (Blueprint $table) {
-            $foreignKeys = $this->listTableForeignKeys('targetforce_campaign_segment');
+        Schema::table('targetforce_post_segment', function (Blueprint $table) {
+            $foreignKeys = $this->listTableForeignKeys('targetforce_post_segment');
 
-            if (in_array('targetforce_campaign_segment_segment_id_foreign', $foreignKeys)) {
-                $table->dropForeign('targetforce_campaign_segment_segment_id_foreign');
-            } elseif (in_array('campaign_segment_segment_id_foreign', $foreignKeys)) {
-                $table->dropForeign('campaign_segment_segment_id_foreign');
+            if (in_array('targetforce_post_segment_segment_id_foreign', $foreignKeys)) {
+                $table->dropForeign('targetforce_post_segment_segment_id_foreign');
+            } elseif (in_array('post_segment_segment_id_foreign', $foreignKeys)) {
+                $table->dropForeign('post_segment_segment_id_foreign');
             }
 
             $table->renameColumn('segment_id', 'tag_id');
@@ -46,7 +46,7 @@ class RenameSegmentsToTags extends Migration
             $table->foreign('tag_id')->references('id')->on('targetforce_tags');
         });
 
-        Schema::rename("targetforce_campaign_segment", "targetforce_campaign_tag");
+        Schema::rename("targetforce_post_segment", "targetforce_post_tag");
     }
 
     protected function listTableForeignKeys(string $table): array

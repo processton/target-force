@@ -9,18 +9,18 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Http\Requests\Api\CampaignStoreRequest;
-use Targetforce\Base\Http\Resources\Campaign as CampaignResource;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Http\Requests\Api\PostStoreRequest;
+use Targetforce\Base\Http\Resources\Post as PostResource;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignsController extends Controller
+class PostsController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    private $campaigns;
+    /** @var PostTenantRepositoryInterface */
+    private $posts;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaigns)
+    public function __construct(PostTenantRepositoryInterface $posts)
     {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
     }
 
     /**
@@ -30,51 +30,51 @@ class CampaignsController extends Controller
     {
         $workspaceId = Targetforce::currentWorkspaceId();
 
-        return CampaignResource::collection($this->campaigns->paginate($workspaceId, 'id', ['tags']));
+        return PostResource::collection($this->posts->paginate($workspaceId, 'id', ['tags']));
     }
 
     /**
      * @throws Exception
      */
-    public function store(CampaignStoreRequest $request): CampaignResource
+    public function store(PostStoreRequest $request): PostResource
     {
         $workspaceId = Targetforce::currentWorkspaceId();
         $data = Arr::except($request->validated(), ['tags']);
 
         $data['save_as_draft'] = $request->get('save_as_draft') ?? 0;
 
-        $campaign = $this->campaigns->store($workspaceId, $data);
+        $post = $this->posts->store($workspaceId, $data);
 
-        $campaign->tags()->sync($request->get('tags'));
+        $post->tags()->sync($request->get('tags'));
 
-        return new CampaignResource($campaign);
+        return new PostResource($post);
     }
 
     /**
      * @throws Exception
      */
-    public function show(int $id): CampaignResource
+    public function show(int $id): PostResource
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $campaign = $this->campaigns->find($workspaceId, $id);
+        $post = $this->posts->find($workspaceId, $id);
 
-        return new CampaignResource($campaign);
+        return new PostResource($post);
     }
 
     /**
      * @throws Exception
      */
-    public function update(CampaignStoreRequest $request, int $id): CampaignResource
+    public function update(PostStoreRequest $request, int $id): PostResource
     {
         $workspaceId = Targetforce::currentWorkspaceId();
         $data = Arr::except($request->validated(), ['tags']);
 
         $data['save_as_draft'] = $request->get('save_as_draft') ?? 0;
 
-        $campaign = $this->campaigns->update($workspaceId, $id, $data);
+        $post = $this->posts->update($workspaceId, $id, $data);
 
-        $campaign->tags()->sync($request->get('tags'));
+        $post->tags()->sync($request->get('tags'));
 
-        return new CampaignResource($campaign);
+        return new PostResource($post);
     }
 }

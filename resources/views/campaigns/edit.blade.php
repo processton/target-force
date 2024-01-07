@@ -1,9 +1,9 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Edit Campaign'))
+@section('title', __('Edit Post'))
 
 @section('heading')
-    {{ __('Edit Campaign') }}
+    {{ __('Edit Post') }}
 @stop
 
 @section('content')
@@ -12,13 +12,13 @@
         <div class="col-lg-8 offset-lg-2">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Edit Campaign') }}
+                    {{ __('Edit Post') }}
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('targetforce.campaigns.update', $campaign->id) }}" method="POST" class="form-horizontal">
+                    <form action="{{ route('targetforce.posts.update', $post->id) }}" method="POST" class="form-horizontal">
                         @csrf
                         @method('PUT')
-                        @include('targetforce::campaigns.partials.form')
+                        @include('targetforce::posts.partials.form')
                     </form>
                 </div>
             </div>

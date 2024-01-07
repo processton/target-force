@@ -1,9 +1,9 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Confirm Campaign'))
+@section('title', __('Confirm Post'))
 
 @section('heading')
-    {{ __('Preview Campaign') }}: {{ $campaign->name }}
+    {{ __('Preview Post') }}: {{ $post->name }}
 @stop
 
 @section('content')
@@ -22,7 +22,7 @@
                         <label class="col-sm-2 col-form-label">{{ __('From') }}:</label>
                         <div class="col-sm-10">
                             <b>
-                                <span class="form-control-plaintext">{{ $campaign->from_name . ' <' . $campaign->from_email . '>' }}</span>
+                                <span class="form-control-plaintext">{{ $post->from_name . ' <' . $post->from_email . '>' }}</span>
                             </b>
                         </div>
                     </div>
@@ -30,13 +30,13 @@
                         <label class="col-sm-2 col-form-label">{{ __('Subject') }}:</label>
                         <div class="col-sm-10">
                             <b>
-                                <span class="form-control-plaintext">{{ $campaign->subject }}</span>
+                                <span class="form-control-plaintext">{{ $post->subject }}</span>
                             </b>
                         </div>
                     </div>
 
                     <div style="border: 1px solid #ddd; height: 600px">
-                        <iframe id="js-template-iframe" srcdoc="{{ $campaign->merged_content }}" class="embed-responsive-item" frameborder="0" style="height: 100%; width: 100%"></iframe>
+                        <iframe id="js-template-iframe" srcdoc="{{ $post->merged_content }}" class="embed-responsive-item" frameborder="0" style="height: 100%; width: 100%"></iframe>
                     </div>
 
                 </form>
@@ -47,7 +47,7 @@
 
     <div class="col-md-4">
 
-        <form action="{{ route('targetforce.campaigns.test', $campaign->id) }}" method="POST">
+        <form action="{{ route('targetforce.posts.test', $post->id) }}" method="POST">
             @csrf
 
             <div class="card mb-4">
@@ -70,7 +70,7 @@
             </div>
         </form>
 
-        <form action="{{ route('targetforce.campaigns.send', $campaign->id) }}" method="POST">
+        <form action="{{ route('targetforce.posts.send', $post->id) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="card mb-4">
@@ -83,17 +83,17 @@
                     <div class="form-group row form-group-recipients">
                         <div class="col-sm-12">
                             <select id="id-field-recipients" class="form-control" name="recipients">
-                                <option value="send_to_all" {{ (old('recipients') ? old('recipients') == 'send_to_all' : $campaign->send_to_all) ? 'selected' : '' }}>
+                                <option value="send_to_all" {{ (old('recipients') ? old('recipients') == 'send_to_all' : $post->send_to_all) ? 'selected' : '' }}>
                                     {{ __('All subscribers') }} ({{ $subscriberCount }})
                                 </option>
-                                <option value="send_to_tags" {{ (old('recipients') ? old('recipients') == 'send_to_tags' : !$campaign->send_to_all) ? 'selected' : '' }}>
+                                <option value="send_to_tags" {{ (old('recipients') ? old('recipients') == 'send_to_tags' : !$post->send_to_all) ? 'selected' : '' }}>
                                     {{ __('Select Tags') }}
                                 </option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="tags-container {{ (old('recipients') ? old('recipients') == 'send_to_tags' : !$campaign->send_to_all) ? '' : 'hide' }}">
+                    <div class="tags-container {{ (old('recipients') ? old('recipients') == 'send_to_tags' : !$post->send_to_all) ? '' : 'hide' }}">
                         @forelse($tags as $tag)
                             <div class="checkbox">
                                 <label>
@@ -110,17 +110,17 @@
                     <div class="form-group row form-group-schedule">
                         <div class="col-sm-12">
                             <select id="id-field-schedule" class="form-control" name="schedule">
-                                <option value="now" {{ old('schedule') === 'now' || is_null($campaign->scheduled_at) ? 'selected' : '' }}>
+                                <option value="now" {{ old('schedule') === 'now' || is_null($post->scheduled_at) ? 'selected' : '' }}>
                                     {{ __('Dispatch now') }}
                                 </option>
-                                <option value="scheduled" {{ old('schedule') === 'now' || $campaign->scheduled_at ? 'selected' : '' }}>
+                                <option value="scheduled" {{ old('schedule') === 'now' || $post->scheduled_at ? 'selected' : '' }}>
                                     {{ __('Dispatch at a specific time') }}
                                 </option>
                             </select>
                         </div>
                     </div>
 
-                    <input id="input-field-scheduled_at" class="form-control hide mb-3" name="scheduled_at" type="text" value="{{ $campaign->scheduled_at ?: now() }}">
+                    <input id="input-field-scheduled_at" class="form-control hide mb-3" name="scheduled_at" type="text" value="{{ $post->scheduled_at ?: now() }}">
 
                     <div class="pb-2"><b>{{ __('SENDING BEHAVIOUR') }}</b></div>
                     <div class="form-group row form-group-schedule">
@@ -136,8 +136,8 @@
             </div>
 
             <div>
-                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
-                <button type="submit" class="btn btn-primary">{{ __('Send campaign') }}</button>
+                <a href="{{ route('targetforce.posts.index') }}" class="btn btn-light">{{ __('Cancel') }}</a>
+                <button type="submit" class="btn btn-primary">{{ __('Send post') }}</button>
             </div>
 
         </form>

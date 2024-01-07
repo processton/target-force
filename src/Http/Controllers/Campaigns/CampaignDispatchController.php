@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\RedirectResponse;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Http\Requests\CampaignDispatchRequest;
+use Targetforce\Base\Http\Requests\PostDispatchRequest;
 use Targetforce\Base\Interfaces\QuotaServiceInterface;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignDispatchController extends Controller
+class PostDispatchController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaigns;
+    /** @var PostTenantRepositoryInterface */
+    protected $posts;
 
     /**
      * @var QuotaServiceInterface
@@ -25,50 +25,50 @@ class CampaignDispatchController extends Controller
     protected $quotaService;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaigns,
+        PostTenantRepositoryInterface $posts,
         QuotaServiceInterface $quotaService
     ) {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
         $this->quotaService = $quotaService;
     }
 
     /**
-     * Dispatch the campaign.
+     * Dispatch the post.
      *
      * @throws Exception
      */
-    public function send(CampaignDispatchRequest $request, int $id): RedirectResponse
+    public function send(PostDispatchRequest $request, int $id): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id, ['email_service', 'messages']);
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $id, ['email_service', 'messages']);
 
-        if ($campaign->status_id !== CampaignStatus::STATUS_DRAFT) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if ($post->status_id !== PostStatus::STATUS_DRAFT) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
-        if (!$campaign->email_service_id) {
-            return redirect()->route('targetforce.campaigns.edit', $id)
+        if (!$post->email_service_id) {
+            return redirect()->route('targetforce.posts.edit', $id)
                 ->withErrors(__('Please select an Email Service'));
         }
 
-        $campaign->update([
+        $post->update([
             'send_to_all' => $request->get('recipients') === 'send_to_all',
         ]);
 
-        $campaign->tags()->sync($request->get('tags'));
+        $post->tags()->sync($request->get('tags'));
 
-        if ($this->quotaService->exceedsQuota($campaign->email_service, $campaign->unsent_count)) {
-            return redirect()->route('targetforce.campaigns.edit', $id)
-                ->withErrors(__('The number of subscribers for this campaign exceeds your SES quota'));
+        if ($this->quotaService->exceedsQuota($post->email_service, $post->unsent_count)) {
+            return redirect()->route('targetforce.posts.edit', $id)
+                ->withErrors(__('The number of subscribers for this post exceeds your SES quota'));
         }
 
         $scheduledAt = $request->get('schedule') === 'scheduled' ? Carbon::parse($request->get('scheduled_at')) : now();
 
-        $campaign->update([
+        $post->update([
             'scheduled_at' => $scheduledAt,
-            'status_id' => CampaignStatus::STATUS_QUEUED,
+            'status_id' => PostStatus::STATUS_QUEUED,
             'save_as_draft' => $request->get('behaviour') === 'draft',
         ]);
 
-        return redirect()->route('targetforce.campaigns.status', $id);
+        return redirect()->route('targetforce.posts.status', $id);
     }
 }

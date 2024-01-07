@@ -1,22 +1,22 @@
 @extends('targetforce::layouts.app')
 
-@section('title', $campaign->name)
+@section('title', $post->name)
 
 @section('heading')
-    {{ $campaign->name }}
+    {{ $post->name }}
 @endsection
 
 @section('content')
 
-    @include('targetforce::campaigns.reports.partials.nav')
+    @include('targetforce::posts.reports.partials.nav')
 
     <div class="row mb-4">
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('targetforce.campaigns.reports.recipients', $campaign->id) }}"
+            <a href="{{ route('targetforce.posts.reports.recipients', $post->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
-                        <div class="h2 m-0">{{ $campaignStats['counts']['sent'] }}</div>
+                        <div class="h2 m-0">{{ $postStats['counts']['sent'] }}</div>
                         <div class="text-uppercase">{{ __('Emails Sent') }}</div>
                     </div>
                     <div class="col-4 d-flex align-items-center justify-content-center rounded-left">
@@ -27,11 +27,11 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('targetforce.campaigns.reports.opens', $campaign->id) }}"
+            <a href="{{ route('targetforce.posts.reports.opens', $post->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
-                        <div class="h2 m-0">{{ round($campaignStats['ratios']['open'] * 100, 1) }}%</div>
+                        <div class="h2 m-0">{{ round($postStats['ratios']['open'] * 100, 1) }}%</div>
                         <div class="text-uppercase">{{ __('Unique Opens') }}</div>
                     </div>
                     <div class="col-4 d-flex align-items-center justify-content-center rounded-left">
@@ -42,11 +42,11 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('targetforce.campaigns.reports.clicks', $campaign->id) }}"
+            <a href="{{ route('targetforce.posts.reports.clicks', $post->id) }}"
                class="text-decoration-none text-reset">
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
-                        <div class="h2 m-0">{{ round($campaignStats['ratios']['click'] * 100, 1) }}%</div>
+                        <div class="h2 m-0">{{ round($postStats['ratios']['click'] * 100, 1) }}%</div>
                         <div class="text-uppercase">{{ __('Click Rate') }}</div>
                     </div>
                     <div class="col-4 d-flex align-items-center justify-content-center rounded-left">
@@ -57,12 +57,12 @@
         </div>
 
         <div class="col-md-3 col-sm-6 mb-md-0 mb-3">
-            <a href="{{ route('targetforce.campaigns.reports.bounces', $campaign->id) }}"
+            <a href="{{ route('targetforce.posts.reports.bounces', $post->id) }}"
                class="text-decoration-none text-reset">
 
                 <div class="widget flex-row align-items-center align-items-stretch">
                     <div class="col-8 py-4 rounded-right">
-                        <div class="h2 m-0">{{ round($campaignStats['ratios']['bounce'] * 100, 1) }}%</div>
+                        <div class="h2 m-0">{{ round($postStats['ratios']['bounce'] * 100, 1) }}%</div>
                         <div class="text-uppercase">{{ __('Bounce Rate') }}</div>
                     </div>
                     <div class="col-4 d-flex align-items-center justify-content-center rounded-left">
@@ -111,10 +111,10 @@
                     <td><b>{{ __('URL') }}</b></td>
                     <td class="text-right"><b>{{ __('Click Count') }}</b></td>
                 </tr>
-                @forelse($campaignUrls as $campaignUrl)
-                    <tr class="campaign-link">
-                        <td>{{ $campaignUrl->url }}</td>
-                        <td class="text-right">{{ $campaignUrl->click_count }}</td>
+                @forelse($postUrls as $postUrl)
+                    <tr class="post-link">
+                        <td>{{ $postUrl->url }}</td>
+                        <td class="text-right">{{ $postUrl->click_count }}</td>
                     </tr>
                 @empty
                     <tr>

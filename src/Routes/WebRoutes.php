@@ -52,42 +52,42 @@ class WebRoutes
 
                 $appRouter->get('/forms', 'Forms\FormsController@index')->name('forms');
 
-                // Campaigns.
-                $appRouter->resource('campaigns', 'Campaigns\CampaignsController')->except(['show', 'destroy']);
-                $appRouter->name('campaigns.')->prefix('campaigns')->namespace('Campaigns')->group(static function (
-                    Router $campaignRouter
+                // Posts.
+                $appRouter->resource('posts', 'Posts\PostsController')->except(['show', 'destroy']);
+                $appRouter->name('posts.')->prefix('posts')->namespace('Posts')->group(static function (
+                    Router $postRouter
                 ) {
-                    $campaignRouter->get('sent', 'CampaignsController@sent')->name('sent');
-                    $campaignRouter->get('{id}', 'CampaignsController@show')->name('show');
-                    $campaignRouter->get('{id}/preview', 'CampaignsController@preview')->name('preview');
-                    $campaignRouter->put('{id}/send', 'CampaignDispatchController@send')->name('send');
-                    $campaignRouter->get('{id}/status', 'CampaignsController@status')->name('status');
-                    $campaignRouter->post('{id}/test', 'CampaignTestController@handle')->name('test');
+                    $postRouter->get('sent', 'PostsController@sent')->name('sent');
+                    $postRouter->get('{id}', 'PostsController@show')->name('show');
+                    $postRouter->get('{id}/preview', 'PostsController@preview')->name('preview');
+                    $postRouter->put('{id}/send', 'PostDispatchController@send')->name('send');
+                    $postRouter->get('{id}/status', 'PostsController@status')->name('status');
+                    $postRouter->post('{id}/test', 'PostTestController@handle')->name('test');
 
-                    $campaignRouter->get(
+                    $postRouter->get(
                         '{id}/confirm-delete',
-                        'CampaignDeleteController@confirm'
+                        'PostDeleteController@confirm'
                     )->name('destroy.confirm');
-                    $campaignRouter->delete('', 'CampaignDeleteController@destroy')->name('destroy');
+                    $postRouter->delete('', 'PostDeleteController@destroy')->name('destroy');
 
-                    $campaignRouter->get('{id}/duplicate', 'CampaignDuplicateController@duplicate')->name('duplicate');
+                    $postRouter->get('{id}/duplicate', 'PostDuplicateController@duplicate')->name('duplicate');
 
-                    $campaignRouter->get('{id}/confirm-cancel', 'CampaignCancellationController@confirm')->name('confirm-cancel');
-                    $campaignRouter->post('{id}/cancel', 'CampaignCancellationController@cancel')->name('cancel');
+                    $postRouter->get('{id}/confirm-cancel', 'PostCancellationController@confirm')->name('confirm-cancel');
+                    $postRouter->post('{id}/cancel', 'PostCancellationController@cancel')->name('cancel');
 
-                    $campaignRouter->get('{id}/report', 'CampaignReportsController@index')->name('reports.index');
-                    $campaignRouter->get('{id}/report/recipients', 'CampaignReportsController@recipients')
+                    $postRouter->get('{id}/report', 'PostReportsController@index')->name('reports.index');
+                    $postRouter->get('{id}/report/recipients', 'PostReportsController@recipients')
                         ->name('reports.recipients');
-                    $campaignRouter->get('{id}/report/opens', 'CampaignReportsController@opens')->name('reports.opens');
-                    $campaignRouter->get(
+                    $postRouter->get('{id}/report/opens', 'PostReportsController@opens')->name('reports.opens');
+                    $postRouter->get(
                         '{id}/report/clicks',
-                        'CampaignReportsController@clicks'
+                        'PostReportsController@clicks'
                     )->name('reports.clicks');
-                    $campaignRouter->get('{id}/report/unsubscribes', 'CampaignReportsController@unsubscribes')
+                    $postRouter->get('{id}/report/unsubscribes', 'PostReportsController@unsubscribes')
                         ->name('reports.unsubscribes');
-                    $campaignRouter->get(
+                    $postRouter->get(
                         '{id}/report/bounces',
-                        'CampaignReportsController@bounces'
+                        'PostReportsController@bounces'
                     )->name('reports.bounces');
                 });
 

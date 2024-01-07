@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\EmailServiceType;
 use Tests\TestCase;
@@ -130,7 +130,7 @@ class EmailServicesControllerTest extends TestCase
     {
         $emailService = EmailService::factory()->create(['workspace_id' => Targetforce::currentWorkspaceId()]);
 
-        Campaign::factory()->create([
+        Post::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
             'email_service_id' => $emailService->id
         ]);

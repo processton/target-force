@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Arr;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Template;
 use Targetforce\Base\Traits\NormalizeTags;
 use Tests\TestCase;
@@ -133,7 +133,7 @@ class TemplatesControllerTest extends TestCase
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
-        Campaign::factory()->create([
+        Post::factory()->create([
             'template_id' => $template->id
         ]);
 

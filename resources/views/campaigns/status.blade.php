@@ -1,9 +1,9 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Campaign Status'))
+@section('title', __('Post Status'))
 
 @section('heading')
-    {{ __('Campaign Status') }}
+    {{ __('Post Status') }}
 @stop
 
 @section('content')
@@ -13,17 +13,17 @@
 <div class="card">
     <div class="card-header card-header-accent">
         <div class="card-header-inner">
-            {{ __('Your campaign is currently') }} <strong>{{ strtolower($campaign->status->name) }}</strong>
+            {{ __('Your post is currently') }} <strong>{{ strtolower($post->status->name) }}</strong>
         </div>
     </div>
     <div class="card-body">
-        @if ($campaign->queued)
-            Your campaign is queued and will be sent out soon.
-        @elseif ($campaign->cancelled)
-            Your campaign was cancelled.
+        @if ($post->queued)
+            Your post is queued and will be sent out soon.
+        @elseif ($post->cancelled)
+            Your post was cancelled.
         @else
             <i class="fas fa-cog fa-spin"></i>
-            {{ $campaignStats[$campaign->id]['counts']['sent'] }} out of {{ $campaignStats[$campaign->id]['counts']['total'] }} messages sent.
+            {{ $postStats[$post->id]['counts']['sent'] }} out of {{ $postStats[$post->id]['counts']['total'] }} messages sent.
         @endif
     </div>
 </div>

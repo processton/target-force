@@ -7,9 +7,9 @@ namespace Targetforce\Base\Providers;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Targetforce\Base\Interfaces\QuotaServiceInterface;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
-use Targetforce\Base\Repositories\Campaigns\MySqlCampaignTenantRepository;
-use Targetforce\Base\Repositories\Campaigns\PostgresCampaignTenantRepository;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\MySqlPostTenantRepository;
+use Targetforce\Base\Repositories\Posts\PostgresPostTenantRepository;
 use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 use Targetforce\Base\Repositories\Messages\MySqlMessageTenantRepository;
 use Targetforce\Base\Repositories\Messages\PostgresMessageTenantRepository;
@@ -31,13 +31,13 @@ class TargetforceAppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Campaign repository.
-        $this->app->bind(CampaignTenantRepositoryInterface::class, function (Application $app) {
+        // Post repository.
+        $this->app->bind(PostTenantRepositoryInterface::class, function (Application $app) {
             if ($this->usingPostgres()) {
-                return $app->make(PostgresCampaignTenantRepository::class);
+                return $app->make(PostgresPostTenantRepository::class);
             }
 
-            return $app->make(MySqlCampaignTenantRepository::class);
+            return $app->make(MySqlPostTenantRepository::class);
         });
 
         // Message repository.

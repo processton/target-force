@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  *
- * @property EloquentCollection $campaigns
+ * @property EloquentCollection $posts
  * @property EloquentCollection $subscribers
  * @property EloquentCollection $active_subscribers
  *
@@ -47,9 +47,9 @@ class Tag extends BaseModel
         'subscribers'
     ];
 
-    public function campaigns(): BelongsToMany
+    public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Campaign::class, 'targetforce_campaign_tag');
+        return $this->belongsToMany(Post::class, 'targetforce_post_tag');
     }
 
     /**

@@ -43,7 +43,7 @@ use Targetforce\Pro\Models\AutomationSchedule;
  *
  * @property EloquentCollection $failures
  * @property Subscriber $subscriber
- * @property Campaign $source // NOTE(david): this should be updated to a mixed type when Automations are added.
+ * @property Post $source // NOTE(david): this should be updated to a mixed type when Automations are added.
  *
  * @property-read string $source_string
  *
@@ -131,13 +131,13 @@ class Message extends BaseModel
     }
 
     /**
-     * Determine if this message is for a campaign.
+     * Determine if this message is for a post.
      *
      * @return bool
      */
-    public function isCampaign(): bool
+    public function isPost(): bool
     {
-        return $this->source_type === Campaign::class;
+        return $this->source_type === Post::class;
     }
 
     /**
@@ -147,8 +147,8 @@ class Message extends BaseModel
      */
     public function getSourceStringAttribute(): ?string
     {
-        if ($this->source_type === Campaign::class) {
-            return 'Campaign';
+        if ($this->source_type === Post::class) {
+            return 'Post';
         }
 
         if (Helper::isPro() && $this->source_type === AutomationSchedule::class) {

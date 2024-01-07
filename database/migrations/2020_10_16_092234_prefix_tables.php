@@ -31,9 +31,9 @@ class PrefixTables extends Migration
     protected function getTables()
     {
         return [
-            'campaign_segment',
-            'campaign_statuses',
-            'campaigns',
+            'post_segment',
+            'post_statuses',
+            'posts',
             'email_service_types',
             'email_services',
             'message_failures',

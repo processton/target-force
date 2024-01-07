@@ -7,29 +7,29 @@ namespace Targetforce\Base\Http\Requests\Api;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Http\Requests\CampaignStoreRequest as BaseCampaignStoreRequest;
-use Targetforce\Base\Models\Campaign;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Http\Requests\PostStoreRequest as BasePostStoreRequest;
+use Targetforce\Base\Models\Post;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Repositories\TagTenantRepository;
 
-class CampaignStoreRequest extends BaseCampaignStoreRequest
+class PostStoreRequest extends BasePostStoreRequest
 {
     /**
-     * @var CampaignTenantRepositoryInterface
+     * @var PostTenantRepositoryInterface
      */
-    protected $campaigns;
+    protected $posts;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaigns)
+    public function __construct(PostTenantRepositoryInterface $posts)
     {
         parent::__construct();
 
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
         $this->workspaceId = Targetforce::currentWorkspaceId();
 
         Validator::extendImplicit('valid_status', function ($attribute, $value, $parameters, $validator) {
-            return $this->campaign
-                ? $this->getCampaign()->status_id === CampaignStatus::STATUS_DRAFT
+            return $this->post
+                ? $this->getPost()->status_id === PostStatus::STATUS_DRAFT
                 : true;
         });
     }
@@ -37,9 +37,9 @@ class CampaignStoreRequest extends BaseCampaignStoreRequest
     /**
      * @throws \Exception
      */
-    public function getCampaign(): Campaign
+    public function getPost(): Post
     {
-        return $this->campaign = $this->campaigns->find($this->workspaceId, $this->campaign);
+        return $this->post = $this->posts->find($this->workspaceId, $this->post);
     }
 
     public function rules(): array
@@ -79,7 +79,7 @@ class CampaignStoreRequest extends BaseCampaignStoreRequest
     public function messages(): array
     {
         return [
-            'valid_status' => __('A campaign cannot be updated if its status is not draft'),
+            'valid_status' => __('A post cannot be updated if its status is not draft'),
             'tags.in' => 'One or more of the tags is invalid.',
         ];
     }

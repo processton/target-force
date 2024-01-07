@@ -91,10 +91,10 @@ class EmailServicesController extends Controller
      */
     public function delete(int $emailServiceId): RedirectResponse
     {
-        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId, ['campaigns']);
+        $emailService = $this->emailServices->find(Targetforce::currentWorkspaceId(), $emailServiceId, ['posts']);
 
         if ($emailService->in_use) {
-            return redirect()->back()->withErrors(__("You cannot delete an email service that is currently used by a campaign or automation."));
+            return redirect()->back()->withErrors(__("You cannot delete an email service that is currently used by a post or automation."));
         }
 
         $this->emailServices->destroy(Targetforce::currentWorkspaceId(), $emailServiceId);

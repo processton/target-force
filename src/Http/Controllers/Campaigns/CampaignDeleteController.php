@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Exception;
 use Illuminate\Http\RedirectResponse;
@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignDeleteController extends Controller
+class PostDeleteController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaigns;
+    /** @var PostTenantRepositoryInterface */
+    protected $posts;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaigns)
+    public function __construct(PostTenantRepositoryInterface $posts)
     {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
     }
 
     /**
@@ -30,33 +30,33 @@ class CampaignDeleteController extends Controller
      */
     public function confirm(int $id)
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $id);
 
-        if (!$campaign->draft) {
-            return redirect()->route('targetforce.campaigns.index')
-                ->withErrors(__('Unable to delete a campaign that is not in draft status'));
+        if (!$post->draft) {
+            return redirect()->route('targetforce.posts.index')
+                ->withErrors(__('Unable to delete a post that is not in draft status'));
         }
 
-        return view('targetforce::campaigns.delete', compact('campaign'));
+        return view('targetforce::posts.delete', compact('post'));
     }
 
     /**
-     * Delete a campaign from the database.
+     * Delete a post from the database.
      *
      * @throws Exception
      */
     public function destroy(Request $request): RedirectResponse
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $request->get('id'));
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $request->get('id'));
 
-        if (!$campaign->draft) {
-            return redirect()->route('targetforce.campaigns.index')
-                ->withErrors(__('Unable to delete a campaign that is not in draft status'));
+        if (!$post->draft) {
+            return redirect()->route('targetforce.posts.index')
+                ->withErrors(__('Unable to delete a post that is not in draft status'));
         }
 
-        $this->campaigns->destroy(Targetforce::currentWorkspaceId(), $request->get('id'));
+        $this->posts->destroy(Targetforce::currentWorkspaceId(), $request->get('id'));
 
-        return redirect()->route('targetforce.campaigns.index')
-            ->with('success', __('The Campaign has been successfully deleted'));
+        return redirect()->route('targetforce.posts.index')
+            ->with('success', __('The Post has been successfully deleted'));
     }
 }

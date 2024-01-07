@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Targetforce\Base\Facades\Helper;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Repositories\BaseTenantRepository;
 
@@ -38,7 +38,7 @@ abstract class BaseMessageTenantRepository extends BaseTenantRepository implemen
             ]);
 
         $instance->when(!Helper::isPro(), function ($q) {
-            $q->where('source_type', '=', Campaign::class);
+            $q->where('source_type', '=', Post::class);
         });
 
         $this->applyFilters($instance, $parameters);

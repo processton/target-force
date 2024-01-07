@@ -76,9 +76,9 @@
                             </td>
                             <td>{{ $message->subject }}</td>
                             <td>
-                                @if($message->isCampaign())
+                                @if($message->isPost())
                                     <i class="fas fa-envelope color-gray-300"></i>
-                                    <a href="{{ route('targetforce.campaigns.reports.index', $message->source_id) }}">
+                                    <a href="{{ route('targetforce.posts.reports.index', $message->source_id) }}">
                                         {{ $message->source->name }}
                                     </a>
                                 @elseif($message->isAutomation())

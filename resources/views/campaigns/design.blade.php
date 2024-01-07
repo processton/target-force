@@ -1,14 +1,14 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Campaign Design'))
+@section('title', __('Post Design'))
 
 @section('heading')
-    {{ __('Campaign Design') }}
+    {{ __('Post Design') }}
 @stop
 
 @section('content')
 
-    <form action="{{ route('campaigns.content.update', $campaign->id) }}" method="POST">
+    <form action="{{ route('posts.content.update', $post->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -16,7 +16,7 @@
 
         <br>
 
-        <a href="{{ route('targetforce.campaigns.template', $campaign->id) }}" class="btn btn-link"><i
+        <a href="{{ route('targetforce.posts.template', $post->id) }}" class="btn btn-link"><i
                 class="fa fa-arrow-left"></i> {{ __('Back') }}</a>
 
         <button class="btn btn-primary" type="submit">{{ __('Save and continue') }}</button>

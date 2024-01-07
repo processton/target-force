@@ -7,41 +7,41 @@ namespace Targetforce\Base\Http\Requests\Api;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\Post;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignDispatchRequest extends FormRequest
+class PostDispatchRequest extends FormRequest
 {
     /**
-     * @var CampaignTenantRepositoryInterface
+     * @var PostTenantRepositoryInterface
      */
-    protected $campaigns;
+    protected $posts;
 
     /**
-     * @var Campaign
+     * @var Post
      */
-    protected $campaign;
+    protected $post;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaigns)
+    public function __construct(PostTenantRepositoryInterface $posts)
     {
         parent::__construct();
 
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
 
         Validator::extendImplicit('valid_status', function ($attribute, $value, $parameters, $validator) {
-            return $this->getCampaign()->status_id === CampaignStatus::STATUS_DRAFT;
+            return $this->getPost()->status_id === PostStatus::STATUS_DRAFT;
         });
     }
 
     /**
      * @param array $relations
-     * @return Campaign
+     * @return Post
      * @throws \Exception
      */
-    public function getCampaign(array $relations = []): Campaign
+    public function getPost(array $relations = []): Post
     {
-        return $this->campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $this->id, $relations);
+        return $this->post = $this->posts->find(Targetforce::currentWorkspaceId(), $this->id, $relations);
     }
 
     public function rules()
@@ -54,7 +54,7 @@ class CampaignDispatchRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'valid_status' => __('The campaign must have a status of draft to be dispatched'),
+            'valid_status' => __('The post must have a status of draft to be dispatched'),
         ];
     }
 }

@@ -25,7 +25,7 @@ interface MessageTenantRepositoryInterface extends BaseTenantInterface
     public function getFirstOpenedAt(int $workspaceId, string $sourceType, int $sourceId);
 
     /**
-     * Count the number of unique opens per period for a campaign or automation schedule.
+     * Count the number of unique opens per period for a post or automation schedule.
      */
     public function countUniqueOpensPerPeriod(int $workspaceId, string $sourceType, int $sourceId, int $intervalInSeconds): Collection;
 }

@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Exception;
 use Illuminate\Contracts\View\View as ViewContract;
 use Illuminate\Http\RedirectResponse;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Http\Requests\CampaignStoreRequest;
+use Targetforce\Base\Http\Requests\PostStoreRequest;
 use Targetforce\Base\Models\EmailService;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 use Targetforce\Base\Repositories\EmailServiceTenantRepository;
 use Targetforce\Base\Repositories\Subscribers\SubscriberTenantRepositoryInterface;
 use Targetforce\Base\Repositories\TagTenantRepository;
 use Targetforce\Base\Repositories\TemplateTenantRepository;
-use Targetforce\Base\Services\Campaigns\CampaignStatisticsService;
+use Targetforce\Base\Services\Posts\PostStatisticsService;
 
-class CampaignsController extends Controller
+class PostsController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface */
-    protected $campaigns;
+    /** @var PostTenantRepositoryInterface */
+    protected $posts;
 
     /** @var TemplateTenantRepository */
     protected $templates;
@@ -36,24 +36,24 @@ class CampaignsController extends Controller
     protected $subscribers;
 
     /**
-     * @var CampaignStatisticsService
+     * @var PostStatisticsService
      */
-    protected $campaignStatisticsService;
+    protected $postStatisticsService;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaigns,
+        PostTenantRepositoryInterface $posts,
         TemplateTenantRepository $templates,
         TagTenantRepository $tags,
         EmailServiceTenantRepository $emailServices,
         SubscriberTenantRepositoryInterface $subscribers,
-        CampaignStatisticsService $campaignStatisticsService
+        PostStatisticsService $postStatisticsService
     ) {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
         $this->templates = $templates;
         $this->tags = $tags;
         $this->emailServices = $emailServices;
         $this->subscribers = $subscribers;
-        $this->campaignStatisticsService = $campaignStatisticsService;
+        $this->postStatisticsService = $postStatisticsService;
     }
 
     /**
@@ -63,11 +63,11 @@ class CampaignsController extends Controller
     {
         $workspaceId = Targetforce::currentWorkspaceId();
         $params = ['draft' => true];
-        $campaigns = $this->campaigns->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
+        $posts = $this->posts->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
 
-        return view('targetforce::campaigns.index', [
-            'campaigns' => $campaigns,
-            'campaignStats' => $this->campaignStatisticsService->getForPaginator($campaigns, $workspaceId),
+        return view('targetforce::posts.index', [
+            'posts' => $posts,
+            'postStats' => $this->postStatisticsService->getForPaginator($posts, $workspaceId),
         ]);
     }
 
@@ -78,11 +78,11 @@ class CampaignsController extends Controller
     {
         $workspaceId = Targetforce::currentWorkspaceId();
         $params = ['sent' => true];
-        $campaigns = $this->campaigns->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
+        $posts = $this->posts->paginate($workspaceId, 'created_atDesc', ['status'], 25, $params);
 
-        return view('targetforce::campaigns.index', [
-            'campaigns' => $campaigns,
-            'campaignStats' => $this->campaignStatisticsService->getForPaginator($campaigns, $workspaceId),
+        return view('targetforce::posts.index', [
+            'posts' => $posts,
+            'postStats' => $this->postStatisticsService->getForPaginator($posts, $workspaceId),
         ]);
     }
 
@@ -99,18 +99,18 @@ class CampaignsController extends Controller
                 return $emailService;
             });
 
-        return view('targetforce::campaigns.create', compact('templates', 'emailServices'));
+        return view('targetforce::posts.create', compact('templates', 'emailServices'));
     }
 
     /**
      * @throws Exception
      */
-    public function store(CampaignStoreRequest $request): RedirectResponse
+    public function store(PostStoreRequest $request): RedirectResponse
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $campaign = $this->campaigns->store($workspaceId, $this->handleCheckboxes($request->validated()));
+        $post = $this->posts->store($workspaceId, $this->handleCheckboxes($request->validated()));
 
-        return redirect()->route('targetforce.campaigns.preview', $campaign->id);
+        return redirect()->route('targetforce.posts.preview', $post->id);
     }
 
     /**
@@ -118,9 +118,9 @@ class CampaignsController extends Controller
      */
     public function show(int $id): ViewContract
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $id);
 
-        return view('targetforce::campaigns.show', compact('campaign'));
+        return view('targetforce::posts.show', compact('post'));
     }
 
     /**
@@ -129,7 +129,7 @@ class CampaignsController extends Controller
     public function edit(int $id): ViewContract
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $campaign = $this->campaigns->find($workspaceId, $id);
+        $post = $this->posts->find($workspaceId, $id);
         $emailServices = $this->emailServices->all($workspaceId, 'id', ['type'])
             ->map(static function (EmailService $emailService) {
                 $emailService->formatted_name = "{$emailService->name} ({$emailService->type->name})";
@@ -137,22 +137,22 @@ class CampaignsController extends Controller
             });
         $templates = [null => '- None -'] + $this->templates->pluck($workspaceId);
 
-        return view('targetforce::campaigns.edit', compact('campaign', 'emailServices', 'templates'));
+        return view('targetforce::posts.edit', compact('post', 'emailServices', 'templates'));
     }
 
     /**
      * @throws Exception
      */
-    public function update(int $campaignId, CampaignStoreRequest $request): RedirectResponse
+    public function update(int $postId, PostStoreRequest $request): RedirectResponse
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $campaign = $this->campaigns->update(
+        $post = $this->posts->update(
             $workspaceId,
-            $campaignId,
+            $postId,
             $this->handleCheckboxes($request->validated())
         );
 
-        return redirect()->route('targetforce.campaigns.preview', $campaign->id);
+        return redirect()->route('targetforce.posts.preview', $post->id);
     }
 
     /**
@@ -161,16 +161,16 @@ class CampaignsController extends Controller
      */
     public function preview(int $id)
     {
-        $campaign = $this->campaigns->find(Targetforce::currentWorkspaceId(), $id);
+        $post = $this->posts->find(Targetforce::currentWorkspaceId(), $id);
         $subscriberCount = $this->subscribers->countActive(Targetforce::currentWorkspaceId());
 
-        if (!$campaign->draft) {
-            return redirect()->route('targetforce.campaigns.status', $id);
+        if (!$post->draft) {
+            return redirect()->route('targetforce.posts.status', $id);
         }
 
         $tags = $this->tags->all(Targetforce::currentWorkspaceId(), 'name');
 
-        return view('targetforce::campaigns.preview', compact('campaign', 'tags', 'subscriberCount'));
+        return view('targetforce::posts.preview', compact('post', 'tags', 'subscriberCount'));
     }
 
     /**
@@ -180,22 +180,22 @@ class CampaignsController extends Controller
     public function status(int $id)
     {
         $workspaceId = Targetforce::currentWorkspaceId();
-        $campaign = $this->campaigns->find($workspaceId, $id, ['status']);
+        $post = $this->posts->find($workspaceId, $id, ['status']);
 
-        if ($campaign->sent) {
-            return redirect()->route('targetforce.campaigns.reports.index', $id);
+        if ($post->sent) {
+            return redirect()->route('targetforce.posts.reports.index', $id);
         }
 
-        return view('targetforce::campaigns.status', [
-            'campaign' => $campaign,
-            'campaignStats' => $this->campaignStatisticsService->getForCampaign($campaign, $workspaceId),
+        return view('targetforce::posts.status', [
+            'post' => $post,
+            'postStats' => $this->postStatisticsService->getForPost($post, $workspaceId),
         ]);
     }
 
     /**
      * Handle checkbox fields.
      *
-     * NOTE(david): this is here because the Campaign model is marked as being unable to use boolean fields.
+     * NOTE(david): this is here because the Post model is marked as being unable to use boolean fields.
      */
     private function handleCheckboxes(array $input): array
     {

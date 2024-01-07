@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Targetforce\Base\Services\Messages;
 
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 
 class MessageTrackingOptions
@@ -17,23 +17,23 @@ class MessageTrackingOptions
 
     public static function fromMessage(Message $message): MessageTrackingOptions
     {
-        // NOTE(david): at the moment only campaigns have the ability to turn off tracking, so we start
+        // NOTE(david): at the moment only posts have the ability to turn off tracking, so we start
         // by creating a default set of options that has the tracking on, and only look to adjust that
-        // if the message we've got is for a campaign.
+        // if the message we've got is for a post.
         $trackingOptions = new static;
 
-        if ($message->source && get_class($message->source) === Campaign::class) {
-            return static::fromCampaign($message->source);
+        if ($message->source && get_class($message->source) === Post::class) {
+            return static::fromPost($message->source);
         }
 
         return $trackingOptions;
     }
 
-    public static function fromCampaign(Campaign $campaign): MessageTrackingOptions
+    public static function fromPost(Post $post): MessageTrackingOptions
     {
         return (new static)
-            ->setIsOpenTracking($campaign->is_open_tracking ?? true)
-            ->setIsClickTracking($campaign->is_click_tracking ?? true);
+            ->setIsOpenTracking($post->is_open_tracking ?? true)
+            ->setIsClickTracking($post->is_click_tracking ?? true);
     }
 
     public function isOpenTracking(): bool

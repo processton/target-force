@@ -1,17 +1,17 @@
 @extends('targetforce::layouts.app')
 
-@section('title', __('Cancel Campaign'))
+@section('title', __('Cancel Post'))
 
 @section('heading')
-    @lang('Cancel Campaign') - {{ $campaign->name }}
+    @lang('Cancel Post') - {{ $post->name }}
 @endsection
 
 @section('content')
 
     @component('targetforce::layouts.partials.actions')
         @slot('right')
-            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.campaigns.create') }}">
-                <i class="fa fa-plus mr-1"></i> {{ __('Create Campaign') }}
+            <a class="btn btn-primary btn-md btn-flat" href="{{ route('targetforce.posts.create') }}">
+                <i class="fa fa-plus mr-1"></i> {{ __('Create Post') }}
             </a>
         @endslot
     @endcomponent
@@ -24,20 +24,20 @@
         </div>
         <div class="card-body">
             <p>
-                {!! __('Are you sure that you want to cancel the <b>:name</b> campaign?', ['name' => $campaign->name]) !!}
+                {!! __('Are you sure that you want to cancel the <b>:name</b> post?', ['name' => $post->name]) !!}
             </p>
 
             <p>
-                @if($campaign->save_as_draft)
+                @if($post->save_as_draft)
                     {!! __('All draft messages will be permanently deleted.') !!}
                 @else
                     {!! __('Messages already dispatched will not be deleted. Unsent messages will not be dispatched.') !!}
                 @endif
             </p>
 
-            <form action="{{ route('targetforce.campaigns.cancel', $campaign->id) }}" method="post">
+            <form action="{{ route('targetforce.posts.cancel', $post->id) }}" method="post">
                 @csrf
-                <a href="{{ route('targetforce.campaigns.index') }}" class="btn btn-md btn-light">{{ __('Go Back') }}</a>
+                <a href="{{ route('targetforce.posts.index') }}" class="btn btn-md btn-light">{{ __('Go Back') }}</a>
                 <button type="submit" class="btn btn-md btn-danger">{{ __('CANCEL') }}</button>
             </form>
         </div>

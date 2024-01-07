@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services\Messages;
 
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Services\Messages\MessageTrackingOptions;
 use Tests\TestCase;
@@ -54,13 +54,13 @@ class MessageTrackingOptionsTest extends TestCase
     }
 
     /** @test */
-    public function open_tracking_can_be_turned_off_from_a_campaign()
+    public function open_tracking_can_be_turned_off_from_a_post()
     {
         // given
-        $campaign = Campaign::factory()->withoutOpenTracking()->make();
+        $post = Post::factory()->withoutOpenTracking()->make();
 
         // when
-        $trackingOptions = MessageTrackingOptions::fromCampaign($campaign);
+        $trackingOptions = MessageTrackingOptions::fromPost($post);
 
         // then
         self::assertFalse($trackingOptions->isOpenTracking());
@@ -68,13 +68,13 @@ class MessageTrackingOptionsTest extends TestCase
     }
 
     /** @test */
-    public function click_tracking_can_be_turned_off_from_a_campaign()
+    public function click_tracking_can_be_turned_off_from_a_post()
     {
         // given
-        $campaign = Campaign::factory()->withoutClickTracking()->make();
+        $post = Post::factory()->withoutClickTracking()->make();
 
         // when
-        $trackingOptions = MessageTrackingOptions::fromCampaign($campaign);
+        $trackingOptions = MessageTrackingOptions::fromPost($post);
 
         // then
         self::assertTrue($trackingOptions->isOpenTracking());
@@ -85,9 +85,9 @@ class MessageTrackingOptionsTest extends TestCase
     public function open_tracking_can_be_turned_off_from_a_message()
     {
         // given
-        $campaign = Campaign::factory()->withoutOpenTracking()->make();
+        $post = Post::factory()->withoutOpenTracking()->make();
         $message = new Message();
-        $message->source = $campaign;
+        $message->source = $post;
 
         // when
         $trackingOptions = MessageTrackingOptions::fromMessage($message);
@@ -101,9 +101,9 @@ class MessageTrackingOptionsTest extends TestCase
     public function click_tracking_can_be_turned_off_from_a_message()
     {
         // given
-        $campaign = Campaign::factory()->withoutClickTracking()->make();
+        $post = Post::factory()->withoutClickTracking()->make();
         $message = new Message();
-        $message->source = $campaign;
+        $message->source = $post;
 
         // when
         $trackingOptions = MessageTrackingOptions::fromMessage($message);

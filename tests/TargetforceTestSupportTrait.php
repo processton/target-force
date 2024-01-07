@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests;
 
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\Subscriber;
 use Targetforce\Base\Models\Tag;
@@ -19,9 +19,9 @@ trait TargetforceTestSupportTrait
         ]);
     }
 
-    protected function createCampaign(EmailService $emailService): Campaign
+    protected function createPost(EmailService $emailService): Post
     {
-        return Campaign::factory()
+        return Post::factory()
             ->withContent()
             ->sent()
             ->create([

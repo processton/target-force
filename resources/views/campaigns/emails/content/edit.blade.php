@@ -1,7 +1,7 @@
 @extends('targetforce::layouts.app')
 
 @section('heading')
-    {{ __('Edit Email Content For Campaign') }} {{ $email->mailable->name }}
+    {{ __('Edit Email Content For Post') }} {{ $email->mailable->name }}
 @stop
 
 @section('content')

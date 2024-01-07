@@ -9,7 +9,7 @@ use Carbon\CarbonInterval;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Repositories\Messages\MessageTenantRepositoryInterface;
 use Targetforce\Base\Repositories\Messages\MySqlMessageTenantRepository;
@@ -34,17 +34,17 @@ class MessageTenantRepositoryTest extends TestCase
     public function it_should_not_count_messages_that_have_not_been_opened_yet()
     {
         // given
-        $campaign = Campaign::factory()->create([
+        $post = Post::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
         Message::factory()->count(2)->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
         ]);
 
         // when
-        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($campaign), $campaign->id, (int)CarbonInterval::day()->totalSeconds);
+        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($post), $post->id, (int)CarbonInterval::day()->totalSeconds);
 
         // then
         self::assertInstanceOf(Collection::class, $data);
@@ -56,7 +56,7 @@ class MessageTenantRepositoryTest extends TestCase
     {
         // given
         $opened_at = CarbonImmutable::create(2020, 05, 9, 20);
-        $campaign = Campaign::factory()->create([
+        $post = Post::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
@@ -64,7 +64,7 @@ class MessageTenantRepositoryTest extends TestCase
         foreach (range(0, 3) as $i) {
             Message::factory()->create([
                 'workspace_id' => Targetforce::currentWorkspaceId(),
-                'source_id' => $campaign->id,
+                'source_id' => $post->id,
                 'opened_at' => $opened_at->addHours($i)
             ]);
         }
@@ -74,12 +74,12 @@ class MessageTenantRepositoryTest extends TestCase
 
         Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'opened_at' => $next_opened_at
         ]);
 
         // when
-        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($campaign), $campaign->id, (int)CarbonInterval::day()->totalSeconds);
+        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($post), $post->id, (int)CarbonInterval::day()->totalSeconds);
 
         // then
         self::assertEquals(2, $data->count());
@@ -99,7 +99,7 @@ class MessageTenantRepositoryTest extends TestCase
         // given
         $opened_at = CarbonImmutable::create(2020, 05, 9, 20);
 
-        $campaign = Campaign::factory()->create([
+        $post = Post::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
@@ -107,7 +107,7 @@ class MessageTenantRepositoryTest extends TestCase
         foreach (range(0, 3) as $i) {
             Message::factory()->create([
                 'workspace_id' => Targetforce::currentWorkspaceId(),
-                'source_id' => $campaign->id,
+                'source_id' => $post->id,
                 'opened_at' => $opened_at->addHours($i)
             ]);
         }
@@ -117,12 +117,12 @@ class MessageTenantRepositoryTest extends TestCase
 
         Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'opened_at' => $next_opened_at
         ]);
 
         // when
-        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($campaign), $campaign->id, (int)CarbonInterval::hours(2)->totalSeconds);
+        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($post), $post->id, (int)CarbonInterval::hours(2)->totalSeconds);
 
         // then
         self::assertEquals(3, $data->count());
@@ -149,7 +149,7 @@ class MessageTenantRepositoryTest extends TestCase
         // given
         $opened_at = CarbonImmutable::create(2020, 05, 9, 20);
 
-        $campaign = Campaign::factory()->create([
+        $post = Post::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
@@ -157,7 +157,7 @@ class MessageTenantRepositoryTest extends TestCase
         foreach (range(0, 3) as $i) {
             Message::factory()->create([
                 'workspace_id' => Targetforce::currentWorkspaceId(),
-                'source_id' => $campaign->id,
+                'source_id' => $post->id,
                 'opened_at' => $opened_at->addHours($i)
             ]);
         }
@@ -167,12 +167,12 @@ class MessageTenantRepositoryTest extends TestCase
 
         Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
-            'source_id' => $campaign->id,
+            'source_id' => $post->id,
             'opened_at' => $next_opened_at
         ]);
 
         // when
-        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($campaign), $campaign->id, (int)CarbonInterval::hour()->totalSeconds);
+        $data = $this->repository->countUniqueOpensPerPeriod(Targetforce::currentWorkspaceId(), get_class($post), $post->id, (int)CarbonInterval::hour()->totalSeconds);
 
         // then
         self::assertEquals(5, $data->count());

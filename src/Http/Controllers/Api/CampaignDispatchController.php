@@ -4,18 +4,18 @@ namespace Targetforce\Base\Http\Controllers\Api;
 
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Http\Requests\Api\CampaignDispatchRequest;
-use Targetforce\Base\Http\Resources\Campaign as CampaignResource;
+use Targetforce\Base\Http\Requests\Api\PostDispatchRequest;
+use Targetforce\Base\Http\Resources\Post as PostResource;
 use Targetforce\Base\Interfaces\QuotaServiceInterface;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignDispatchController extends Controller
+class PostDispatchController extends Controller
 {
     /**
-     * @var CampaignTenantRepositoryInterface
+     * @var PostTenantRepositoryInterface
      */
-    protected $campaigns;
+    protected $posts;
 
     /**
      * @var QuotaServiceInterface
@@ -23,31 +23,31 @@ class CampaignDispatchController extends Controller
     protected $quotaService;
 
     public function __construct(
-        CampaignTenantRepositoryInterface $campaigns,
+        PostTenantRepositoryInterface $posts,
         QuotaServiceInterface $quotaService
     ) {
-        $this->campaigns = $campaigns;
+        $this->posts = $posts;
         $this->quotaService = $quotaService;
     }
 
     /**
      * @throws \Exception
      */
-    public function send(CampaignDispatchRequest $request, $campaignId)
+    public function send(PostDispatchRequest $request, $postId)
     {
-        $campaign = $request->getCampaign(['email_service', 'messages']);
+        $post = $request->getPost(['email_service', 'messages']);
         $workspaceId = Targetforce::currentWorkspaceId();
 
-        if ($this->quotaService->exceedsQuota($campaign->email_service, $campaign->unsent_count)) {
+        if ($this->quotaService->exceedsQuota($post->email_service, $post->unsent_count)) {
             return response([
-                'message' => __('The number of subscribers for this campaign exceeds your SES quota')
+                'message' => __('The number of subscribers for this post exceeds your SES quota')
             ], 422);
         }
 
-        $campaign = $this->campaigns->update($workspaceId, $campaignId, [
-            'status_id' => CampaignStatus::STATUS_QUEUED,
+        $post = $this->posts->update($workspaceId, $postId, [
+            'status_id' => PostStatus::STATUS_QUEUED,
         ]);
 
-        return new CampaignResource($campaign);
+        return new PostResource($post);
     }
 }

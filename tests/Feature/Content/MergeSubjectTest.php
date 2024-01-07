@@ -7,7 +7,7 @@ namespace Tests\Feature\Content;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Models\Subscriber;
 use Targetforce\Base\Services\Content\MergeSubjectService;
@@ -23,7 +23,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{email}}';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com', 'foo', 'bar');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com', 'foo', 'bar');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -37,7 +37,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{first_name}}';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com', 'foo', 'bar');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com', 'foo', 'bar');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -51,7 +51,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{first_name}}';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -65,7 +65,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{last_name}}';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com', 'foo', 'bar');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com', 'foo', 'bar');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -79,7 +79,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{last_name}}';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -93,7 +93,7 @@ class MergeSubjectTest extends TestCase
     {
         // given
         $subject = 'Hi, {{first_name}} {{ last_name }} ({{email }})';
-        $message = $this->generateCampaignMessage($subject, 'foo@bar.com', 'foo', 'bar');
+        $message = $this->generatePostMessage($subject, 'foo@bar.com', 'foo', 'bar');
 
         // when
         $mergedSubject = $this->mergeSubject($message);
@@ -102,16 +102,16 @@ class MergeSubjectTest extends TestCase
         self::assertEquals('Hi, foo bar (foo@bar.com)', $mergedSubject);
     }
 
-    private function generateCampaignMessage(
-        string $campaignSubject,
+    private function generatePostMessage(
+        string $postSubject,
         string $email,
         ?string $firstName = null,
         ?string $lastName = null
     ): Message {
-        /** @var Campaign $campaign */
-        $campaign = Campaign::factory()->create([
+        /** @var Post $post */
+        $post = Post::factory()->create([
             'content' => '<p>Content</p>',
-            'subject' => $campaignSubject,
+            'subject' => $postSubject,
             'workspace_id' => Targetforce::currentWorkspaceId()
         ]);
 
@@ -126,9 +126,9 @@ class MergeSubjectTest extends TestCase
         return Message::factory()->create([
             'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => $subscriber->id,
-            'source_type' => Campaign::class,
-            'source_id' => $campaign->id,
-            'subject' => $campaignSubject,
+            'source_type' => Post::class,
+            'source_id' => $post->id,
+            'subject' => $postSubject,
             'recipient_email' => $email,
         ]);
     }

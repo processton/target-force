@@ -6,7 +6,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Targetforce\Base\Facades\Targetforce;
-use Targetforce\Base\Models\Campaign;
+use Targetforce\Base\Models\Post;
 use Targetforce\Base\Models\Message;
 use Targetforce\Base\Models\Subscriber;
 
@@ -21,8 +21,8 @@ class MessageFactory extends Factory
             'hash' => $this->faker->uuid,
             'workspace_id' => Targetforce::currentWorkspaceId(),
             'subscriber_id' => Subscriber::factory(),
-            'source_type' => Campaign::class,
-            'source_id' => Campaign::factory(),
+            'source_type' => Post::class,
+            'source_id' => Post::factory(),
             'recipient_email' => $this->faker->email,
             'subject' => $this->faker->sentence(3),
             'from_name' => $this->faker->name,

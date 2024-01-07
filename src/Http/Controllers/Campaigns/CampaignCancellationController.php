@@ -2,83 +2,83 @@
 
 declare(strict_types=1);
 
-namespace Targetforce\Base\Http\Controllers\Campaigns;
+namespace Targetforce\Base\Http\Controllers\Posts;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
 use Targetforce\Base\Facades\Targetforce;
 use Targetforce\Base\Http\Controllers\Controller;
-use Targetforce\Base\Models\Campaign;
-use Targetforce\Base\Models\CampaignStatus;
-use Targetforce\Base\Repositories\Campaigns\CampaignTenantRepositoryInterface;
+use Targetforce\Base\Models\Post;
+use Targetforce\Base\Models\PostStatus;
+use Targetforce\Base\Repositories\Posts\PostTenantRepositoryInterface;
 
-class CampaignCancellationController extends Controller
+class PostCancellationController extends Controller
 {
-    /** @var CampaignTenantRepositoryInterface $campaignRepository */
-    private $campaignRepository;
+    /** @var PostTenantRepositoryInterface $postRepository */
+    private $postRepository;
 
-    public function __construct(CampaignTenantRepositoryInterface $campaignRepository)
+    public function __construct(PostTenantRepositoryInterface $postRepository)
     {
-        $this->campaignRepository = $campaignRepository;
+        $this->postRepository = $postRepository;
     }
 
     /**
      * @throws Exception
      */
-    public function confirm(int $campaignId)
+    public function confirm(int $postId)
     {
-        $campaign = $this->campaignRepository->find(Targetforce::currentWorkspaceId(), $campaignId, ['status']);
+        $post = $this->postRepository->find(Targetforce::currentWorkspaceId(), $postId, ['status']);
 
-        return view('targetforce::campaigns.cancel', [
-            'campaign' => $campaign,
+        return view('targetforce::posts.cancel', [
+            'post' => $post,
         ]);
     }
 
     /**
      * @throws Exception
      */
-    public function cancel(int $campaignId)
+    public function cancel(int $postId)
     {
-        /** @var Campaign $campaign */
-        $campaign = $this->campaignRepository->find(Targetforce::currentWorkspaceId(), $campaignId, ['status']);
-        $originalStatus = $campaign->status;
+        /** @var Post $post */
+        $post = $this->postRepository->find(Targetforce::currentWorkspaceId(), $postId, ['status']);
+        $originalStatus = $post->status;
 
-        if (!$campaign->canBeCancelled()) {
+        if (!$post->canBeCancelled()) {
             throw ValidationException::withMessages([
-                'campaignStatus' => "{$campaign->status->name} campaigns cannot be cancelled.",
-            ])->redirectTo(route('targetforce.campaigns.index'));
+                'postStatus' => "{$post->status->name} posts cannot be cancelled.",
+            ])->redirectTo(route('targetforce.posts.index'));
         }
 
-        if ($campaign->save_as_draft && !$campaign->allDraftsCreated()) {
+        if ($post->save_as_draft && !$post->allDraftsCreated()) {
             throw ValidationException::withMessages([
-                'messagesPendingDraft' => __('Campaigns that save draft messages cannot be cancelled until all drafts have been created.'),
-            ])->redirectTo(route('targetforce.campaigns.index'));
+                'messagesPendingDraft' => __('Posts that save draft messages cannot be cancelled until all drafts have been created.'),
+            ])->redirectTo(route('targetforce.posts.index'));
         }
 
-        $this->campaignRepository->cancelCampaign($campaign);
+        $this->postRepository->cancelPost($post);
 
-        return redirect()->route('targetforce.campaigns.index')->with([
-            'success' => $this->getSuccessMessage($originalStatus, $campaign),
+        return redirect()->route('targetforce.posts.index')->with([
+            'success' => $this->getSuccessMessage($originalStatus, $post),
         ]);
     }
 
-    private function getSuccessMessage(CampaignStatus $campaignStatus, Campaign $campaign): string
+    private function getSuccessMessage(PostStatus $postStatus, Post $post): string
     {
-        if ($campaignStatus->id === CampaignStatus::STATUS_QUEUED) {
-            return __('The queued campaign was cancelled successfully.');
+        if ($postStatus->id === PostStatus::STATUS_QUEUED) {
+            return __('The queued post was cancelled successfully.');
         }
 
-        if ($campaign->save_as_draft) {
-            return __('The campaign was cancelled and any remaining draft messages were deleted.');
+        if ($post->save_as_draft) {
+            return __('The post was cancelled and any remaining draft messages were deleted.');
         }
 
-        $messageCounts = $this->campaignRepository->getCounts(collect($campaign->id), $campaign->workspace_id)[$campaign->id];
+        $messageCounts = $this->postRepository->getCounts(collect($post->id), $post->workspace_id)[$post->id];
 
         return __(
-            "The campaign was cancelled whilst being processed (~:sent/:total dispatched).",
+            "The post was cancelled whilst being processed (~:sent/:total dispatched).",
             [
                 'sent' => $messageCounts->sent,
-                'total' => $campaign->active_subscriber_count
+                'total' => $post->active_subscriber_count
             ]
         );
     }

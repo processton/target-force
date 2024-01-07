@@ -1,10 +1,10 @@
 <ul class="nav nav-pills mb-4">
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('targetforce.campaigns.index') ? 'active'  : '' }}"
-           href="{{ route('targetforce.campaigns.index') }}">{{ __('Draft') }}</a>
+        <a class="nav-link {{ request()->routeIs('targetforce.posts.index') ? 'active'  : '' }}"
+           href="{{ route('targetforce.posts.index') }}">{{ __('Draft') }}</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->routeIs('targetforce.campaigns.sent') ? 'active'  : '' }}"
-           href="{{ route('targetforce.campaigns.sent') }}">{{ __('Sent') }}</a>
+        <a class="nav-link {{ request()->routeIs('targetforce.posts.sent') ? 'active'  : '' }}"
+           href="{{ route('targetforce.posts.sent') }}">{{ __('Sent') }}</a>
     </li>
 </ul>

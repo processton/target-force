@@ -78,7 +78,7 @@
                 </thead>
                 <tbody>
                 @forelse($subscriber->messages as $message)
-                    <tr class="campaign-link">
+                    <tr class="post-link">
                         <td>
                             {{ $message->sent_at ?? $message->created_at }}
                         </td>
@@ -86,9 +86,9 @@
                             {{ $message->subject }}
                         </td>
                         <td>
-                            @if($message->isCampaign())
+                            @if($message->isPost())
                                 <i class="fas fa-envelope color-gray-300"></i>
-                                <a href="{{ route('targetforce.campaigns.reports.index', $message->source_id) }}">
+                                <a href="{{ route('targetforce.posts.reports.index', $message->source_id) }}">
                                     {{ $message->source->name }}
                                 </a>
                             @elseif(\Targetforce\Base\Facades\Helper::isPro() && $message->isAutomation())

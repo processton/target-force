@@ -172,7 +172,7 @@ class HandleMailjetWebhook implements ShouldQueue
                 'content blocked',
                 'policy issue',
                 'mailjet',
-                'duplicate in campaign',
+                'duplicate in post',
             ]
         );
     }
