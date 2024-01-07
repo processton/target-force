@@ -4,7 +4,7 @@ namespace Targetforce\Base\Services;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Log;
-use Targetforce\Base\Adapters\BaseMailAdapter;
+use Targetforce\Base\Adapters\Email\BaseMailAdapter;
 use Targetforce\Base\Factories\MailAdapterFactory;
 use Targetforce\Base\Interfaces\QuotaServiceInterface;
 use Targetforce\Base\Models\EmailService;

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Factories;
 
 use InvalidArgumentException;
-use Targetforce\Base\Adapters\MailgunMailAdapter;
-use Targetforce\Base\Adapters\PostmarkMailAdapter;
-use Targetforce\Base\Adapters\SendgridMailAdapter;
-use Targetforce\Base\Adapters\SesMailAdapter;
+use Targetforce\Base\Adapters\Email\MailgunMailAdapter;
+use Targetforce\Base\Adapters\Email\PostmarkMailAdapter;
+use Targetforce\Base\Adapters\Email\SendgridMailAdapter;
+use Targetforce\Base\Adapters\Email\SesMailAdapter;
 use Targetforce\Base\Factories\MailAdapterFactory;
 use Targetforce\Base\Models\EmailService;
 use Targetforce\Base\Models\EmailServiceType;
