@@ -34,7 +34,7 @@ class TargetforceBaseServiceProvider extends ServiceProvider
             ], 'targetforce-lang');
 
             $this->publishes([
-                __DIR__.'/../public' => public_path('targetforce'),
+                __DIR__.'/../public' => public_path('vendor/targetforce'),
             ], 'targetforce-assets');
 
             $this->commands([
