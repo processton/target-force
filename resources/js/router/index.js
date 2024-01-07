@@ -20,7 +20,7 @@ const routeMiddleware = resolveMiddleware(
 
 const router = createRouter()
 
-const {base_url} = window.targetform
+const base_url = '/target-force/forms'
 
 sync(store, router)
 
